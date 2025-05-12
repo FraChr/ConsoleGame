@@ -9,7 +9,37 @@ public struct GameBounds(int xMax, int yMax)
 
     public readonly bool IsInBounds(Position pos)
     {
-        return pos.X >= XMin && pos.X <= XMax && pos.Y >= YMin && pos.Y <= YMax;
+        return pos.X > XMin && pos.X < XMax && pos.Y > YMin && pos.Y < YMax;
+    }
+
+    public readonly void DrawBounds()
+    {
+        for (var y = YMin + 1; y < YMax; y++)
+        {
+            Console.SetCursorPosition(XMin, y);
+            Console.Write(char.ConvertFromUtf32(0x2502));
+            Console.SetCursorPosition(XMax, y);
+            Console.Write(char.ConvertFromUtf32(0x2502));
+        }
+        
+        for (var x = XMin + 1; x < XMax; x++)
+        {
+            Console.SetCursorPosition(x, YMin);
+            Console.Write(char.ConvertFromUtf32(0x2500));
+            Console.SetCursorPosition(x, YMax);
+            Console.Write(char.ConvertFromUtf32(0x2500));
+        }
+        
+        Console.SetCursorPosition(XMin, YMin);
+        Console.Write(char.ConvertFromUtf32(0x250C));
+        Console.SetCursorPosition(XMax, YMin);
+        Console.Write(char.ConvertFromUtf32(0x2510));
+        Console.SetCursorPosition(XMin, YMax);
+        Console.Write(char.ConvertFromUtf32(0x2514));
+        Console.SetCursorPosition(XMax, YMax);
+        Console.Write(char.ConvertFromUtf32(0x2518));
+        
+        
     }
 }
 

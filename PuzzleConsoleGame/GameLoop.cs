@@ -9,7 +9,6 @@ public class GameLoop
 
     public void Run()
     {
-        Draw();
         Loop();
     }
 
@@ -17,8 +16,8 @@ public class GameLoop
     {
         while (_running)
         {
-            Input();
             Draw();
+            Input();
         }
     }
 
@@ -43,7 +42,7 @@ public class GameLoop
                 break;
             case ConsoleKey.Q:
                 _running = false;
-                Clean();
+                Console.Clear();
                 Environment.Exit(0);
                 break;
         }
@@ -53,16 +52,14 @@ public class GameLoop
             _player = next;
         }
     }
-
-    private static void Clean()
-    {
-        Console.Clear();
-    }
+    
 
     private void Draw()
     {
+        
         Console.CursorVisible = false;
         Console.Clear();
+        _gameArea.DrawBounds();
         Console.SetCursorPosition(_player.X, _player.Y);
         Console.Write("*");
     }
