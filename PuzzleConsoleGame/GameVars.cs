@@ -9,7 +9,7 @@ public struct GameBounds(int xMax, int yMax)
 
     public readonly bool IsInBounds(Position pos)
     {
-        return pos.X > XMin && pos.X < XMax && pos.Y > YMin && pos.Y < YMax;
+        return pos.XPos > XMin && pos.XPos < XMax && pos.YPos > YMin && pos.YPos < YMax;
     }
 
     public readonly void DrawBounds()
@@ -17,40 +17,43 @@ public struct GameBounds(int xMax, int yMax)
         for (var y = YMin + 1; y < YMax; y++)
         {
             Console.SetCursorPosition(XMin, y);
-            Console.Write(char.ConvertFromUtf32(0x2502));
+            Console.Write(char.ConvertFromUtf32(GameConstants.VerticalBorder));
             Console.SetCursorPosition(XMax, y);
-            Console.Write(char.ConvertFromUtf32(0x2502));
+            Console.Write(char.ConvertFromUtf32(GameConstants.VerticalBorder));
         }
         
         for (var x = XMin + 1; x < XMax; x++)
         {
             Console.SetCursorPosition(x, YMin);
-            Console.Write(char.ConvertFromUtf32(0x2500));
+            Console.Write(char.ConvertFromUtf32(GameConstants.HorizontalBorder));
             Console.SetCursorPosition(x, YMax);
-            Console.Write(char.ConvertFromUtf32(0x2500));
+            Console.Write(char.ConvertFromUtf32(GameConstants.HorizontalBorder));
         }
         
         Console.SetCursorPosition(XMin, YMin);
-        Console.Write(char.ConvertFromUtf32(0x250C));
+        Console.Write(char.ConvertFromUtf32(GameConstants.LeftUpperCorner));
+        
         Console.SetCursorPosition(XMax, YMin);
-        Console.Write(char.ConvertFromUtf32(0x2510));
+        Console.Write(char.ConvertFromUtf32(GameConstants.RightUpperCorner));
+        
         Console.SetCursorPosition(XMin, YMax);
-        Console.Write(char.ConvertFromUtf32(0x2514));
+        Console.Write(char.ConvertFromUtf32(GameConstants.LeftLowerCorner));
+        
         Console.SetCursorPosition(XMax, YMax);
-        Console.Write(char.ConvertFromUtf32(0x2518));
+        Console.Write(char.ConvertFromUtf32(GameConstants.RightLowerCorner));
         
         
     }
 }
 
-public struct Position(int startX, int startY)
+public struct Position(int startXPos, int startYPos)
 {
-    public int X { get; private set; } = startX;
-    public int Y { get; private set; } = startY;
+    public int XPos { get; private set; } = startXPos;
+    public int YPos { get; private set; } = startYPos;
 
     public void Move(int dX, int dY)
     {
-        X += dX;
-        Y += dY;
+        XPos += dX;
+        YPos += dY;
     }
 }

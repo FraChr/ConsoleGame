@@ -14,9 +14,10 @@ public class GameLoop
 
     private void Loop()
     {
+        _gameArea.DrawBounds();
         while (_running)
         {
-            Draw();
+            Draw(GameConstants.Character);
             Input();
         }
     }
@@ -49,18 +50,16 @@ public class GameLoop
 
         if (_gameArea.IsInBounds(next))
         {
+            Draw();
             _player = next;
         }
     }
     
 
-    private void Draw()
+    private void Draw(char character = ' ')
     {
-        
         Console.CursorVisible = false;
-        Console.Clear();
-        _gameArea.DrawBounds();
-        Console.SetCursorPosition(_player.X, _player.Y);
-        Console.Write("*");
+        Console.SetCursorPosition(_player.XPos, _player.YPos);
+        Console.Write(character);
     }
 }
