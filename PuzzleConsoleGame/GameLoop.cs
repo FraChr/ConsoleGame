@@ -1,10 +1,12 @@
 ﻿namespace PuzzleConsoleGame;
 
+using static GameConstants;
+
 public class GameLoop
 {
-    private Position _player = new(GameConstants.PlayerStartPosX, GameConstants.PlayerStartPosY);
+    private PlayerPos _player = new(PlayerStart.PlayerStartPosHoriz, PlayerStart.PlayerStartPosVert);
 
-    private readonly GameBounds _gameArea = new(GameConstants.GameBoundsX, GameConstants.GameBoundsY);
+    private readonly GameBounds _gameArea = new(Boundaries.GameBoundsHoriz, Boundaries.GameBoundsVert);
     private bool _running = true;
 
     public void Run()
@@ -17,7 +19,7 @@ public class GameLoop
         _gameArea.DrawBounds();
         while (_running)
         {
-            Draw(GameConstants.Character);
+            Draw(Character);
             Input();
         }
     }
@@ -30,16 +32,16 @@ public class GameLoop
         switch (key)
         {
             case ConsoleKey.W:
-                next.Move(GameConstants.NoMove, GameConstants.MoveNegative);
+                next.Move(Movement.NoMove, Movement.MoveNegative);
                 break;
             case ConsoleKey.S:
-                next.Move(GameConstants.NoMove, GameConstants.MovePositive);
+                next.Move(Movement.NoMove, Movement.MovePositive);
                 break;
             case ConsoleKey.A:
-                next.Move(GameConstants.MoveNegative, GameConstants.NoMove);
+                next.Move(Movement.MoveNegative, Movement.NoMove);
                 break;
             case ConsoleKey.D:
-                next.Move(GameConstants.MovePositive, GameConstants.NoMove);
+                next.Move(Movement.MovePositive, Movement.NoMove);
                 break;
             case ConsoleKey.Q:
                 _running = false;
@@ -54,7 +56,7 @@ public class GameLoop
             _player = next;
         }
     }
-    
+
 
     private void Draw(char character = ' ')
     {
