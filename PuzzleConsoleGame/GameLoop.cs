@@ -7,61 +7,28 @@ public class GameLoop
     private PlayerPos _player = new(PlayerStart.PlayerStartPosHoriz, PlayerStart.PlayerStartPosVert);
 
     private readonly GameBounds _gameArea = new(Boundaries.GameBoundsHoriz, Boundaries.GameBoundsVert);
-    private bool _running = true;
+    private readonly InputManager _inputManager;
+    private readonly Render _render;
+    private const bool Running = true;
+
+    public GameLoop()
+    {
+        _inputManager = new InputManager(_gameArea);
+        _render = new Render(_player);
+    }
 
     public void Run()
     {
-        Loop();
-    }
-
-    private void Loop()
-    {
-        _gameArea.DrawBounds();
-        while (_running)
+        _render.DrawBounds(_gameArea);
+        while (Running)
         {
-            Draw(Character);
-            Input();
+            _render.Draw(Player.Character);
+            var nextPlayer = _inputManager.PlayerControls(_player);
+
+            if (nextPlayer == _player) continue;
+            _render.Draw();
+            _player = nextPlayer;
+            _render.UpdatePlayer(_player);
         }
-    }
-
-    private void Input()
-    {
-        var key = Console.ReadKey(true).Key;
-        var next = _player;
-
-        switch (key)
-        {
-            case ConsoleKey.W:
-                next.Move(Movement.NoMove, Movement.MoveNegative);
-                break;
-            case ConsoleKey.S:
-                next.Move(Movement.NoMove, Movement.MovePositive);
-                break;
-            case ConsoleKey.A:
-                next.Move(Movement.MoveNegative, Movement.NoMove);
-                break;
-            case ConsoleKey.D:
-                next.Move(Movement.MovePositive, Movement.NoMove);
-                break;
-            case ConsoleKey.Q:
-                _running = false;
-                Console.Clear();
-                Environment.Exit(0);
-                break;
-        }
-
-        if (_gameArea.IsInBounds(next))
-        {
-            Draw();
-            _player = next;
-        }
-    }
-
-
-    private void Draw(char character = ' ')
-    {
-        Console.CursorVisible = false;
-        Console.SetCursorPosition(_player.XPos, _player.YPos);
-        Console.Write(character);
     }
 }

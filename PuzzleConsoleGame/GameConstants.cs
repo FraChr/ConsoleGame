@@ -2,7 +2,9 @@
 
 public static class GameConstants
 {
-    public const char Character = '^';
+    public static class Player {
+        public const char Character = '^';
+    }
 
     public static class Movement
     {
