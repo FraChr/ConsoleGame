@@ -2,7 +2,7 @@
 
 public static class GameConstants
 {
-    public static class Player {
+    public static class PlayerData {
         public const char Character = '^';
     }
 
@@ -15,13 +15,15 @@ public static class GameConstants
 
     public static class Boundaries
     {
-        public const int GameBoundsHoriz = 20;
-        public const int GameBoundsVert = 12;
+        public const int GameBoundsHorizontalMax = 20;
+        public const int GameBoundsVerticalMax = 12;
+        public const int GameBoundsHorizontalMin = 0;
+        public const int GameBoundsVerticalMin = 0;
     }
 
     public static class PlayerStart
     {
-        public const int PlayerStartPosHoriz = 5;
+        public const int PlayerStartPosHoriz = 10;
         public const int PlayerStartPosVert = 5;
     }
 

@@ -4,14 +4,14 @@ using static GameConstants;
 
 public class InputManager
 {
-    private readonly GameBounds _gameArea;
+    private readonly GameWorld _gameArea;
 
-    public InputManager(GameBounds gameArea)
+    public InputManager(GameWorld gameArea)
     {
         _gameArea = gameArea;
     }
 
-    public PlayerPos PlayerControls(PlayerPos currentPlayerPosition)
+    public Player PlayerControls(Player currentPlayerPosition)
     {
         var key = Console.ReadKey(true).Key;
         var newPosition = currentPlayerPosition;
@@ -19,16 +19,16 @@ public class InputManager
         switch (key)
         {
             case ConsoleKey.W:
-                newPosition = currentPlayerPosition.Move(dY: Movement.MoveNegative);
+                newPosition = currentPlayerPosition.Move(deltaY: Movement.MoveNegative);
                 break;
             case ConsoleKey.S:
-                newPosition = currentPlayerPosition.Move(dY: Movement.MovePositive);
+                newPosition = currentPlayerPosition.Move(deltaY: Movement.MovePositive);
                 break;
             case ConsoleKey.A:
-                newPosition = currentPlayerPosition.Move(dX: Movement.MoveNegative);
+                newPosition = currentPlayerPosition.Move(deltaX: Movement.MoveNegative);
                 break;
             case ConsoleKey.D:
-                newPosition = currentPlayerPosition.Move(dX: Movement.MovePositive);
+                newPosition = currentPlayerPosition.Move(deltaX: Movement.MovePositive);
                 break;
             case ConsoleKey.Q:
                 Console.Clear();

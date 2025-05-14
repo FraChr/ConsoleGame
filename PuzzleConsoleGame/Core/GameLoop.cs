@@ -4,9 +4,9 @@ using static GameConstants;
 
 public class GameLoop
 {
-    private PlayerPos _player = new(PlayerStart.PlayerStartPosHoriz, PlayerStart.PlayerStartPosVert);
+    private Player _player = new(PlayerStart.PlayerStartPosVert, PlayerStart.PlayerStartPosHoriz);
 
-    private readonly GameBounds _gameArea = new(Boundaries.GameBoundsHoriz, Boundaries.GameBoundsVert);
+    private readonly GameWorld _gameArea = new(Boundaries.GameBoundsHorizontalMax, Boundaries.GameBoundsVerticalMax);
     private readonly InputManager _inputManager;
     private readonly Render _render;
     private const bool Running = true;
@@ -22,7 +22,7 @@ public class GameLoop
         _render.DrawBounds(_gameArea);
         while (Running)
         {
-            _render.Draw(Player.Character);
+            _render.Draw(PlayerData.Character);
             var nextPlayer = _inputManager.PlayerControls(_player);
 
             if (nextPlayer == _player) continue;
