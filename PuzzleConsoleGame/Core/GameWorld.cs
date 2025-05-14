@@ -1,4 +1,7 @@
-﻿namespace PuzzleConsoleGame;
+﻿using PuzzleConsoleGame.Config;
+using PuzzleConsoleGame.Entities;
+
+namespace PuzzleConsoleGame.Core;
 
 using static GameConstants;
 
@@ -14,20 +17,3 @@ public class GameWorld(int verticalMax, int horizontalMax)
         return position.XPosition > VerticalMin && position.XPosition < VerticalMax && position.YPosition > HorizontalMin && position.YPosition < HorizontalMax;
     }
 }
-
-// public class PlayerPos
-// {
-//     public int XPos { get; private set; }
-//     public int YPos { get; private set; }
-//
-//     public PlayerPos(int xPos, int yPos)
-//     {
-//         XPos = xPos;
-//         YPos = yPos;
-//     }
-//
-//     public PlayerPos Move(int dX = Movement.NoMove, int dY = Movement.NoMove)
-//     {
-//         return new PlayerPos(XPos + dX, YPos + dY);
-//     }
-// }

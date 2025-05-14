@@ -1,4 +1,8 @@
-﻿namespace PuzzleConsoleGame;
+﻿using PuzzleConsoleGame.Config;
+using PuzzleConsoleGame.Core;
+using PuzzleConsoleGame.Entities;
+
+namespace PuzzleConsoleGame.Rendering;
 
 public class Render(Player player)
 {
@@ -16,7 +20,7 @@ public class Render(Player player)
         Console.Write(character);
     }
 
-    public void DrawBounds(GameWorld boundaries)
+    public void DrawBoundaries(GameWorld boundaries)
     {
         DrawVerticalBorder(boundaries);
         DrawHorizontalBorder(boundaries);

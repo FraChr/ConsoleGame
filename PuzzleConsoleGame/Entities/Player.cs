@@ -1,4 +1,6 @@
-﻿namespace PuzzleConsoleGame;
+﻿using PuzzleConsoleGame.Config;
+
+namespace PuzzleConsoleGame.Entities;
 using static GameConstants;
 public class Player
 {

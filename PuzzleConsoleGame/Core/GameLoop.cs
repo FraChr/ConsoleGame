@@ -1,4 +1,9 @@
-﻿namespace PuzzleConsoleGame;
+﻿using PuzzleConsoleGame.Config;
+using PuzzleConsoleGame.Entities;
+using PuzzleConsoleGame.Input;
+using PuzzleConsoleGame.Rendering;
+
+namespace PuzzleConsoleGame.Core;
 
 using static GameConstants;
 
@@ -19,7 +24,7 @@ public class GameLoop
 
     public void Run()
     {
-        _render.DrawBounds(_gameArea);
+        _render.DrawBoundaries(_gameArea);
         while (Running)
         {
             _render.Draw(PlayerData.Character);

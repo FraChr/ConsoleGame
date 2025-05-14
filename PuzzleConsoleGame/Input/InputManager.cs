@@ -1,4 +1,8 @@
-﻿namespace PuzzleConsoleGame;
+﻿using PuzzleConsoleGame.Config;
+using PuzzleConsoleGame.Core;
+using PuzzleConsoleGame.Entities;
+
+namespace PuzzleConsoleGame.Input;
 
 using static GameConstants;
 

@@ -1,9 +1,14 @@
-﻿namespace PuzzleConsoleGame;
+﻿namespace PuzzleConsoleGame.Config;
 
 public static class GameConstants
 {
     public static class PlayerData {
         public const char Character = '^';
+    }
+
+    public static class ItemData
+    {
+        public const char Character = '=';
     }
 
     public static class Movement
@@ -24,7 +29,7 @@ public static class GameConstants
     public static class PlayerStart
     {
         public const int PlayerStartPosHoriz = 10;
-        public const int PlayerStartPosVert = 5;
+        public const int PlayerStartPosVert = 6;
     }
 
     public static class Border
