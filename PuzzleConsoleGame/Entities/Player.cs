@@ -8,7 +8,7 @@ public class Player : IRenderable
     public int XPosition { get; set; }
     public int YPosition { get; set; }
     public char Symbol { get; set; }
-    private Direction Facing { get; set; }
+    private Direction Facing { get; }
 
     public Player(int xPosition, int yPosition, Direction facing = Direction.Up)
     {
@@ -18,6 +18,11 @@ public class Player : IRenderable
         Symbol = GetDirectionSymbol(facing);
     }
 
+    public void Shoot()
+    {
+        
+    }
+    
     private char GetDirectionSymbol(Direction direction)
     {
         return direction switch

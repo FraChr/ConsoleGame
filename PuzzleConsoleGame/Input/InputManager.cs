@@ -4,7 +4,6 @@ using PuzzleConsoleGame.Entities;
 
 namespace PuzzleConsoleGame.Input;
 
-
 public class InputManager
 {
     private readonly GameWorld _gameArea;

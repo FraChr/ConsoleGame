@@ -29,7 +29,7 @@ public static class Movement
 
 public static class Boundaries
 {
-    public const int GameBoundsHorizontalMax = 20;
+    public const int GameBoundsHorizontalMax = 50;
     public const int GameBoundsVerticalMax = 12;
     public const int GameBoundsHorizontalMin = 0;
     public const int GameBoundsVerticalMin = 0;
