@@ -1,21 +1,43 @@
 ﻿using PuzzleConsoleGame.Config;
+using PuzzleConsoleGame.Rendering;
 
 namespace PuzzleConsoleGame.Entities;
-using static GameConstants;
-public class Player
+
+public class Player : IRenderable
 {
-    public int XPosition { get; private set; }
-    public int YPosition { get; private set; }
-    
-    public Player(int xPosition, int yPosition)
+    public int XPosition { get; set; }
+    public int YPosition { get; set; }
+    public char Symbol { get; set; }
+    private Direction Facing { get; set; }
+
+    public Player(int xPosition, int yPosition, Direction facing = Direction.Up)
     {
         XPosition = xPosition;
         YPosition = yPosition;
+        Facing = facing;
+        Symbol = GetDirectionSymbol(facing);
     }
-    
-    
+
+    private char GetDirectionSymbol(Direction direction)
+    {
+        return direction switch
+        {
+            Direction.Up => PlayerData.CharacterDefault,
+            Direction.Down => PlayerData.CharacterDown,
+            Direction.Left => PlayerData.CharacterLeft,
+            Direction.Right => PlayerData.CharacterRight,
+            _ => PlayerData.CharacterDefault
+        };
+    }
+
+
     public Player Move(int deltaX = Movement.NoMove, int deltaY = Movement.NoMove)
     {
-        return new Player(XPosition + deltaX, YPosition + deltaY);
+        return new Player(XPosition + deltaX, YPosition + deltaY, Facing);
+    }
+
+    public Player Rotate(Direction newDirection)
+    {
+        return new Player(XPosition, YPosition, newDirection);
     }
 }

@@ -1,24 +1,17 @@
 ﻿using PuzzleConsoleGame.Config;
 using PuzzleConsoleGame.Core;
-using PuzzleConsoleGame.Entities;
 
 namespace PuzzleConsoleGame.Rendering;
 
-public class Render(Player player)
+public class Render
 {
-    private Player _player = player;
-
-    public void UpdatePlayer(Player player)
-    {
-        _player = player;
-    }
-
-    public void Draw(char character = ' ')
+    public void Draw(IRenderable obj, char? overrideChar = null)
     {
         Console.CursorVisible = false;
-        Console.SetCursorPosition(_player.XPosition, _player.YPosition);
-        Console.Write(character);
+        Console.SetCursorPosition(obj.XPosition, obj.YPosition);
+        Console.Write(overrideChar ?? obj.Symbol);
     }
+
 
     public void DrawBoundaries(GameWorld boundaries)
     {
@@ -33,9 +26,9 @@ public class Render(Player player)
         for (var y = yMinBound; y < boundaries.HorizontalMax; y++)
         {
             Console.SetCursorPosition(GameWorld.VerticalMin, y);
-            Console.Write(char.ConvertFromUtf32(GameConstants.Border.VerticalBorder));
+            Console.Write(char.ConvertFromUtf32(Border.VerticalBorder));
             Console.SetCursorPosition(boundaries.VerticalMax, y);
-            Console.Write(char.ConvertFromUtf32(GameConstants.Border.VerticalBorder));
+            Console.Write(char.ConvertFromUtf32(Border.VerticalBorder));
         }
     }
 
@@ -45,24 +38,24 @@ public class Render(Player player)
         for (var x = xMinBound; x < boundaries.VerticalMax; x++)
         {
             Console.SetCursorPosition(x, GameWorld.HorizontalMin);
-            Console.Write(char.ConvertFromUtf32(GameConstants.Border.HorizontalBorder));
+            Console.Write(char.ConvertFromUtf32(Border.HorizontalBorder));
             Console.SetCursorPosition(x, boundaries.HorizontalMax);
-            Console.Write(char.ConvertFromUtf32(GameConstants.Border.HorizontalBorder));
+            Console.Write(char.ConvertFromUtf32(Border.HorizontalBorder));
         }
     }
 
     private static void DrawCorners(GameWorld boundaries)
     {
         Console.SetCursorPosition(GameWorld.VerticalMin, GameWorld.HorizontalMin);
-        Console.Write(char.ConvertFromUtf32(GameConstants.Border.LeftUpperCorner));
+        Console.Write(char.ConvertFromUtf32(Border.LeftUpperCorner));
 
         Console.SetCursorPosition(boundaries.VerticalMax, GameWorld.HorizontalMin);
-        Console.Write(char.ConvertFromUtf32(GameConstants.Border.RightUpperCorner));
+        Console.Write(char.ConvertFromUtf32(Border.RightUpperCorner));
 
         Console.SetCursorPosition(GameWorld.VerticalMin, boundaries.HorizontalMax);
-        Console.Write(char.ConvertFromUtf32(GameConstants.Border.LeftLowerCorner));
+        Console.Write(char.ConvertFromUtf32(Border.LeftLowerCorner));
 
         Console.SetCursorPosition(boundaries.VerticalMax, boundaries.HorizontalMax);
-        Console.Write(char.ConvertFromUtf32(GameConstants.Border.RightLowerCorner));
+        Console.Write(char.ConvertFromUtf32(Border.RightLowerCorner));
     }
 }

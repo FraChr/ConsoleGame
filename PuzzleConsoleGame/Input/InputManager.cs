@@ -4,7 +4,6 @@ using PuzzleConsoleGame.Entities;
 
 namespace PuzzleConsoleGame.Input;
 
-using static GameConstants;
 
 public class InputManager
 {
@@ -33,6 +32,18 @@ public class InputManager
                 break;
             case ConsoleKey.D:
                 newPosition = currentPlayerPosition.Move(deltaX: Movement.MovePositive);
+                break;
+            case ConsoleKey.UpArrow:
+                newPosition = currentPlayerPosition.Rotate(Direction.Up);
+                break;
+            case ConsoleKey.DownArrow:
+                newPosition = currentPlayerPosition.Rotate(Direction.Down);
+                break;
+            case ConsoleKey.LeftArrow:
+                newPosition = currentPlayerPosition.Rotate(Direction.Left);
+                break;
+            case ConsoleKey.RightArrow:
+                newPosition = currentPlayerPosition.Rotate(Direction.Right);
                 break;
             case ConsoleKey.Q:
                 Console.Clear();

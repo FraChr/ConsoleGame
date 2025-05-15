@@ -3,8 +3,6 @@ using PuzzleConsoleGame.Entities;
 
 namespace PuzzleConsoleGame.Core;
 
-using static GameConstants;
-
 public class GameWorld(int verticalMax, int horizontalMax)
 {
     public const int VerticalMin = Boundaries.GameBoundsVerticalMin;
