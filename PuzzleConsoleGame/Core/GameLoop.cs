@@ -1,74 +1,94 @@
 ﻿using PuzzleConsoleGame.Config;
 using PuzzleConsoleGame.Entities;
 using PuzzleConsoleGame.Entities.Items;
-using PuzzleConsoleGame.Input;
 using PuzzleConsoleGame.Rendering;
 
 namespace PuzzleConsoleGame.Core;
-
-
 
 public class GameLoop
 {
     private Player _player;
 
     private readonly GameWorld _gameArea;
-    private readonly InputManager _inputManager;
     private readonly Render _render;
 
     private readonly CollisionManager _collisionManager;
 
-    private Coin _coin;
-    
-    private const bool Running = true;
+    private readonly ItemManager _itemManager;
+
+    private bool _running = true;
+    private int _score;
+    private readonly Input _input;
 
     public GameLoop()
     {
-        _gameArea = new GameWorld(Boundaries.GameBoundsHorizontalMax, Boundaries.GameBoundsVerticalMax);
+        _gameArea = new GameWorld(Boundaries.GameBoundsVerticalMax, Boundaries.GameBoundsHorizontalMax);
+        _itemManager = new ItemManager(_gameArea);
         _player = new Player(PlayerStart.PlayerStartPosHoriz, PlayerStart.PlayerStartPosVert);
-        _inputManager = new InputManager(_gameArea);
         _render = new Render();
-        _collisionManager = new CollisionManager();
-        _coin = new Coin(12, 10);
+        _collisionManager = new CollisionManager(_itemManager);
+        _input = new Input(_player, _render, _gameArea);
     }
 
     public void Run()
     {
-        InitGame();
-        while (Running)
+        try
         {
-            HandleInput();
-            Update();
-            RenderFrame();
+            InitGame();
+            while (_running)
+            {
+                _player = _input.HandleInput();
+                Update();
+                RenderFrame();
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error: Unhandled Exception - {e.Message}");
+            Console.WriteLine(e.StackTrace);
+        }
+        finally
+        {
+            CleanUp();
+            Console.WriteLine("Game Exited");
         }
     }
 
-    private void HandleInput()
+    private void CleanUp()
     {
-        var nextPlayer = _inputManager.PlayerControls(_player);
-        if (nextPlayer == _player) return;
-        _render.Draw(_player, PlayerData.Remove);
-        _player = nextPlayer;
+        _running = false;
+        Environment.Exit(-1);
     }
 
     private void Update()
     {
-        _collisionManager.CheckInteraction(_player, _coin);
+        foreach (var interactable in _itemManager.GetSpawnedItems())
+        {
+            _collisionManager.CheckInteraction(_player, interactable);
+            if (interactable.IsCollected)
+            {
+                _score += interactable.Value;
+            }
+        }
     }
 
     private void RenderFrame()
     {
-        if (!_coin.IsCollected)
-        {
-            _render.Draw(_coin);
-        }
         _render.Draw(_player);
+        Console.SetCursorPosition(60, 5);
+        Console.Write($"score {_score}");
     }
 
     private void InitGame()
     {
         _render.DrawBoundaries(_gameArea);
+        _itemManager.SpawnItems<Coin>();
+        foreach (var item in _itemManager.GetSpawnedItems())
+        {
+            _render.Draw(item);
+        }
+
+
         RenderFrame();
     }
-    
 }

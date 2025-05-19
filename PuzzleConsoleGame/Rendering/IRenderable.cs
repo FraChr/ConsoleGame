@@ -1,8 +1,8 @@
-﻿namespace PuzzleConsoleGame.Rendering;
+﻿using PuzzleConsoleGame.Core;
 
-public interface IRenderable
-{
-    int XPosition { get; set; }
-    int YPosition { get; set; }
+namespace PuzzleConsoleGame.Rendering;
+
+public interface IRenderable : IPositioned
+{ 
     char Symbol { get; set; }
 }

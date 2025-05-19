@@ -25,7 +25,7 @@ public class Render
         const int yMinBound = GameWorld.HorizontalMin + 1;
         for (var y = yMinBound; y < boundaries.HorizontalMax; y++)
         {
-            Console.SetCursorPosition(GameWorld.VerticalMin, y);
+            Console.SetCursorPosition( GameWorld.VerticalMin, y);
             Console.Write(char.ConvertFromUtf32(Border.VerticalBorder));
             Console.SetCursorPosition(boundaries.VerticalMax, y);
             Console.Write(char.ConvertFromUtf32(Border.VerticalBorder));
@@ -37,7 +37,7 @@ public class Render
         const int xMinBound = GameWorld.VerticalMin + 1;
         for (var x = xMinBound; x < boundaries.VerticalMax; x++)
         {
-            Console.SetCursorPosition(x, GameWorld.HorizontalMin);
+            Console.SetCursorPosition(x,GameWorld.HorizontalMin);
             Console.Write(char.ConvertFromUtf32(Border.HorizontalBorder));
             Console.SetCursorPosition(x, boundaries.HorizontalMax);
             Console.Write(char.ConvertFromUtf32(Border.HorizontalBorder));

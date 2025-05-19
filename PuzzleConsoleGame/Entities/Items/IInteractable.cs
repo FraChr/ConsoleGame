@@ -1,10 +1,12 @@
-﻿namespace PuzzleConsoleGame.Entities;
+﻿using PuzzleConsoleGame.Core;
+using PuzzleConsoleGame.Rendering;
 
-public interface IInteractable
+namespace PuzzleConsoleGame.Entities.Items;
+
+public interface IInteractable : IRenderable
 {
-    int XPosition { get; set; }
-    int YPosition { get; set; }
     bool IsCollected { get; set; }
+    int Value { get; set; }
 
     void Interact();
 }

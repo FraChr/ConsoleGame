@@ -1,6 +1,8 @@
-﻿namespace PuzzleConsoleGame.Entities;
+﻿using PuzzleConsoleGame.Entities.Items;
 
-public class CollisionManager
+namespace PuzzleConsoleGame.Entities;
+
+public class CollisionManager(ItemManager itemManager)
 {
     public void CheckInteraction(Player player, IInteractable interactable)
     {
@@ -9,6 +11,11 @@ public class CollisionManager
             player.YPosition == interactable.YPosition)
         {
             interactable.Interact();
+        }
+
+        if (interactable.IsCollected)
+        {
+            itemManager.RemoveItem(interactable);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using PuzzleConsoleGame.Config;
+using PuzzleConsoleGame.Core;
 using PuzzleConsoleGame.Rendering;
 
 namespace PuzzleConsoleGame.Entities;
@@ -18,11 +19,17 @@ public class Player : IRenderable
         Symbol = GetDirectionSymbol(facing);
     }
 
-    public void Shoot()
+
+    public Player Move(int deltaX = Movement.NoMove, int deltaY = Movement.NoMove)
     {
-        
+        return new Player(XPosition + deltaX, YPosition + deltaY, Facing);
     }
-    
+
+    public Player Rotate(Direction newDirection)
+    {
+        return new Player(XPosition, YPosition, newDirection);
+    }
+
     private char GetDirectionSymbol(Direction direction)
     {
         return direction switch
@@ -33,16 +40,5 @@ public class Player : IRenderable
             Direction.Right => PlayerData.CharacterRight,
             _ => PlayerData.CharacterDefault
         };
-    }
-
-
-    public Player Move(int deltaX = Movement.NoMove, int deltaY = Movement.NoMove)
-    {
-        return new Player(XPosition + deltaX, YPosition + deltaY, Facing);
-    }
-
-    public Player Rotate(Direction newDirection)
-    {
-        return new Player(XPosition, YPosition, newDirection);
     }
 }
