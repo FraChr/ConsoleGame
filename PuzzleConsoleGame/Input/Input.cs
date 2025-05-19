@@ -1,9 +1,8 @@
 ﻿using PuzzleConsoleGame.Config;
+using PuzzleConsoleGame.Core;
 using PuzzleConsoleGame.Entities;
-using PuzzleConsoleGame.Input;
 using PuzzleConsoleGame.Rendering;
-
-namespace PuzzleConsoleGame.Core;
+namespace PuzzleConsoleGame.Input;
 
 public class Input(Player player, Render render, GameWorld gameWorld)
 {

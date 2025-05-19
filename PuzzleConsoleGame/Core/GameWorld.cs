@@ -16,15 +16,4 @@ public class GameWorld( int horizontalMax, int verticalMax)
                entity.YPosition > HorizontalMin &&
                entity.YPosition < HorizontalMax;
     }
-
-    // public void SpawnItem(IPositioned entity)
-    // {
-    //     var random = new Random();
-    //
-    //     var y = random.Next(HorizontalMin + 1, HorizontalMax);
-    //     var x = random.Next(VerticalMin + 1, VerticalMax);
-    //
-    //     entity.XPosition = x;
-    //     entity.YPosition = y;
-    // }
 }

@@ -1,6 +1,4 @@
-﻿using PuzzleConsoleGame;
-using PuzzleConsoleGame.Core;
-using PuzzleConsoleGame.Entities;
+﻿using PuzzleConsoleGame.Core;
 
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 

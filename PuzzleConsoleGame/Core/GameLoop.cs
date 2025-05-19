@@ -20,7 +20,7 @@ public class GameLoop
     private bool _running = true;
     private bool _paused = false;
     private int _score;
-    private readonly Input _input;
+    private readonly Input.Input _input;
 
     // private Enemy _enemy;
 
@@ -31,7 +31,7 @@ public class GameLoop
         _player = new Player(PlayerStart.PlayerStartPosHoriz, PlayerStart.PlayerStartPosVert);
         _render = new Render();
         _collisionManager = new CollisionManager(_itemManager);
-        _input = new Input(_player, _render, _gameArea);
+        _input = new Input.Input(_player, _render, _gameArea);
         // _enemy = new Enemy(EnemyData.StartPositionHorizontal, EnemyData.StartPositionVertical, _gameArea, _player);
     }
 
