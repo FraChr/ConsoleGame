@@ -1,55 +1,19 @@
 ﻿using PuzzleConsoleGame.Config;
-using PuzzleConsoleGame.Core;
-using PuzzleConsoleGame.Entities;
 
 namespace PuzzleConsoleGame.Input;
 
 public class InputManager
 {
-    private readonly GameWorld _gameArea;
-
-    public InputManager(GameWorld gameArea)
+    private static readonly Dictionary<ConsoleKey, (int dx, int dy)> MovementMap = new()
     {
-        _gameArea = gameArea;
-    }
+        { ConsoleKey.W, (Movement.NoMove, Movement.MoveNegative) },
+        { ConsoleKey.S, (Movement.NoMove, Movement.MovePositive) },
+        { ConsoleKey.A, (Movement.MoveNegative, Movement.NoMove) },
+        { ConsoleKey.D, (Movement.MovePositive, Movement.NoMove) },
+    };
 
-    public Player PlayerControls(Player currentPlayerPosition)
+    public (int dx, int dy)? GetMovement(ConsoleKey key)
     {
-        var key = Console.ReadKey(true).Key;
-        var newPosition = currentPlayerPosition;
-
-        switch (key)
-        {
-            case ConsoleKey.W:
-                newPosition = currentPlayerPosition.Move(deltaY: Movement.MoveNegative);
-                break;
-            case ConsoleKey.S:
-                newPosition = currentPlayerPosition.Move(deltaY: Movement.MovePositive);
-                break;
-            case ConsoleKey.A:
-                newPosition = currentPlayerPosition.Move(deltaX: Movement.MoveNegative);
-                break;
-            case ConsoleKey.D:
-                newPosition = currentPlayerPosition.Move(deltaX: Movement.MovePositive);
-                break;
-            case ConsoleKey.UpArrow:
-                newPosition = currentPlayerPosition.Rotate(Direction.Up);
-                break;
-            case ConsoleKey.DownArrow:
-                newPosition = currentPlayerPosition.Rotate(Direction.Down);
-                break;
-            case ConsoleKey.LeftArrow:
-                newPosition = currentPlayerPosition.Rotate(Direction.Left);
-                break;
-            case ConsoleKey.RightArrow:
-                newPosition = currentPlayerPosition.Rotate(Direction.Right);
-                break;
-            case ConsoleKey.Q:
-                Console.Clear();
-                Environment.Exit(0);
-                break;
-        }
-
-        return _gameArea.IsInBounds(newPosition) ? newPosition : currentPlayerPosition;
+        return MovementMap.TryGetValue(key, out var delta) ? delta : null;
     }
 }

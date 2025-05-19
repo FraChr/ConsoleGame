@@ -1,5 +1,4 @@
 ﻿using PuzzleConsoleGame.Config;
-using PuzzleConsoleGame.Entities;
 
 namespace PuzzleConsoleGame.Core;
 

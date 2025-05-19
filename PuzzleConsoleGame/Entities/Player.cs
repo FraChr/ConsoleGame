@@ -1,36 +1,31 @@
 ﻿using PuzzleConsoleGame.Config;
-using PuzzleConsoleGame.Core;
 using PuzzleConsoleGame.Rendering;
 
 namespace PuzzleConsoleGame.Entities;
 
-public class Player : IRenderable
+public class Player(int xPosition, int yPosition, Direction facing = Direction.Up)
+    : IRenderable
 {
-    public int XPosition { get; set; }
-    public int YPosition { get; set; }
-    public char Symbol { get; set; }
-    private Direction Facing { get; }
+    public int XPosition { get; set; } = xPosition;
+    public int YPosition { get; set; } = yPosition;
+    public char Symbol { get; set; } = GetDirectionSymbol(facing);
 
-    public Player(int xPosition, int yPosition, Direction facing = Direction.Up)
+    public void Move(int deltaX = Movement.NoMove, int deltaY = Movement.NoMove)
     {
-        XPosition = xPosition;
-        YPosition = yPosition;
-        Facing = facing;
-        Symbol = GetDirectionSymbol(facing);
+        if(deltaX == Movement.MovePositive) Rotate(Direction.Right);
+        else if(deltaX == Movement.MoveNegative) Rotate(Direction.Left);
+        else if(deltaY == Movement.MoveNegative) Rotate(Direction.Up);
+        else if(deltaY == Movement.MovePositive) Rotate(Direction.Down);
+        XPosition += deltaX;
+        YPosition += deltaY;
     }
 
-
-    public Player Move(int deltaX = Movement.NoMove, int deltaY = Movement.NoMove)
+    private void Rotate(Direction newDirection)
     {
-        return new Player(XPosition + deltaX, YPosition + deltaY, Facing);
+        Symbol = GetDirectionSymbol(newDirection);
     }
 
-    public Player Rotate(Direction newDirection)
-    {
-        return new Player(XPosition, YPosition, newDirection);
-    }
-
-    private char GetDirectionSymbol(Direction direction)
+    private static char GetDirectionSymbol(Direction direction)
     {
         return direction switch
         {

@@ -5,6 +5,13 @@ public static class GameSymbols
     public const char Remove = ' ';
 }
 
+public static class EnemyData
+{
+    public const char EnemyCharacter = 'O';
+    public const int StartPositionHorizontal = 3;
+    public const int StartPositionVertical = 4;
+}
+
 public static class PlayerData
 {
     public const char CharacterDefault = '^';
@@ -31,7 +38,7 @@ public static class Boundaries
 {
     public const int GameBoundsHorizontalMax = 50;
     public const int GameBoundsVerticalMax = 12;
-    public const int GameBoundsHorizontalMin = 0;
+    public const int GameBoundsHorizontalMin = 1;
     public const int GameBoundsVerticalMin = 0;
 }
 
@@ -49,4 +56,10 @@ public static class Border
     public const int RightUpperCorner = 0x2510;
     public const int LeftLowerCorner = 0x2514;
     public const int RightLowerCorner = 0x2518;
+}
+
+public static class Ui
+{
+    public const int HorizontalPosition = 2;
+    public const int VerticalPosition = 0;
 }

@@ -12,7 +12,6 @@ public class Render
         Console.Write(overrideChar ?? obj.Symbol);
     }
 
-
     public void DrawBoundaries(GameWorld boundaries)
     {
         DrawVerticalBorder(boundaries);
@@ -20,7 +19,13 @@ public class Render
         DrawCorners(boundaries);
     }
 
-    private static void DrawVerticalBorder(GameWorld boundaries)
+    public void DrawScore(int score)
+    {
+        Console.SetCursorPosition(Ui.HorizontalPosition, Ui.VerticalPosition);
+        Console.Write($"score {score}");
+    }
+
+private static void DrawVerticalBorder(GameWorld boundaries)
     {
         const int yMinBound = GameWorld.HorizontalMin + 1;
         for (var y = yMinBound; y < boundaries.HorizontalMax; y++)

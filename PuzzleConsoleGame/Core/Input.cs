@@ -7,17 +7,32 @@ namespace PuzzleConsoleGame.Core;
 
 public class Input(Player player, Render render, GameWorld gameWorld)
 {
-    private Player _player = player;
-    private readonly InputManager _inputManager = new(gameWorld);
+    private readonly InputManager _inputManager = new();
     
-    public Player HandleInput()
+    public void HandleInput()
     {
-        var nextPlayer = _inputManager.PlayerControls(_player);
-        if (nextPlayer == _player) return _player;
-        render.Draw(_player, PlayerData.Remove);
-        _player = nextPlayer;
+        var key = Console.ReadKey(true).Key;
+        
+        var movement = _inputManager.GetMovement(key);
 
-        return _player;
+        if (key == ConsoleKey.Q)
+        {
+            Console.Clear();
+            Environment.Exit(0);
+        }
+        
+        var previousXPosition = player.XPosition;
+        var previousYPosition = player.YPosition;
+
+        if (movement != null)
+        {
+            var newPoint = new RenderPoint(player.XPosition + movement.Value.dx, player.YPosition + movement.Value.dy);
+            if (gameWorld.IsInBounds(newPoint))
+            {
+                player.Move(movement.Value.dx, movement.Value.dy);
+            }
+        }
+        
+        render.Draw(new RenderPoint(previousXPosition, previousYPosition), PlayerData.Remove);
     }
-    
 }
