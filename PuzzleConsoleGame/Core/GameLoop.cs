@@ -18,7 +18,6 @@ public class GameLoop
     private readonly ItemManager _itemManager;
 
     private bool _running = true;
-    private bool _paused = false;
     private int _score;
     private readonly Input.Input _input;
 
@@ -46,12 +45,6 @@ public class GameLoop
             while (_running)
             {
                 _input.HandleInput();
-
-                if (_paused)
-                {
-                    Thread.Sleep(100);
-                    continue;
-                }
                 
                 Update();
                 RenderFrame();
