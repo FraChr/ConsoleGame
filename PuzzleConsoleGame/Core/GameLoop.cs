@@ -29,7 +29,7 @@ public class GameLoop
         _render = new Render();
         _collisionManager = new CollisionManager(_itemManager);
         _input = new Input.Input(_player, _render, _gameArea);
-        _gameEnvironment = new GameEnvironment(_render, _gameArea, _player);
+        _gameEnvironment = new GameEnvironment(_render, _gameArea, _player, _itemManager);
     }
 
     public void Run()
@@ -83,6 +83,7 @@ public class GameLoop
     {
         _render.Draw(_player);
         _render.DrawScore(_score);
+        
     }
 
     private void InitGame()

@@ -11,7 +11,16 @@ public class Input(Player player, Render render, GameWorld gameWorld)
     public void HandleInput()
     {
         var key = Console.ReadKey(true).Key;
-        
+
+
+        var action = _inputManager.GetAction(key);
+
+        if (action != null)
+        {
+            action();
+        }
+
+
         var movement = _inputManager.GetMovement(key);
 
         if (key == ConsoleKey.Q)

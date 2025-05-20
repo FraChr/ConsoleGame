@@ -5,7 +5,7 @@ namespace PuzzleConsoleGame.Entities.Items;
 
 
 
-public class Coin : IRenderable, IInteractable
+public class Coin : IInteractable
 {
     public int XPosition { get; set; }
     public int YPosition { get; set; }

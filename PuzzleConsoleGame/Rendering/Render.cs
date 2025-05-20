@@ -31,9 +31,9 @@ private static void DrawVerticalBorder(GameWorld boundaries)
         for (var y = yMinBound; y < boundaries.HorizontalMax; y++)
         {
             Console.SetCursorPosition( GameWorld.VerticalMin, y);
-            Console.Write(char.ConvertFromUtf32(Border.VerticalBorder));
+            Console.Write(Border.VerticalBorder);
             Console.SetCursorPosition(boundaries.VerticalMax, y);
-            Console.Write(char.ConvertFromUtf32(Border.VerticalBorder));
+            Console.Write(Border.VerticalBorder);
         }
     }
 
@@ -43,9 +43,9 @@ private static void DrawVerticalBorder(GameWorld boundaries)
         for (var x = xMinBound; x < boundaries.VerticalMax; x++)
         {
             Console.SetCursorPosition(x,GameWorld.HorizontalMin);
-            Console.Write(char.ConvertFromUtf32(Border.HorizontalBorder));
+            Console.Write(Border.HorizontalBorder);
             Console.SetCursorPosition(x, boundaries.HorizontalMax);
-            Console.Write(char.ConvertFromUtf32(Border.HorizontalBorder));
+            Console.Write(Border.HorizontalBorder);
         }
     }
 
@@ -55,12 +55,12 @@ private static void DrawVerticalBorder(GameWorld boundaries)
         Console.Write(char.ConvertFromUtf32(Border.LeftUpperCorner));
 
         Console.SetCursorPosition(boundaries.VerticalMax, GameWorld.HorizontalMin);
-        Console.Write(char.ConvertFromUtf32(Border.RightUpperCorner));
+        Console.Write(Border.RightUpperCorner);
 
         Console.SetCursorPosition(GameWorld.VerticalMin, boundaries.HorizontalMax);
-        Console.Write(char.ConvertFromUtf32(Border.LeftLowerCorner));
+        Console.Write(Border.LeftLowerCorner);
 
         Console.SetCursorPosition(boundaries.VerticalMax, boundaries.HorizontalMax);
-        Console.Write(char.ConvertFromUtf32(Border.RightLowerCorner));
+        Console.Write(Border.RightLowerCorner);
     }
 }

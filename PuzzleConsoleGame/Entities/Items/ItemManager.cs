@@ -16,14 +16,12 @@ public class ItemManager(GameWorld gameWorld)
     {
         var itemType = typeof(T);
 
-        if (!_maxItemsPerType.ContainsKey(itemType))
+        if (!_maxItemsPerType.TryGetValue(itemType, out var maxAllowed))
         {
             return;
         }
 
-        int currentCount = _spawnedItems.Count(i => i is T);
-        int maxAllowed = _maxItemsPerType[itemType];
-
+        var currentCount = _spawnedItems.Count(i => i is T);
         for (var i = currentCount; i < maxAllowed; i++)
         {
             var item = new T();

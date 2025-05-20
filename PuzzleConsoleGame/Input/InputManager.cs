@@ -4,7 +4,7 @@ namespace PuzzleConsoleGame.Input;
 
 public class InputManager
 {
-    private static readonly Dictionary<ConsoleKey, (int dx, int dy)> MovementMap = new()
+    private readonly Dictionary<ConsoleKey, (int dx, int dy)> _movementMap = new()
     {
         { ConsoleKey.W, (Movement.NoMove, Movement.MoveNegative) },
         { ConsoleKey.S, (Movement.NoMove, Movement.MovePositive) },
@@ -12,8 +12,34 @@ public class InputManager
         { ConsoleKey.D, (Movement.MovePositive, Movement.NoMove) },
     };
 
+    private readonly Dictionary<ConsoleKey, Action> _actionMap;
+
+    public InputManager()
+    {
+        _actionMap = new Dictionary<ConsoleKey, Action>
+        {
+            { ConsoleKey.Spacebar, Shoot }
+        };
+    }
+
     public (int dx, int dy)? GetMovement(ConsoleKey key)
     {
-        return MovementMap.TryGetValue(key, out var delta) ? delta : null;
+        return _movementMap.TryGetValue(key, out var delta) ? delta : null;
+    }
+
+    public Action? GetAction(ConsoleKey key)
+    {
+        return _actionMap.TryGetValue(key, out var action) ? action : null;
+    }
+
+    public void Shoot()
+    {
+        string sound = "pew pew";
+        Console.SetCursorPosition(12, 0);
+        Console.Write(sound);
+        Thread.Sleep(300);
+        Console.SetCursorPosition(12, 0);
+        Console.Write(new string(' ', sound.Length));
     }
 }
+

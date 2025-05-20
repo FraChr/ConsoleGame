@@ -7,23 +7,24 @@ public static class GameSymbols
 
 public static class EnemyData
 {
-    public const char EnemyCharacter = 'O';
+    public const char EnemyCharacter = '\u2622';
     public const int StartPositionHorizontal = 3;
     public const int StartPositionVertical = 4;
 }
 
 public static class PlayerData
 {
-    public const char CharacterDefault = '^';
-    public const char CharacterLeft = '<';
-    public const char CharacterRight = '>';
-    public const char CharacterDown = 'v';
+    public const char CharacterDefault = '\u25B2';
+    public const char CharacterDown = '\u25BC';
+    public const char CharacterLeft = '\u25C0';
+    public const char CharacterRight = '\u25B6';
+
     public static char Remove => GameSymbols.Remove;
 }
 
 public static class ItemData
 {
-    public const char Coin = '●';
+    public const char Coin = '\u25CF';
     public static char Remove => GameSymbols.Remove;
 }
 
@@ -50,12 +51,12 @@ public static class PlayerStart
 
 public static class Border
 {
-    public const int VerticalBorder = 0x2502;
-    public const int HorizontalBorder = 0x2500;
-    public const int LeftUpperCorner = 0x250C;
-    public const int RightUpperCorner = 0x2510;
-    public const int LeftLowerCorner = 0x2514;
-    public const int RightLowerCorner = 0x2518;
+    public const char VerticalBorder = '\u2502';
+    public const char HorizontalBorder = '\u2500';
+    public const char LeftUpperCorner = '\u250C';
+    public const char RightUpperCorner = '\u2510';
+    public const char LeftLowerCorner = '\u2514';
+    public const char RightLowerCorner = '\u2518';
 }
 
 public static class Ui
