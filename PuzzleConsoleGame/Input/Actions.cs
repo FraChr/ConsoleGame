@@ -19,16 +19,5 @@ public class Actions
     {
         var bullet = new Bullet(_player);
         GameState.Bullets.Add(bullet);
-        // _render.Draw(bullet, ' ');
-        // bullet.Move();
-        // _render.Draw(bullet);
-
-
-        // string sound = "pew pew";
-        // Console.SetCursorPosition(12, 0);
-        // Console.Write(sound);
-        // Thread.Sleep(300);
-        // Console.SetCursorPosition(12, 0);
-        // Console.Write(new string(' ', sound.Length));
     }
 }

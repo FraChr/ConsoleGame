@@ -8,34 +8,51 @@ namespace PuzzleConsoleGame.Core;
 
 public class GameLoop
 {
-    private readonly Player _player;
-
-    private readonly GameWorld _gameArea;
-    private readonly Render _render;
-
-    private readonly CollisionManager _collisionManager;
-
-    private readonly ItemManager _itemManager;
-
+    // private readonly Player _player;
+    //
+    // private readonly GameWorld _gameArea;
+    // private readonly Render _render;
+    //
+    // private readonly CollisionManager _collisionManager;
+    //
+    // private readonly ItemManager _itemManager;
+    //
     private bool _running = true;
     private int _score;
+    // private readonly Input.Input _input;
+    // private readonly GameEnvironment _gameEnvironment;
+    //
+    // private readonly Actions _actions;
+    
+    private readonly Player _player;
+    private readonly GameWorld _gameWorld;
+    private readonly Render _render;
+    private readonly CollisionManager _collisionManager;
+    private readonly ItemManager _itemManager;
     private readonly Input.Input _input;
     private readonly GameEnvironment _gameEnvironment;
-    
-    private Actions _actions;
+    private readonly Actions _actions;
 
-    public GameLoop()
+    public GameLoop(Player player, GameWorld gameWorld, Render render, CollisionManager collisionManager, ItemManager itemManager, Input.Input input, GameEnvironment gameEnvironment, Actions actions)
     {
-        _gameArea = new GameWorld(Boundaries.GameBoundsVerticalMax, Boundaries.GameBoundsHorizontalMax);
-        _itemManager = new ItemManager(_gameArea);
-        _player = new Player(PlayerStart.PlayerStartPosHoriz, PlayerStart.PlayerStartPosVert);
-        _render = new Render();
-        _collisionManager = new CollisionManager(_itemManager);
-        
-        _actions = new Actions(_player, _render);
-        _input = new Input.Input(_player, _render, _gameArea, _actions);
-        
-        _gameEnvironment = new GameEnvironment(_render, _gameArea, _player, _itemManager, _actions);
+        // _gameArea = new GameWorld(Boundaries.GameBoundsVerticalMax, Boundaries.GameBoundsHorizontalMax);
+        // _itemManager = new ItemManager(_gameArea);
+        // _player = new Player(PlayerStart.PlayerStartPosHoriz, PlayerStart.PlayerStartPosVert);
+        // _render = new Render();
+        // _collisionManager = new CollisionManager(_itemManager);
+        //
+        // _actions = new Actions(_player, _render);
+        // _input = new Input.Input(_player, _render, _gameArea, _actions);
+        //
+        // _gameEnvironment = new GameEnvironment(_render, _gameArea, _player, _itemManager, _actions);
+        _player = player;
+        _gameWorld = gameWorld;
+        _render = render;
+        _collisionManager = collisionManager;
+        _itemManager = itemManager;
+        _input = input;
+        _gameEnvironment = gameEnvironment;
+        _actions = actions;
         
     }
 
@@ -95,7 +112,7 @@ public class GameLoop
 
     private void InitGame()
     {
-        _render.DrawBoundaries(_gameArea);
+        _render.DrawBoundaries(_gameWorld);
         _itemManager.SpawnItems<Coin>();
         foreach (var item in _itemManager.GetSpawnedItems())
         {

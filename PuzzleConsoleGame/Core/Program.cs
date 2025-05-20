@@ -2,5 +2,6 @@
 
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-
-new GameLoop().Run();
+var game = new Initializer().Initialize();
+game.Run();
+// new GameLoop().Run();

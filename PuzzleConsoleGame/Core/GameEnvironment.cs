@@ -2,7 +2,6 @@
 using PuzzleConsoleGame.Entities;
 using PuzzleConsoleGame.Entities.Enemy;
 using PuzzleConsoleGame.Entities.Items;
-using PuzzleConsoleGame.Entities.Weapon;
 using PuzzleConsoleGame.Input;
 using PuzzleConsoleGame.Rendering;
 
@@ -31,7 +30,7 @@ public class GameEnvironment
     {
         while (!token.IsCancellationRequested)
         {
-            // MoveEnemy(_enemy);
+            MoveEnemy(_enemy);
             KeepCoin();
             MoveBullet();
             await Task.Delay(500);
@@ -40,15 +39,12 @@ public class GameEnvironment
 
     private void MoveBullet()
     {
-        // var activeBullets = new List<Bullet>();
         foreach (var bullet in GameState.Bullets)
         {
             _render.Draw(bullet, ' ');
             bullet.Move();
             _render.Draw(bullet);
         }
-
-        
     }
     
     private void MoveEnemy(Enemy enemy)
