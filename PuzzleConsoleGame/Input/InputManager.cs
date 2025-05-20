@@ -42,4 +42,3 @@ public class InputManager
         Console.Write(new string(' ', sound.Length));
     }
 }
-
