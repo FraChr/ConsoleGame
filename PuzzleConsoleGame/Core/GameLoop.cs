@@ -1,6 +1,7 @@
 ﻿using PuzzleConsoleGame.Config;
 using PuzzleConsoleGame.Entities;
 using PuzzleConsoleGame.Entities.Items;
+using PuzzleConsoleGame.Input;
 using PuzzleConsoleGame.Rendering;
 
 namespace PuzzleConsoleGame.Core;
@@ -20,6 +21,8 @@ public class GameLoop
     private int _score;
     private readonly Input.Input _input;
     private readonly GameEnvironment _gameEnvironment;
+    
+    private Actions _actions;
 
     public GameLoop()
     {
@@ -28,8 +31,12 @@ public class GameLoop
         _player = new Player(PlayerStart.PlayerStartPosHoriz, PlayerStart.PlayerStartPosVert);
         _render = new Render();
         _collisionManager = new CollisionManager(_itemManager);
-        _input = new Input.Input(_player, _render, _gameArea);
-        _gameEnvironment = new GameEnvironment(_render, _gameArea, _player, _itemManager);
+        
+        _actions = new Actions(_player, _render);
+        _input = new Input.Input(_player, _render, _gameArea, _actions);
+        
+        _gameEnvironment = new GameEnvironment(_render, _gameArea, _player, _itemManager, _actions);
+        
     }
 
     public void Run()

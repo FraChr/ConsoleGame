@@ -22,6 +22,11 @@ public static class PlayerData
     public static char Remove => GameSymbols.Remove;
 }
 
+public static class WeaponData
+{
+    public const char Bullet = '*';
+}
+
 public static class ItemData
 {
     public const char Coin = '\u25CF';

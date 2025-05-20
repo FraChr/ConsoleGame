@@ -1,4 +1,5 @@
 ﻿using PuzzleConsoleGame.Config;
+using PuzzleConsoleGame.Entities.Weapon;
 
 namespace PuzzleConsoleGame.Input;
 
@@ -13,12 +14,15 @@ public class InputManager
     };
 
     private readonly Dictionary<ConsoleKey, Action> _actionMap;
+    private readonly Actions _actions;
 
-    public InputManager()
+    public InputManager(Actions actions)
     {
+        _actions = actions;
+        // _actions = new Actions();
         _actionMap = new Dictionary<ConsoleKey, Action>
         {
-            { ConsoleKey.Spacebar, Shoot }
+            { ConsoleKey.Spacebar, _actions.Shoot }
         };
     }
 
@@ -30,15 +34,5 @@ public class InputManager
     public Action? GetAction(ConsoleKey key)
     {
         return _actionMap.TryGetValue(key, out var action) ? action : null;
-    }
-
-    public void Shoot()
-    {
-        string sound = "pew pew";
-        Console.SetCursorPosition(12, 0);
-        Console.Write(sound);
-        Thread.Sleep(300);
-        Console.SetCursorPosition(12, 0);
-        Console.Write(new string(' ', sound.Length));
     }
 }

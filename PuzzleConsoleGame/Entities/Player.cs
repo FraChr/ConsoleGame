@@ -9,6 +9,7 @@ public class Player
     public int XPosition { get; set; }
     public int YPosition { get; set; }
     public char Symbol { get; set; }
+    public Direction Facing { get; private set; }
 
     public Player(int xPosition, int yPosition, Direction facing = Direction.Up)
     {
@@ -29,6 +30,7 @@ public class Player
 
     private void Rotate(Direction newDirection)
     {
+        Facing = newDirection;
         Symbol = GetDirectionSymbol(newDirection);
     }
 
