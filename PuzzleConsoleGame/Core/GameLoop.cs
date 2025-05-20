@@ -1,6 +1,5 @@
 ﻿using PuzzleConsoleGame.Config;
 using PuzzleConsoleGame.Entities;
-using PuzzleConsoleGame.Entities.Enemy;
 using PuzzleConsoleGame.Entities.Items;
 using PuzzleConsoleGame.Rendering;
 
@@ -8,7 +7,7 @@ namespace PuzzleConsoleGame.Core;
 
 public class GameLoop
 {
-    private Player _player;
+    private readonly Player _player;
 
     private readonly GameWorld _gameArea;
     private readonly Render _render;
@@ -20,8 +19,7 @@ public class GameLoop
     private bool _running = true;
     private int _score;
     private readonly Input.Input _input;
-
-    // private Enemy _enemy;
+    private readonly GameEnvironment _gameEnvironment;
 
     public GameLoop()
     {
@@ -31,7 +29,7 @@ public class GameLoop
         _render = new Render();
         _collisionManager = new CollisionManager(_itemManager);
         _input = new Input.Input(_player, _render, _gameArea);
-        // _enemy = new Enemy(EnemyData.StartPositionHorizontal, EnemyData.StartPositionVertical, _gameArea, _player);
+        _gameEnvironment = new GameEnvironment(_render, _gameArea, _player);
     }
 
     public void Run()
@@ -40,12 +38,12 @@ public class GameLoop
         try
         {
             InitGame();
-            
-            var worldTick = Task.Run(() => GameTick(cts.Token), cts.Token);
+
+            var worldTick = Task.Run(() => _gameEnvironment.GameTick(cts.Token), cts.Token);
             while (_running)
             {
                 _input.HandleInput();
-                
+
                 Update();
                 RenderFrame();
             }
@@ -69,18 +67,6 @@ public class GameLoop
         Environment.Exit(-1);
     }
 
-    private async Task GameTick(CancellationToken token)
-    {
-        var enemy = new Enemy(EnemyData.StartPositionHorizontal, EnemyData.StartPositionVertical, _gameArea, _player);
-        while (!token.IsCancellationRequested)
-        {
-            _render.Draw(enemy, ' ');
-            enemy.Move();
-            _render.Draw(enemy);
-            await Task.Delay(500);
-        }
-    }
-        
     private void Update()
     {
         foreach (var interactable in _itemManager.GetSpawnedItems())
@@ -95,7 +81,6 @@ public class GameLoop
 
     private void RenderFrame()
     {
-        
         _render.Draw(_player);
         _render.DrawScore(_score);
     }
