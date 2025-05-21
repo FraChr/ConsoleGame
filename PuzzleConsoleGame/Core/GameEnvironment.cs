@@ -2,6 +2,7 @@
 using PuzzleConsoleGame.Entities;
 using PuzzleConsoleGame.Entities.Enemy;
 using PuzzleConsoleGame.Entities.Items;
+using PuzzleConsoleGame.Entities.Weapon;
 using PuzzleConsoleGame.Input;
 using PuzzleConsoleGame.Rendering;
 
@@ -15,15 +16,18 @@ public class GameEnvironment
     private readonly ItemManager _itemManager;
     private readonly Enemy _enemy;
     private readonly Actions _actions;
+    private readonly BulletManager _bulletManager;
 
-    public GameEnvironment(Render render, GameWorld gameWorld, Player player, ItemManager itemManager, Actions actions)
+    public GameEnvironment(Render render, GameWorld gameWorld, Player player, ItemManager itemManager, Actions actions,
+        BulletManager bulletManager)
     {
         _render = render;
         _gameWorld = gameWorld;
         _player = player;
         _itemManager = itemManager;
-        _enemy = new Enemy(EnemyData.StartPositionHorizontal, EnemyData.StartPositionVertical, _gameWorld, _player);
+        _enemy = new Enemy(EnemyData.StartPositionHorizontal, EnemyData.StartPositionVertical, _player);
         _actions = actions;
+        _bulletManager = bulletManager;
     }
 
     public async Task GameTick(CancellationToken token)
@@ -31,29 +35,19 @@ public class GameEnvironment
         while (!token.IsCancellationRequested)
         {
             MoveEnemy(_enemy);
+            _bulletManager.UpdateAndRenderBullets();
             KeepCoin();
-            MoveBullet();
             await Task.Delay(500);
         }
     }
 
-    private void MoveBullet()
-    {
-        foreach (var bullet in GameState.Bullets)
-        {
-            _render.Draw(bullet, ' ');
-            bullet.Move();
-            _render.Draw(bullet);
-        }
-    }
-    
     private void MoveEnemy(Enemy enemy)
     {
         _render.Draw(enemy, ' ');
         enemy.Move();
         _render.Draw(enemy);
     }
-    
+
     private void KeepCoin()
     {
         foreach (var spawnedItem in _itemManager.GetSpawnedItems().Where(spawnedItem => !spawnedItem.IsCollected))

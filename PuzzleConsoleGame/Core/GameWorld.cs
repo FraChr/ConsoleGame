@@ -2,18 +2,25 @@
 
 namespace PuzzleConsoleGame.Core;
 
-public class GameWorld( int horizontalMax, int verticalMax)
+public class GameWorld
 {
-    public const int VerticalMin = Boundaries.GameBoundsVerticalMin;
-    public const int HorizontalMin = Boundaries.GameBoundsHorizontalMin;
-    public int VerticalMax { get; set; } = verticalMax;
-    public int HorizontalMax { get; set; } = horizontalMax;
-    
-    public bool IsInBounds(IPositioned entity)
+    public readonly int VerticalMin = Boundaries.GameBoundsVerticalMin;
+    public readonly int HorizontalMin = Boundaries.GameBoundsHorizontalMin;
+    public int VerticalMax { get; set; }
+    public int HorizontalMax { get; set; }
+
+    public GameWorld(int horizontalMax, int verticalMax)
     {
-        return entity.XPosition > VerticalMin &&
-               entity.XPosition < VerticalMax &&
-               entity.YPosition > HorizontalMin &&
-               entity.YPosition < HorizontalMax;
+        VerticalMax = verticalMax;
+        HorizontalMax = horizontalMax;
     }
+
+
+    // public bool IsInBounds(IPositioned entity)
+    // {
+    //     return entity.XPosition > VerticalMin &&
+    //            entity.XPosition < VerticalMax &&
+    //            entity.YPosition > HorizontalMin &&
+    //            entity.YPosition < HorizontalMax;
+    // }
 }

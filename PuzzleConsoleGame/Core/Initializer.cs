@@ -1,6 +1,7 @@
 ﻿using PuzzleConsoleGame.Config;
 using PuzzleConsoleGame.Entities;
 using PuzzleConsoleGame.Entities.Items;
+using PuzzleConsoleGame.Entities.Weapon;
 using PuzzleConsoleGame.Input;
 using PuzzleConsoleGame.Rendering;
 
@@ -10,15 +11,16 @@ public class Initializer
 {
     public GameLoop Initialize()
     {
-        var gameArea = new GameWorld(Boundaries.GameBoundsVerticalMax, Boundaries.GameBoundsHorizontalMax);
-        var itemManager = new ItemManager(gameArea);
+        var gameWorld = new GameWorld(Boundaries.GameBoundsVerticalMax, Boundaries.GameBoundsHorizontalMax);
+        var itemManager = new ItemManager(gameWorld);
         var player = new Player(PlayerStart.PlayerStartPosHoriz, PlayerStart.PlayerStartPosVert);
         var render = new Render();
-        var collisionManager = new CollisionManager(itemManager);
-        var actions = new Actions(player, render);
-        var input = new Input.Input(player, render, gameArea, actions);
-        var gameEnvironment = new GameEnvironment(render, gameArea, player, itemManager, actions);
+        var collisionManager = new CollisionManager(itemManager, gameWorld);
+        var bulletManager = new BulletManager(render, collisionManager);
+        var actions = new Actions(player, render, bulletManager);
+        var input = new Input.Input(player, render, collisionManager, actions);
+        var gameEnvironment = new GameEnvironment(render, gameWorld, player, itemManager, actions, bulletManager);
         
-        return new GameLoop(player, gameArea, render, collisionManager, itemManager, input, gameEnvironment, actions);
+        return new GameLoop(player, gameWorld, render, collisionManager, itemManager, input, gameEnvironment, actions);
     }
 }

@@ -25,6 +25,7 @@ public static class PlayerData
 public static class WeaponData
 {
     public const char Bullet = '*';
+    public static char Remove => GameSymbols.Remove;
 }
 
 public static class ItemData

@@ -44,8 +44,8 @@ public class ItemManager(GameWorld gameWorld)
 
     private void SpawnItem(IPositioned item, List<IPositioned> spawnedItems)
     {
-        var y = _random.Next(GameWorld.HorizontalMin + 1, gameWorld.HorizontalMax);
-        var x = _random.Next(GameWorld.VerticalMin + 1, gameWorld.VerticalMax);
+        var y = _random.Next(gameWorld.HorizontalMin + 1, gameWorld.HorizontalMax);
+        var x = _random.Next(gameWorld.VerticalMin + 1, gameWorld.VerticalMax);
 
         item.XPosition = x;
         item.YPosition = y;

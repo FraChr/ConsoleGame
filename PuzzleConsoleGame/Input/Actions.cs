@@ -7,17 +7,18 @@ namespace PuzzleConsoleGame.Input;
 
 public class Actions
 {
-    private Player _player;
+    private readonly Player _player;
     private Render _render;
-    public Actions(Player player, Render render)
+    private readonly BulletManager _bulletManager;
+    public Actions(Player player, Render render, BulletManager bulletManager)
     {
         _player = player;
         _render = render;
+        _bulletManager = bulletManager;
     }
 
     public void Shoot()
     {
-        var bullet = new Bullet(_player);
-        GameState.Bullets.Add(bullet);
+        _bulletManager.SpawnBullet(_player);
     }
 }

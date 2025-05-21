@@ -1,10 +1,9 @@
 ﻿using PuzzleConsoleGame.Config;
-using PuzzleConsoleGame.Core;
 using PuzzleConsoleGame.Rendering;
 
 namespace PuzzleConsoleGame.Entities.Enemy;
 
-public class Enemy(int xPosition, int yPosition, GameWorld gameWorld, Player player) : IRenderable
+public class Enemy(int xPosition, int yPosition, Player player) : IRenderable
 {
     public int XPosition { get; set; } = xPosition;
     public int YPosition { get; set; } = yPosition;
@@ -13,8 +12,6 @@ public class Enemy(int xPosition, int yPosition, GameWorld gameWorld, Player pla
 
     public void Move()
     {
-        if (!gameWorld.IsInBounds(this)) return;
-
         if (XPosition < player.XPosition) XPosition++;
         else if (XPosition > player.XPosition) XPosition--;
         if (YPosition < player.YPosition) YPosition++;

@@ -10,13 +10,13 @@ public class Input
     private readonly Actions _action;
     private readonly Player _player;
     private readonly Render _render;
-    private readonly GameWorld _gameWorld;
+    private readonly CollisionManager _collisionManager;
 
-    public Input(Player player, Render render, GameWorld gameWorld, Actions action)
+    public Input(Player player, Render render, CollisionManager collisionManager, Actions action)
     {
         _player = player;
         _render = render;
-        _gameWorld = gameWorld;
+        _collisionManager = collisionManager;
         _action = action;
         _inputManager = new InputManager(_action);
     }
@@ -48,7 +48,7 @@ public class Input
         if (movement != null)
         {
             var newPoint = new RenderPoint(_player.XPosition + movement.Value.dx, _player.YPosition + movement.Value.dy);
-            if (_gameWorld.IsInBounds(newPoint))
+            if (_collisionManager.IsInBounds(newPoint))
             {
                 _player.Move(movement.Value.dx, movement.Value.dy);
             }
