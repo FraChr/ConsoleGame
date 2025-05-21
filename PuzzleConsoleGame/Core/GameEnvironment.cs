@@ -2,6 +2,7 @@
 using PuzzleConsoleGame.Entities;
 using PuzzleConsoleGame.Entities.Enemy;
 using PuzzleConsoleGame.Entities.Items;
+using PuzzleConsoleGame.Entities.Player;
 using PuzzleConsoleGame.Entities.Weapon;
 using PuzzleConsoleGame.Input;
 using PuzzleConsoleGame.Rendering;
@@ -43,7 +44,7 @@ public class GameEnvironment
 
     private void MoveEnemy(Enemy enemy)
     {
-        _render.Draw(enemy, ' ');
+        _render.Draw(enemy, EnemyData.Remove);
         enemy.Move();
         _render.Draw(enemy);
     }

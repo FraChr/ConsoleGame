@@ -8,9 +8,10 @@ public class Bullet : IRenderable
     public int XPosition { get; set; }
     public int YPosition { get; set; }
     public char Symbol { get; set; }
+    public int Damage { get; set; } = 100;
     private readonly Direction _direction;
 
-    public Bullet(Player player, char symbol = WeaponData.Bullet)
+    public Bullet(Player.Player player, char symbol = WeaponData.Bullet)
     {
         XPosition = player.XPosition;
         YPosition = player.YPosition;

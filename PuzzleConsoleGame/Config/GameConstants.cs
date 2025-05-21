@@ -7,9 +7,10 @@ public static class GameSymbols
 
 public static class EnemyData
 {
-    public const char EnemyCharacter = '\u2622';
+    public const char EnemyCharacter = '\u2620';
     public const int StartPositionHorizontal = 3;
     public const int StartPositionVertical = 4;
+    public static char Remove => GameSymbols.Remove;
 }
 
 public static class PlayerData
@@ -24,7 +25,7 @@ public static class PlayerData
 
 public static class WeaponData
 {
-    public const char Bullet = '*';
+    public const char Bullet = '\u2022';
     public static char Remove => GameSymbols.Remove;
 }
 

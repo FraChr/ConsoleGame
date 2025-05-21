@@ -1,5 +1,4 @@
 ﻿using PuzzleConsoleGame.Config;
-using PuzzleConsoleGame.Core;
 using PuzzleConsoleGame.Rendering;
 
 namespace PuzzleConsoleGame.Entities.Weapon;
@@ -19,7 +18,7 @@ public class BulletManager
     }
 
 
-    public void SpawnBullet(Player player)
+    public void SpawnBullet(Player.Player player)
     {
         var bullet = new Bullet(player);
         _activeBullets.Add(bullet);

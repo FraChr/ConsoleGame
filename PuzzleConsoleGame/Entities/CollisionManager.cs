@@ -14,7 +14,7 @@ public class CollisionManager
         _gameWorld = gameWorld;
     }
 
-    public void CheckInteraction(Player player, IInteractable interactable)
+    public void CheckInteraction(Player.Player player, IInteractable interactable)
     {
         if (!interactable.IsCollected &&
             player.XPosition == interactable.XPosition &&
@@ -36,4 +36,6 @@ public class CollisionManager
                entity.YPosition > _gameWorld.HorizontalMin &&
                entity.YPosition < _gameWorld.HorizontalMax;
     }
+    
+    
 }
