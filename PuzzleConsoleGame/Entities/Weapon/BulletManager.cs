@@ -1,4 +1,5 @@
 ﻿using PuzzleConsoleGame.Config;
+using PuzzleConsoleGame.Interfaces;
 using PuzzleConsoleGame.Rendering;
 
 namespace PuzzleConsoleGame.Entities.Weapon;
@@ -14,7 +15,6 @@ public class BulletManager
     {
         _render = render;
         _collisionManager = collisionManager;
-        
     }
 
 
@@ -30,12 +30,13 @@ public class BulletManager
         {
             _render.Draw(bullet, WeaponData.Remove);
             bullet.Move();
-            
+
             if (!_collisionManager.IsInBounds(bullet))
             {
                 _bulletsToRemove.Add(bullet);
                 continue;
             }
+
             _render.Draw(bullet);
         }
 
@@ -43,5 +44,19 @@ public class BulletManager
         {
             _activeBullets.Remove(bullet);
         }
+        _bulletsToRemove.Clear();
+    }
+
+    public void RemoveBullet(Bullet bullet)
+    {
+        // if(!_bulletsToRemove.Contains(bullet)){
+        //     _bulletsToRemove.Add(bullet);
+        // }
+        _activeBullets.Remove(bullet);
+    }
+
+    public List<IEntity> GetSpawnedBullets()
+    {
+        return _activeBullets.OfType<IEntity>().ToList(); 
     }
 }

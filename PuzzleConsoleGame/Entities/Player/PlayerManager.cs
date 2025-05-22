@@ -18,6 +18,11 @@ public class PlayerManager
     
     public void UpdateAndRenderPlayer(int deltaX, int deltaY)
     {
+        // if (_player.Health <= 0)
+        // {
+        //     _render.Draw(_player, PlayerData.Remove);
+        //     return;
+        // }
         var oldPoint = new RenderPoint(_player.XPosition, _player.YPosition);
         var newPoint = new RenderPoint(_player.XPosition + deltaX, _player.YPosition + deltaY);
         if (_collisionManager.IsInBounds(newPoint))

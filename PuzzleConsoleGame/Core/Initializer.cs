@@ -1,5 +1,6 @@
 ﻿using PuzzleConsoleGame.Config;
 using PuzzleConsoleGame.Entities;
+using PuzzleConsoleGame.Entities.Enemy;
 using PuzzleConsoleGame.Entities.Items;
 using PuzzleConsoleGame.Entities.Player;
 using PuzzleConsoleGame.Entities.Weapon;
@@ -19,12 +20,13 @@ public class Initializer
         var render = new Render();
         var collisionManager = new CollisionManager(itemManager, gameWorld);
         var bulletManager = new BulletManager(render, collisionManager);
+        
         var actions = new Actions(player, bulletManager);
         var playerManager = new PlayerManager(render, collisionManager, player);
         var input = new InputProcessor(actions, playerManager);
-        var gameEnvironment = new GameEnvironment(render, gameWorld, player, itemManager, actions, bulletManager);
+        var gameEnvironment = new GameEnvironment(render, gameWorld, player, itemManager, actions, bulletManager, collisionManager);
         
         
-        return new GameLoop(player, gameWorld, render, collisionManager, itemManager, input, gameEnvironment, actions);
+        return new GameLoop(player, gameWorld, render, collisionManager, itemManager, input, gameEnvironment, actions, bulletManager);
     }
 }

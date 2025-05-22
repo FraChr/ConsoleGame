@@ -1,4 +1,5 @@
 ﻿using PuzzleConsoleGame.Config;
+using PuzzleConsoleGame.Interfaces;
 using PuzzleConsoleGame.Rendering;
 
 namespace PuzzleConsoleGame.Entities.Enemy;
@@ -8,7 +9,7 @@ public class Enemy(int xPosition, int yPosition, Player.Player player) : IRender
     public int XPosition { get; set; } = xPosition;
     public int YPosition { get; set; } = yPosition;
     public char Symbol { get; set; } = EnemyData.EnemyCharacter;
-    public int Health { get; set; } = 100;
+    public int Health { get; private set; } = 100;
 
 
     public void Move()
@@ -17,5 +18,10 @@ public class Enemy(int xPosition, int yPosition, Player.Player player) : IRender
         else if (XPosition > player.XPosition) XPosition--;
         if (YPosition < player.YPosition) YPosition++;
         else if (YPosition > player.YPosition) YPosition--;
+    }
+    
+    public void TakeDamage(IDamage damage)
+    {
+        Health -= damage.Damage;
     }
 }

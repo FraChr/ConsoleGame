@@ -1,4 +1,5 @@
 ﻿using PuzzleConsoleGame.Config;
+using PuzzleConsoleGame.Interfaces;
 using PuzzleConsoleGame.Rendering;
 
 namespace PuzzleConsoleGame.Entities.Player;
@@ -9,7 +10,7 @@ public class Player
     public int XPosition { get; set; }
     public int YPosition { get; set; }
     public char Symbol { get; set; }
-    public int Health { get; set; } = 100;
+    public int Health { get;  private set; } = 100;
     public Direction Facing { get; private set; }
 
     public Player(int xPosition, int yPosition, Direction facing = Direction.Up)
@@ -27,6 +28,11 @@ public class Player
         else if (deltaY == Movement.MovePositive) Rotate(Direction.Down);
         XPosition += deltaX;
         YPosition += deltaY;
+    }
+
+    public void TakeDamage(IDamage damage)
+    {
+        Health -= damage.Damage;
     }
 
     private void Rotate(Direction newDirection)

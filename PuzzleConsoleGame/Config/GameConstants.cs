@@ -32,6 +32,7 @@ public static class WeaponData
 public static class ItemData
 {
     public const char Coin = '\u25CF';
+    public const int CoinValue = 1;
     public static char Remove => GameSymbols.Remove;
 }
 

@@ -5,6 +5,7 @@ using PuzzleConsoleGame.Entities.Items;
 using PuzzleConsoleGame.Entities.Player;
 using PuzzleConsoleGame.Entities.Weapon;
 using PuzzleConsoleGame.Input;
+using PuzzleConsoleGame.Interfaces;
 using PuzzleConsoleGame.Rendering;
 
 namespace PuzzleConsoleGame.Core;
@@ -18,9 +19,11 @@ public class GameEnvironment
     private readonly Enemy _enemy;
     private readonly Actions _actions;
     private readonly BulletManager _bulletManager;
+    private readonly CollisionManager _collisionManager;
+    private int _score;
 
     public GameEnvironment(Render render, GameWorld gameWorld, Player player, ItemManager itemManager, Actions actions,
-        BulletManager bulletManager)
+        BulletManager bulletManager, CollisionManager collisionManager)
     {
         _render = render;
         _gameWorld = gameWorld;
@@ -29,6 +32,7 @@ public class GameEnvironment
         _enemy = new Enemy(EnemyData.StartPositionHorizontal, EnemyData.StartPositionVertical, _player);
         _actions = actions;
         _bulletManager = bulletManager;
+        _collisionManager = collisionManager;
     }
 
     public async Task GameTick(CancellationToken token)
@@ -36,6 +40,7 @@ public class GameEnvironment
         while (!token.IsCancellationRequested)
         {
             MoveEnemy(_enemy);
+            UpdateAuto();
             _bulletManager.UpdateAndRenderBullets();
             KeepCoin();
             await Task.Delay(500);
@@ -44,6 +49,11 @@ public class GameEnvironment
 
     private void MoveEnemy(Enemy enemy)
     {
+        if (enemy.Health <= 0)
+        {
+            _render.Draw(enemy, ' ');
+            return;
+        }
         _render.Draw(enemy, EnemyData.Remove);
         enemy.Move();
         _render.Draw(enemy);
@@ -51,9 +61,35 @@ public class GameEnvironment
 
     private void KeepCoin()
     {
-        foreach (var spawnedItem in _itemManager.GetSpawnedItems().Where(spawnedItem => !spawnedItem.IsCollected))
+        foreach (var spawnedItem in _itemManager.GetSpawnedItems().Where(spawnedItem => !spawnedItem.IsActive))
         {
             _render.Draw(spawnedItem);
         }
+    }
+    
+    private void UpdateAuto()
+    {
+        var allEntities = new List<IEntity>();
+        allEntities.AddRange(_itemManager.GetSpawnedItems());
+        allEntities.AddRange(_bulletManager.GetSpawnedBullets());
+        
+        foreach (var interactable in allEntities)
+        {
+            _collisionManager.CheckInteraction(_player, interactable);
+            
+
+            switch (interactable)
+            {
+                case IDamage damage when interactable.IsActive:
+                    _player.TakeDamage(damage);
+                    if(interactable is Bullet bullet){
+                        _bulletManager.RemoveBullet(bullet);
+                    }
+                    interactable.IsActive = false;
+                    break;
+            }
+        }
+        
+        allEntities.Clear();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using PuzzleConsoleGame.Core;
+using PuzzleConsoleGame.Interfaces;
 
 namespace PuzzleConsoleGame.Entities.Items;
 
@@ -29,9 +30,9 @@ public class ItemManager(GameWorld gameWorld)
         }
     }
 
-    public List<IInteractable> GetSpawnedItems()
+    public List<IEntity> GetSpawnedItems()
     {
-        return _spawnedItems.OfType<IInteractable>().ToList();
+        return _spawnedItems.OfType<IEntity>().ToList();
     }
 
     public void RemoveItem(IInteractable item)
