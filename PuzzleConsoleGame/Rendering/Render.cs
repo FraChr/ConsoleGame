@@ -53,9 +53,12 @@ public class Render
 
     public void DrawBoundaries(GameWorld gameWorld)
     {
-        DrawVerticalBorder(gameWorld);
-        DrawHorizontalBorder(gameWorld);
-        DrawCorners(gameWorld);
+        lock (_syncLock)
+        {
+            DrawVerticalBorder(gameWorld);
+            DrawHorizontalBorder(gameWorld);
+            DrawCorners(gameWorld);    
+        }
     }
 
 

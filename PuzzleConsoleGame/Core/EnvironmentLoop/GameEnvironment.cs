@@ -5,10 +5,9 @@ using PuzzleConsoleGame.Entities.Items;
 using PuzzleConsoleGame.Entities.Player;
 using PuzzleConsoleGame.Entities.Weapon;
 using PuzzleConsoleGame.Input;
-using PuzzleConsoleGame.Interfaces;
 using PuzzleConsoleGame.Rendering;
 
-namespace PuzzleConsoleGame.Core;
+namespace PuzzleConsoleGame.Core.EnvironmentLoop;
 
 public class GameEnvironment
 {
@@ -21,9 +20,10 @@ public class GameEnvironment
     private readonly BulletManager _bulletManager;
     private readonly CollisionManager _collisionManager;
     private int _score;
+    private readonly EnvironmentProcessor _environmentProcessor;
 
     public GameEnvironment(Render render, GameWorld gameWorld, Player player, ItemManager itemManager, Actions actions,
-        BulletManager bulletManager, CollisionManager collisionManager)
+        BulletManager bulletManager, CollisionManager collisionManager, EnvironmentProcessor environmentProcessor)
     {
         _render = render;
         _gameWorld = gameWorld;
@@ -33,6 +33,7 @@ public class GameEnvironment
         _actions = actions;
         _bulletManager = bulletManager;
         _collisionManager = collisionManager;
+        _environmentProcessor = environmentProcessor;
     }
 
     public async Task GameTick(CancellationToken token)
@@ -40,7 +41,7 @@ public class GameEnvironment
         while (!token.IsCancellationRequested)
         {
             MoveEnemy(_enemy);
-            UpdateAuto();
+            _environmentProcessor.UpdateAuto();
             _bulletManager.UpdateAndRenderBullets();
             KeepCoin();
             await Task.Delay(500);
@@ -65,30 +66,5 @@ public class GameEnvironment
         {
             _render.Draw(spawnedItem);
         }
-    }
-    
-    private void UpdateAuto()
-    {
-        var allEntities = new List<IEntity>();
-        allEntities.AddRange(_bulletManager.GetSpawnedBullets());
-        
-        foreach (var interactable in allEntities)
-        {
-            _collisionManager.CheckInteraction(_player, interactable);
-            
-
-            switch (interactable)
-            {
-                case IDamage damage when interactable.IsActive:
-                    _player.TakeDamage(damage);
-                    if(interactable is Bullet bullet){
-                        _bulletManager.RemoveBullet(bullet);
-                    }
-                    interactable.IsActive = false;
-                    break;
-            }
-        }
-        
-        allEntities.Clear();
     }
 }

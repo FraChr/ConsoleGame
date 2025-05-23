@@ -4,5 +4,5 @@ namespace PuzzleConsoleGame.Rendering;
 
 public interface IRenderable : IPositioned
 { 
-    char Symbol { get; set; }
+    char Symbol { get; }
 }

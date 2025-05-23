@@ -10,7 +10,7 @@ public class Bullet : IDamage, IEntity
     public int XPosition { get; set; }
     public int YPosition { get; set; }
     public char Symbol { get; set; }
-    public int Damage { get; } = 50;
+    public int Damage => WeaponData.Damage;
     private readonly Direction _direction;
 
     public bool IsActive { get; set; }
@@ -33,21 +33,15 @@ public class Bullet : IDamage, IEntity
 
     public void Move()
     {
-        // if (_direction == Direction.Up) YPosition--;
-        // else if (_direction == Direction.Down) YPosition++;
-        // else if (_direction == Direction.Left) XPosition--;
-        // else if (_direction == Direction.Right) XPosition++;
-        
-        var(dx, dy) = GetDirectionsOffset(_direction);
-        XPosition += dx;
-        YPosition += dy;
+        var(deltaX, deltaY) = GetDirectionsOffset(_direction);
+        XPosition += deltaX;
+        YPosition += deltaY;
     }
 
     private (int, int) GetDirectionsOffset(Direction direction)
     {
         return direction switch
         {
-            // Direction.Up => (0, -1),
             Direction.Up => (Movement.NoMove, Movement.MoveNegative),
             Direction.Down => (Movement.NoMove, Movement.MovePositive),
             Direction.Left => (Movement.MoveNegative, Movement.NoMove),

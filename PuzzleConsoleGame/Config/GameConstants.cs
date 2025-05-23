@@ -10,6 +10,7 @@ public static class EnemyData
     public const char EnemyCharacter = '\u2620';
     public const int StartPositionHorizontal = 3;
     public const int StartPositionVertical = 4;
+    public const int Health = 100;
     public static char Remove => GameSymbols.Remove;
 }
 
@@ -19,6 +20,7 @@ public static class PlayerData
     public const char CharacterDown = '\u25BC';
     public const char CharacterLeft = '\u25C0';
     public const char CharacterRight = '\u25B6';
+    public const int Health = 100;
 
     public static char Remove => GameSymbols.Remove;
 }
@@ -26,6 +28,7 @@ public static class PlayerData
 public static class WeaponData
 {
     public const char Bullet = '\u2022';
+    public const int Damage = 50;
     public static char Remove => GameSymbols.Remove;
 }
 

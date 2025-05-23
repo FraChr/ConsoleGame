@@ -9,8 +9,8 @@ public class Player
 {
     public int XPosition { get; set; }
     public int YPosition { get; set; }
-    public char Symbol { get; set; }
-    public int Health { get;  private set; } = 100;
+    public char Symbol { get; private set; }
+    public int Health { get;  private set; } = PlayerData.Health;
     public Direction Facing { get; private set; }
 
     public Player(int xPosition, int yPosition, Direction facing = Direction.Up)
