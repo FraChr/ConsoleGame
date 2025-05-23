@@ -70,7 +70,6 @@ public class GameEnvironment
     private void UpdateAuto()
     {
         var allEntities = new List<IEntity>();
-        allEntities.AddRange(_itemManager.GetSpawnedItems());
         allEntities.AddRange(_bulletManager.GetSpawnedBullets());
         
         foreach (var interactable in allEntities)

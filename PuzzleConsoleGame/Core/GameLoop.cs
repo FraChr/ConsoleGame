@@ -42,19 +42,17 @@ public class GameLoop
 
     public void Run()
     {
-        var cts = new CancellationTokenSource();
+        var tokenSource = new CancellationTokenSource();
         var tickRate = TimeSpan.FromMilliseconds(16);
         var stopwatch = new Stopwatch();
-        
         
         try
         {
             InitGame();
 
-            var worldTick = Task.Run(() => _gameEnvironment.GameTick(cts.Token), cts.Token);
+            var worldTick = Task.Run(() => _gameEnvironment.GameTick(tokenSource.Token), tokenSource.Token);
             while (_running)
             {
-                // var frameStart = DateTime.UtcNow;
                 stopwatch.Restart();
                 if(Console.KeyAvailable)
                 {
@@ -64,7 +62,6 @@ public class GameLoop
                 Update();
                 RenderFrame();
                 
-                // var elapsed = DateTime.UtcNow - frameStart;
                 var elapsed = stopwatch.Elapsed;
                 var sleep = tickRate - elapsed;
 
@@ -72,7 +69,6 @@ public class GameLoop
                 {
                     Thread.Sleep(sleep);
                 }
-                // Console.Write($"player health: {_player.Health}");
             }
         }
         catch (Exception e)
@@ -83,7 +79,7 @@ public class GameLoop
         finally
         {
             CleanUp();
-            cts.Cancel();
+            tokenSource.Cancel();
             Console.WriteLine("Game Exited");
         }
     }
@@ -98,7 +94,6 @@ public class GameLoop
     {
         var allEntities = new List<IEntity>();
         allEntities.AddRange(_itemManager.GetSpawnedItems());
-        allEntities.AddRange(_bulletManager.GetSpawnedBullets());
     
         foreach (var interactable in allEntities)
         {
@@ -119,13 +114,11 @@ public class GameLoop
     private void RenderFrame()
     {
         _render.DrawScore(_score, _player);
-        
-        _render.Draw(_player);
-        
     }
 
     private void InitGame()
     {
+        _render.Draw(_player);
         _render.DrawBoundaries(_gameWorld);
         _itemManager.SpawnItems<Coin>();
         foreach (var item in _itemManager.GetSpawnedItems())
