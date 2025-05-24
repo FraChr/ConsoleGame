@@ -25,16 +25,16 @@ public class ItemManager
 
     public void RandomSpawnItems()
     {
-        var entery = _maxItemsPerType.ElementAt(_random.Next(_maxItemsPerType.Count));
-        
-        
-        var factory = entery.Value;
-        var instance = factory();
-        
-        if (instance is IPositioned positioned)
-        {
-            SpawnItems(() => positioned, 7, 10);
-        }
+        // var entery = _maxItemsPerType.ElementAt(_random.Next(_maxItemsPerType.Count));
+        //
+        //
+        // var factory = entery.Value;
+        // var instance = factory();
+        //
+        // if (instance is IPositioned positioned)
+        // {
+        //     SpawnItems(() => positioned, 7, 10);
+        // }
         
 
 
