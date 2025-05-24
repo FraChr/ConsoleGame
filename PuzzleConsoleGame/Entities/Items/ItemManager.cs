@@ -6,10 +6,10 @@ namespace PuzzleConsoleGame.Entities.Items;
 
 public class ItemManager
 {
-    private readonly Dictionary<int, Func<IInteractable>> _maxItemsPerType = new()
+    private readonly Dictionary<int, Func<IInteractable>> _lootGenerationMap = new()
     {
-        { 2, () => new Coin() },
-        { 10, () => new HealthPack() }
+        { 1, () => new Coin() },
+        { 2, () => new HealthPack() }
     };
 
     private readonly List<IInteractable> _spawnedItems = [];
@@ -23,11 +23,12 @@ public class ItemManager
         _render = render;
     }
 
-    public void RandomSpawnItems(int positionX = 0, int positionY = 0)
+    public void SpawnRandomItem(int positionX = 0, int positionY = 0)
     {
-        var entry = _maxItemsPerType.ElementAt(_random.Next(_maxItemsPerType.Count));
-
-        var factory = entry.Value;
+        var entery = _lootGenerationMap.ElementAt(_random.Next(_lootGenerationMap.Count));
+        
+        
+        var factory = entery.Value;
         var instance = factory();
 
         if (instance is IPositioned interactable)
@@ -35,11 +36,35 @@ public class ItemManager
             interactable.XPosition = positionX;
             interactable.YPosition = positionY;
         }
-
+        
         instance.IsActive = true;
-
+        
         _spawnedItems.Add(instance);
     }
+
+    public void SpawnItem<T>(Func<T> factory, int x, int y) where T : IInteractable, IPositioned
+    {
+        var item = factory();
+        item.XPosition = x;
+        item.YPosition = y;
+        item.IsActive = true;
+        _spawnedItems.Add(item);
+
+        // var itemType = typeof(T);
+        //
+        // if (!_maxItemsPerType.TryGetValue(itemType, out var maxAllowed))
+        // {
+        //     return;
+        // }
+
+        // var currentCount = _spawnedItems.Count(i => i is T);
+        // for (var i = currentCount; i < maxAllowed; i++)
+        // {
+        //     var item = new T();
+        //     SpawnItem(item);
+        // }
+    }
+
 
     public void UpdateItems()
     {
@@ -51,6 +76,7 @@ public class ItemManager
 
     public List<IInteractable> GetSpawnedItems()
     {
+        // return _spawnedItems.OfType<IInteractable>().ToList();
         return _spawnedItems;
     }
 

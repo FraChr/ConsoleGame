@@ -40,7 +40,7 @@ public class InputProcessor
 
         if (movement != null)
         {
-            _playerManager.UpdateAndRenderPlayer(movement.Value.dx, movement.Value.dy);
+            _playerManager.UpdatePlayer(movement.Value.dx, movement.Value.dy);
         }
     }
 }

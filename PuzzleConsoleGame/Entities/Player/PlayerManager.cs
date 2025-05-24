@@ -16,7 +16,7 @@ public class PlayerManager
         _player = player;
     }
     
-    public void UpdateAndRenderPlayer(int deltaX, int deltaY)
+    public void UpdatePlayer(int deltaX, int deltaY)
     {
         var newPoint = new RenderPoint(_player.XPosition + deltaX, _player.YPosition + deltaY);
         if (_collisionManager.IsInBounds(newPoint))
@@ -24,6 +24,8 @@ public class PlayerManager
             _player.Update(deltaX, deltaY);
         }
     }
+    
+    
 
 
 }

@@ -81,12 +81,13 @@ public class Game
     {
         _player.IsActive = true;
         _render.DrawBoundaries(_gameWorld);
-        // _itemManager.SpawnItems(() => new Coin(), 10, 10);
+        _itemManager.SpawnItem(() => new Coin(), 10, 10);
+        _itemManager.SpawnItem(() => new Coin(), 15, 5);
         _enemyManager.SpawnEnemy(_player);
 
         RenderFrame();
     }
-
+    
     private void HandleInteractions()
     {
         var allInteractables = new List<IInteractable>();

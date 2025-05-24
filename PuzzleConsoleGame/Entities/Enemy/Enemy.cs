@@ -50,6 +50,7 @@ public class Enemy : IRenderable, IInteractable, IDamage
         _movementCooldown = MoveInterval;
     }
 
+    // TODO: Revise enemy movement pattern! currently following player slavishly
     private void Move()
     {
         if (XPosition < _player.XPosition) XPosition++;

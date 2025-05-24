@@ -37,7 +37,7 @@ public class EnemyManager : IInteractionHandler
     {
         foreach (var enemy in _enemiesToRemove)
         {
-            _itemManager.RandomSpawnItems(enemy.XPosition, enemy.YPosition);
+            _itemManager.SpawnRandomItem(enemy.XPosition, enemy.YPosition);
             _activeEnemies.Remove(enemy);
         }
         _enemiesToRemove.Clear();

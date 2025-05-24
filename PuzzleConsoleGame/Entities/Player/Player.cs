@@ -56,6 +56,16 @@ public class Player
     {
         Health -= damage.Damage;
     }
+    
+    
+    // TODO: PLAYER SIDE: make some better solution to detect if player is picking up item or not!!!
+    public int GiveHealth(int health)
+    {
+        int maxHealth = PlayerData.Health;
+        if(Health >= maxHealth) return -1;
+        Health += health;
+        return 0;
+    }
 
     private void Rotate(Direction newDirection)
     {
