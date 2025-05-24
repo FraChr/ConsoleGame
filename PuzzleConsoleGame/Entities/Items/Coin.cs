@@ -11,8 +11,8 @@ public class Coin : IInteractable , IPointsItem, IRenderable
     public int XPosition { get; set; }
     public int YPosition { get; set; }
     
-    public int previousX { get;  set; }
-    public int previousY { get;  set; }
+    public int PreviousX { get;  set; }
+    public int PreviousY { get;  set; }
     public char Symbol { get; set; } = ItemData.Coin;
     public bool IsActive { get; set; }
     public int Value { get; set; } = ItemData.CoinValue;

@@ -12,8 +12,8 @@ public class Player
     public int XPosition { get; set; }
     public int YPosition { get; set; }
     
-    public int previousX { get;  set; }
-    public int previousY { get;  set; }
+    public int PreviousX { get;  set; }
+    public int PreviousY { get;  set; }
     public char Symbol { get; private set; }
     public int Health { get;  private set; } = PlayerData.Health;
     public int Score { get; set; }
@@ -32,6 +32,14 @@ public class Player
     public void Interact(IInteractable other)
     {
         
+    }
+
+    public void Update(int deltaX, int deltaY)
+    {
+        PreviousX = XPosition;
+        PreviousY = YPosition;
+        
+        Move(deltaX, deltaY);
     }
     
     public void Move(int deltaX = Movement.NoMove, int deltaY = Movement.NoMove)

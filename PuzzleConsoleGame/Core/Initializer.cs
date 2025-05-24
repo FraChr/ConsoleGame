@@ -20,7 +20,7 @@ public class Initializer
         var itemManager = new ItemManager(gameWorld, render);
         var collisionManager = new CollisionManager(itemManager, gameWorld);
         var bulletManager = new BulletManager(render, collisionManager);
-        var enemyManager = new EnemyManager(render, collisionManager);
+        var enemyManager = new EnemyManager(render, collisionManager, itemManager);
         var actions = new Actions(player, bulletManager);
         var playerManager = new PlayerManager(render, collisionManager, player);
         var input = new InputProcessor(actions, playerManager);

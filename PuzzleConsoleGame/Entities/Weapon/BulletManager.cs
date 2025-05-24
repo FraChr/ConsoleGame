@@ -7,7 +7,7 @@ namespace PuzzleConsoleGame.Entities.Weapon;
 
 public class BulletManager : IInteractionHandler
 {
-    private readonly List<Bullet> _activeBullets = [];
+    private List<Bullet> _activeBullets = [];
     private readonly List<Bullet> _bulletsToRemove = [];
     private readonly Render _render;
     private readonly CollisionManager _collisionManager;
@@ -28,36 +28,36 @@ public class BulletManager : IInteractionHandler
         _activeBullets.Add(bullet);
     }
 
-    public void UpdateAndRenderBullets()
+    public void UpdateBullets()
     {
-        foreach (var bullet in _activeBullets)
-        {
-            _render.Draw(bullet, WeaponData.Remove);
-            // bullet.Move();
-            bullet.Update();
-
-            if (!_collisionManager.IsInBounds(bullet))
-            {
-                _bulletsToRemove.Add(bullet);
-                continue;
-            }
-
-            _render.Draw(bullet);
-        }
-
         foreach (var bullet in _bulletsToRemove)
         {
             _activeBullets.Remove(bullet);
         }
         _bulletsToRemove.Clear();
+        foreach (var bullet in _activeBullets)
+        {
+            bullet.Update();
+
+            if (_collisionManager.IsInBounds(bullet)) continue;
+            bullet.IsActive = false;
+            _bulletsToRemove.Add(bullet);
+            
+        }
+        
+        
+        
+        
+        // _activeBullets = _activeBullets.Where(bullet => bullet.IsActive).ToList();
+        // _bulletsToRemove.Clear();
     }
     
     public void RemoveBullet(Bullet bullet)
     {
-        // if(!_bulletsToRemove.Contains(bullet)){
-        //     _bulletsToRemove.Add(bullet);
-        // }
-        _activeBullets.Remove(bullet);
+        if(!_bulletsToRemove.Contains(bullet)){
+            _bulletsToRemove.Add(bullet);
+        }
+        // _activeBullets.Remove(bullet);
     }
 
     public List<IInteractable> GetSpawnedBullets()

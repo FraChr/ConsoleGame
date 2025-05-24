@@ -1,5 +1,7 @@
-﻿using PuzzleConsoleGame.Core;
+﻿using System.Diagnostics;
+using PuzzleConsoleGame.Core;
 using PuzzleConsoleGame.Entities.Items;
+using PuzzleConsoleGame.Entities.Weapon;
 
 namespace PuzzleConsoleGame.Entities;
 
@@ -13,6 +15,7 @@ public class CollisionManager
         _itemManager = itemManager;
         _gameWorld = gameWorld;
     }
+
     // public void CheckInteraction(Player.Player player, IInteractable interactable)
     // {
     //     if (player.XPosition == interactable.XPosition &&
@@ -21,29 +24,29 @@ public class CollisionManager
     //         interactable.Interact(player);
     //     }
     // }
-    public void CheckInteraction(IInteractable a, IInteractable b)
+    public void CheckInteraction(List<IInteractable> entities)
     {
-        
-        // for (int i = 0; i < a.Count; i++)
-        // {
-        //     for (int j = i + 1; j < a.Count; j++)
-        //     {
-        //         if (a[i].XPosition == a[j].XPosition && a[i].YPosition == a[j].YPosition)
-        //         {
-        //             a[i].Interact(a[j]);
-        //             a[j].Interact(a[i]);
-        //         }
-        //     }    
-        // }
+        var entityPairs = entities.SelectMany((entityA, index) => entities.Skip(index + 1).Select(entityB => (entityA, entityB)));
 
-        if (a is IPositioned positionedA && b is IPositioned positionedB)
+        foreach (var pair in entityPairs)
         {
-            if (positionedA.XPosition != positionedB.XPosition || positionedA.YPosition != positionedB.YPosition) return;    
+            var entityA = pair.Item1;
+            var entityB = pair.Item2;
+
+            if (!(entityA is IPositioned positionedA && entityB is IPositioned positionedB)) continue;
+            
+            if (positionedA.XPosition != positionedB.XPosition ||
+                positionedA.YPosition != positionedB.YPosition) continue;
+            
+            if (entityA is Bullet && entityB is Bullet)
+            {
+                continue;
+            }
+            if(entityA is Bullet && entityB is Coin) continue;
+
+            entityA.Interact(entityB);
+            entityB.Interact(entityA);
         }
-        
-        
-        a.Interact(b);
-        b.Interact(a);
     }
 
     public bool IsInBounds(IPositioned entity)

@@ -59,13 +59,11 @@ public class Game
             {
                 _inputProcessor.ProcessControls();
             }
-
-
-            _enemyManager.UpdateAndRenderEnemies();
-            _bulletManager.UpdateAndRenderBullets();
+            
+            _enemyManager.UpdateEnemies();
+            _bulletManager.UpdateBullets();
             _itemManager.UpdateItems();
-
-
+            
             HandleInteractions();
 
             RenderFrame();
@@ -81,13 +79,10 @@ public class Game
 
     private void InitGame()
     {
+        _player.IsActive = true;
         _render.DrawBoundaries(_gameWorld);
         _itemManager.SpawnItems(() => new Coin(), 10, 10);
         _enemyManager.SpawnEnemy(_player);
-        foreach (var item in _itemManager.GetSpawnedItems().OfType<IRenderable>())
-        {
-            _render.Draw(item);
-        }
 
         RenderFrame();
     }
@@ -98,18 +93,17 @@ public class Game
         allInteractables.AddRange(_bulletManager.GetSpawnedBullets());
         allInteractables.AddRange(_enemyManager.GetActiveEnemies());
         allInteractables.AddRange(_itemManager.GetSpawnedItems());
+        allInteractables.AddRange(_player);
 
-        foreach (var entity in allInteractables)
-        {
-            _collisionManager.CheckInteraction(_player, entity);
-        }
+        _collisionManager.CheckInteraction(allInteractables);
 
-        _render.PrintAllGameObjects(allInteractables);
+        // _render.PrintAllGameObjects(allInteractables);
     }
 
     private void RenderFrame()
     {
         _render.DrawScore(_player);
+
         _render.Draw(_player);
         foreach (var enemy in _enemyManager.GetActiveEnemies().OfType<IRenderable>())
         {
@@ -119,6 +113,11 @@ public class Game
         foreach (var item in _itemManager.GetSpawnedItems().OfType<IRenderable>())
         {
             _render.Draw(item);
+        }
+
+        foreach (var bullet in _bulletManager.GetSpawnedBullets().OfType<IRenderable>())
+        {
+            _render.Draw(bullet);
         }
     }
 

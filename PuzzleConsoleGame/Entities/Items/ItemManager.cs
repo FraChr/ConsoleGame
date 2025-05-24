@@ -4,12 +4,12 @@ using PuzzleConsoleGame.Rendering;
 
 namespace PuzzleConsoleGame.Entities.Items;
 
-
 public class ItemManager
 {
-    private readonly Dictionary<Type, int> _maxItemsPerType = new()
+    private readonly Dictionary<int, Func<IInteractable>> _maxItemsPerType = new()
     {
-        { typeof(Coin), 2 }
+        { 2, () => new Coin() },
+        { 10, () => new HealthPack() }
     };
 
     private readonly List<IInteractable> _spawnedItems = [];
@@ -23,9 +23,26 @@ public class ItemManager
         _render = render;
     }
 
+    public void RandomSpawnItems()
+    {
+        var entery = _maxItemsPerType.ElementAt(_random.Next(_maxItemsPerType.Count));
+        
+        
+        var factory = entery.Value;
+        var instance = factory();
+        
+        if (instance is IPositioned positioned)
+        {
+            SpawnItems(() => positioned, 7, 10);
+        }
+        
+
+
+
+    }
+
     public void SpawnItems<T>(Func<T> factory, int x, int y) where T : IInteractable, IPositioned
     {
-        
         var item = factory();
         item.XPosition = x;
         item.YPosition = y;
@@ -80,22 +97,23 @@ public class ItemManager
 
     public void RemoveItem(IInteractable item)
     {
-        if (_spawnedItems.Contains(item))
-        {
-            _spawnedItems.Remove(item);
-        }
+        _spawnedItems.Remove(item);
     }
 
     private void SpawnItem(IInteractable item)
     {
-        if(item is IPositioned positioned){
-            var y = _random.Next(_gameWorld.HorizontalMin + 1, _gameWorld.HorizontalMax);
-            var x = _random.Next(_gameWorld.VerticalMin + 1, _gameWorld.VerticalMax);
-
-            positioned.XPosition = x;
-            positioned.YPosition = y;
-        }
-        item.IsActive = true;
-        _spawnedItems.Add(item);
+        
+        
+        // if (item is IPositioned positioned)
+        // {
+        //     var y = _random.Next(_gameWorld.HorizontalMin + 1, _gameWorld.HorizontalMax);
+        //     var x = _random.Next(_gameWorld.VerticalMin + 1, _gameWorld.VerticalMax);
+        //
+        //     positioned.XPosition = x;
+        //     positioned.YPosition = y;
+        // }
+        //
+        // item.IsActive = true;
+        // _spawnedItems.Add(item);
     }
 }

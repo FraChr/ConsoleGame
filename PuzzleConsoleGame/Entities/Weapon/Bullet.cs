@@ -11,8 +11,8 @@ public class Bullet : IDamage, IInteractable, IRenderable, IPositioned
     public int XPosition { get; set; }
     public int YPosition { get; set; }
     
-    public int previousX { get;  set; }
-    public int previousY { get;  set; }
+    public int PreviousX { get;  set; }
+    public int PreviousY { get;  set; }
     public char Symbol { get; set; }
     public int Damage => WeaponData.Damage;
     private readonly Direction _direction;
@@ -21,6 +21,7 @@ public class Bullet : IDamage, IInteractable, IRenderable, IPositioned
     
     private int _movementCooldown = 0;
     private const int MoveInterval = 10;
+    public int Delay = 0;
 
 
     public Bullet(Player.Player player, IInteractionHandler interactionHandler, char symbol = WeaponData.Bullet)
@@ -48,6 +49,9 @@ public class Bullet : IDamage, IInteractable, IRenderable, IPositioned
 
     public void Update()
     {
+        PreviousX = XPosition;
+        PreviousY = YPosition;
+        
         if (_movementCooldown > 0)
         {
             _movementCooldown--;

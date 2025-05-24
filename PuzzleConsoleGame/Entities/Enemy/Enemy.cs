@@ -12,8 +12,8 @@ public class Enemy : IRenderable, IInteractable, IDamage
     public int XPosition { get; set; }
     public int YPosition { get; set; }
     
-    public int previousX { get;  set; }
-    public int previousY { get;  set; }
+    public int PreviousX { get;  set; }
+    public int PreviousY { get;  set; }
     public char Symbol { get; private set; } = EnemyData.EnemyCharacter;
     public int Health { get; private set; } = EnemyData.Health;
     public int Damage { get; } = 10;
@@ -38,8 +38,8 @@ public class Enemy : IRenderable, IInteractable, IDamage
 
     public void Update()
     {
-        previousX = XPosition;
-        previousY = YPosition;
+        PreviousX = XPosition;
+        PreviousY = YPosition;
         
         if (_movementCooldown > 0)
         {

@@ -9,10 +9,11 @@ public class Render
 {
     public void Draw(IRenderable obj, char? overrideChar = null)
     {
-        Console.SetCursorPosition(obj.previousX, obj.previousY);
-        Console.Write(' ');
-        
         Console.CursorVisible = false;
+        Console.SetCursorPosition(obj.PreviousX, obj.PreviousY);
+        Console.Write(' ');
+
+        if (!obj.IsActive) return;
         Console.SetCursorPosition(obj.XPosition, obj.YPosition);
         Console.Write(overrideChar ?? obj.Symbol);
     }
