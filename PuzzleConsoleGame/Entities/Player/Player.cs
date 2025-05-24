@@ -1,17 +1,25 @@
 ﻿using PuzzleConsoleGame.Config;
+using PuzzleConsoleGame.Core;
+using PuzzleConsoleGame.Entities.Items;
 using PuzzleConsoleGame.Interfaces;
 using PuzzleConsoleGame.Rendering;
 
 namespace PuzzleConsoleGame.Entities.Player;
 
 public class Player
-    : IRenderable
+    : IRenderable, IInteractable, IPositioned
 {
     public int XPosition { get; set; }
     public int YPosition { get; set; }
+    
+    public int previousX { get;  set; }
+    public int previousY { get;  set; }
     public char Symbol { get; private set; }
     public int Health { get;  private set; } = PlayerData.Health;
+    public int Score { get; set; }
     public Direction Facing { get; private set; }
+    
+    public bool IsActive { get; set; }
 
     public Player(int xPosition, int yPosition, Direction facing = Direction.Up)
     {
@@ -20,6 +28,12 @@ public class Player
         Symbol = GetDirectionSymbol(facing);
     }
 
+    
+    public void Interact(IInteractable other)
+    {
+        
+    }
+    
     public void Move(int deltaX = Movement.NoMove, int deltaY = Movement.NoMove)
     {
         if (deltaX == Movement.MovePositive) Rotate(Direction.Right);
@@ -52,4 +66,6 @@ public class Player
             _ => PlayerData.CharacterDefault
         };
     }
+
+  
 }

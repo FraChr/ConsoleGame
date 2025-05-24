@@ -1,64 +1,57 @@
 ﻿using PuzzleConsoleGame.Config;
 using PuzzleConsoleGame.Core;
-using PuzzleConsoleGame.Entities.Enemy;
+using PuzzleConsoleGame.Entities.Items;
 using PuzzleConsoleGame.Entities.Player;
-using PuzzleConsoleGame.Interfaces;
 
 namespace PuzzleConsoleGame.Rendering;
 
 public class Render
 {
-    private readonly Lock _syncLock = new();
     public void Draw(IRenderable obj, char? overrideChar = null)
     {
-        lock(_syncLock)
-        {
-            Console.CursorVisible = false;
-            Console.SetCursorPosition(obj.XPosition, obj.YPosition);
-            Console.Write(overrideChar ?? obj.Symbol);
-        }
-    }
-
-    public void DrawScore(int score, Player player)
-    {
-        lock(_syncLock)
-        {
-            var maxLenght = 40;
-            Console.SetCursorPosition(Ui.HorizontalPosition, Ui.VerticalPosition);
-            Console.Write(new String(' ', maxLenght));
-            
-            Console.SetCursorPosition(Ui.HorizontalPosition, Ui.VerticalPosition);
-            Console.Write($"score {score} | Health: {player.Health}");
-        }
-    }
-
-    public void PrintAllGameObjects(List<IEntity>allEntities)
-    {
-        lock (_syncLock)
-        {
-            int startX = 60;
-            int startY = 1;
-            
-            Console.SetCursorPosition(startX, startY);
-            Console.WriteLine("Entities this frame: ");
+        Console.SetCursorPosition(obj.previousX, obj.previousY);
+        Console.Write(' ');
         
-            int line = startY + 1;
-            foreach (var entity in allEntities)
+        Console.CursorVisible = false;
+        Console.SetCursorPosition(obj.XPosition, obj.YPosition);
+        Console.Write(overrideChar ?? obj.Symbol);
+    }
+
+    public void DrawScore(Player player)
+    {
+        var maxLenght = 40;
+        Console.SetCursorPosition(Ui.HorizontalPosition, Ui.VerticalPosition);
+        Console.Write(new String(' ', maxLenght));
+
+        Console.SetCursorPosition(Ui.HorizontalPosition, Ui.VerticalPosition);
+        Console.Write($"score {player.Score} | Health: {player.Health}");
+    }
+
+    public void PrintAllGameObjects(List<IInteractable> allEntities)
+    {
+        int startX = 60;
+        int startY = 1;
+
+        Console.SetCursorPosition(startX, startY);
+        Console.WriteLine("Entities this frame: ");
+
+        int line = startY + 1;
+        foreach (var entity in allEntities)
+        {
+            if(entity is IPositioned positioned)
             {
                 Console.SetCursorPosition(startX, line++);
-                Console.WriteLine($"{entity.GetType().Name} @ ({entity.XPosition}, {entity.YPosition}), Active: {entity.IsActive}");
+                Console.WriteLine(
+                    $"{entity.GetType().Name} @ ({positioned.XPosition}, {positioned.YPosition}), Active: {entity.IsActive}");
             }
         }
     }
 
     public void DrawBoundaries(GameWorld gameWorld)
     {
-        lock (_syncLock)
-        {
-            DrawVerticalBorder(gameWorld);
-            DrawHorizontalBorder(gameWorld);
-            DrawCorners(gameWorld);    
-        }
+        DrawVerticalBorder(gameWorld);
+        DrawHorizontalBorder(gameWorld);
+        DrawCorners(gameWorld);
     }
 
 

@@ -14,13 +14,4 @@ public class GameWorld
         VerticalMax = verticalMax;
         HorizontalMax = horizontalMax;
     }
-
-
-    // public bool IsInBounds(IPositioned entity)
-    // {
-    //     return entity.XPosition > VerticalMin &&
-    //            entity.XPosition < VerticalMax &&
-    //            entity.YPosition > HorizontalMin &&
-    //            entity.YPosition < HorizontalMax;
-    // }
 }

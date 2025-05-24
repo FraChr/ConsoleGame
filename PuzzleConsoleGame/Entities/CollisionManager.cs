@@ -13,13 +13,37 @@ public class CollisionManager
         _itemManager = itemManager;
         _gameWorld = gameWorld;
     }
-    public void CheckInteraction(Player.Player player, IInteractable interactable)
+    // public void CheckInteraction(Player.Player player, IInteractable interactable)
+    // {
+    //     if (player.XPosition == interactable.XPosition &&
+    //         player.YPosition == interactable.YPosition)
+    //     {
+    //         interactable.Interact(player);
+    //     }
+    // }
+    public void CheckInteraction(IInteractable a, IInteractable b)
     {
-        if (player.XPosition == interactable.XPosition &&
-            player.YPosition == interactable.YPosition)
+        
+        // for (int i = 0; i < a.Count; i++)
+        // {
+        //     for (int j = i + 1; j < a.Count; j++)
+        //     {
+        //         if (a[i].XPosition == a[j].XPosition && a[i].YPosition == a[j].YPosition)
+        //         {
+        //             a[i].Interact(a[j]);
+        //             a[j].Interact(a[i]);
+        //         }
+        //     }    
+        // }
+
+        if (a is IPositioned positionedA && b is IPositioned positionedB)
         {
-            interactable.Interact();
+            if (positionedA.XPosition != positionedB.XPosition || positionedA.YPosition != positionedB.YPosition) return;    
         }
+        
+        
+        a.Interact(b);
+        b.Interact(a);
     }
 
     public bool IsInBounds(IPositioned entity)

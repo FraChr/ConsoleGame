@@ -1,38 +1,81 @@
-﻿using PuzzleConsoleGame.Core;
-using PuzzleConsoleGame.Interfaces;
+﻿using System.Xml;
+using PuzzleConsoleGame.Core;
+using PuzzleConsoleGame.Rendering;
 
 namespace PuzzleConsoleGame.Entities.Items;
 
-public class ItemManager(GameWorld gameWorld)
+
+public class ItemManager
 {
     private readonly Dictionary<Type, int> _maxItemsPerType = new()
     {
         { typeof(Coin), 2 }
     };
 
-    private readonly List<IPositioned> _spawnedItems = [];
+    private readonly List<IInteractable> _spawnedItems = [];
     private readonly Random _random = new();
+    private readonly GameWorld _gameWorld;
+    private readonly Render _render;
 
-    public void SpawnItems<T>() where T : IPositioned, new()
+    public ItemManager(GameWorld gameWorld, Render render)
     {
-        var itemType = typeof(T);
+        _gameWorld = gameWorld;
+        _render = render;
+    }
 
-        if (!_maxItemsPerType.TryGetValue(itemType, out var maxAllowed))
-        {
-            return;
-        }
+    public void SpawnItems<T>(Func<T> factory, int x, int y) where T : IInteractable, IPositioned
+    {
+        
+        var item = factory();
+        item.XPosition = x;
+        item.YPosition = y;
+        item.IsActive = true;
+        _spawnedItems.Add(item);
 
-        var currentCount = _spawnedItems.Count(i => i is T);
-        for (var i = currentCount; i < maxAllowed; i++)
+        // var itemType = typeof(T);
+        //
+        // if (!_maxItemsPerType.TryGetValue(itemType, out var maxAllowed))
+        // {
+        //     return;
+        // }
+
+        // var currentCount = _spawnedItems.Count(i => i is T);
+        // for (var i = currentCount; i < maxAllowed; i++)
+        // {
+        //     var item = new T();
+        //     SpawnItem(item);
+        // }
+    }
+    // public void SpawnItems<T>() where T : IInteractable, new()
+    // {
+    //     var itemType = typeof(T);
+    //
+    //     if (!_maxItemsPerType.TryGetValue(itemType, out var maxAllowed))
+    //     {
+    //         return;
+    //     }
+    //
+    //     var currentCount = _spawnedItems.Count(i => i is T);
+    //     for (var i = currentCount; i < maxAllowed; i++)
+    //     {
+    //         var item = new T();
+    //         SpawnItem(item);
+    //     }
+    // }
+
+
+    public void UpdateItems()
+    {
+        foreach (var item in _spawnedItems.ToList().Where(item => !item.IsActive))
         {
-            var item = new T();
-            SpawnItem(item, _spawnedItems);
+            RemoveItem(item);
         }
     }
 
-    public List<IEntity> GetSpawnedItems()
+    public List<IInteractable> GetSpawnedItems()
     {
-        return _spawnedItems.OfType<IEntity>().ToList();
+        // return _spawnedItems.OfType<IInteractable>().ToList();
+        return _spawnedItems;
     }
 
     public void RemoveItem(IInteractable item)
@@ -43,13 +86,16 @@ public class ItemManager(GameWorld gameWorld)
         }
     }
 
-    private void SpawnItem(IPositioned item, List<IPositioned> spawnedItems)
+    private void SpawnItem(IInteractable item)
     {
-        var y = _random.Next(gameWorld.HorizontalMin + 1, gameWorld.HorizontalMax);
-        var x = _random.Next(gameWorld.VerticalMin + 1, gameWorld.VerticalMax);
+        if(item is IPositioned positioned){
+            var y = _random.Next(_gameWorld.HorizontalMin + 1, _gameWorld.HorizontalMax);
+            var x = _random.Next(_gameWorld.VerticalMin + 1, _gameWorld.VerticalMax);
 
-        item.XPosition = x;
-        item.YPosition = y;
-        spawnedItems.Add(item);
+            positioned.XPosition = x;
+            positioned.YPosition = y;
+        }
+        item.IsActive = true;
+        _spawnedItems.Add(item);
     }
 }
