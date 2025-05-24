@@ -1,4 +1,6 @@
 ﻿
+using PuzzleConsoleGame.Core;
+
 namespace PuzzleConsoleGame.Entities.Items;
 
 public interface IInteractable

@@ -81,7 +81,7 @@ public class Game
     {
         _player.IsActive = true;
         _render.DrawBoundaries(_gameWorld);
-        _itemManager.SpawnItems(() => new Coin(), 10, 10);
+        // _itemManager.SpawnItems(() => new Coin(), 10, 10);
         _enemyManager.SpawnEnemy(_player);
 
         RenderFrame();
