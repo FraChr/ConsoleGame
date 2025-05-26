@@ -1,49 +1,41 @@
-﻿using PuzzleConsoleGame.Config;
-using PuzzleConsoleGame.Entities.Items;
-using PuzzleConsoleGame.Rendering;
+﻿using PuzzleConsoleGame.Entities.Items;
 
 namespace PuzzleConsoleGame.Entities.Enemy;
 
 public class EnemyManager : IInteractionHandler
 {
-    private readonly Render _render;
-    private readonly CollisionManager _collisionManager;
     private readonly List<Enemy> _activeEnemies = [];
     private readonly List<Enemy> _enemiesToRemove = [];
     private readonly ItemManager _itemManager;
 
-    public EnemyManager(Render render, CollisionManager collisionManager, ItemManager itemManager)
+    public EnemyManager(ItemManager itemManager)
     {
-        _render = render;
-        _collisionManager = collisionManager;
         _itemManager = itemManager;
     }
 
-    public void SpawnEnemy(Player.Player player)
+    public void SpawnEnemy()
     {
-        var enemy = new Enemy(6, 9, player, this)
+        var enemy = new Enemy(6, 9, this)
         {
             IsActive = true
         };
         _activeEnemies.Add(enemy);
     }
 
-    public void RemoveEnemy(Enemy enemy)
-    {
-        _activeEnemies.ToList().Remove(enemy);
-    }
 
-    public void UpdateEnemies()
+    public void UpdateEnemies(int positionX, int positionY)
     {
         foreach (var enemy in _enemiesToRemove)
         {
             _itemManager.SpawnRandomItem(enemy.XPosition, enemy.YPosition);
             _activeEnemies.Remove(enemy);
+            RemoveEnemy(enemy);
         }
+
         _enemiesToRemove.Clear();
         foreach (var activeEnemy in _activeEnemies)
         {
-            activeEnemy.Update();
+            activeEnemy.Update(activeEnemy, positionX, positionY);
             if (activeEnemy.Health > 0) continue;
             activeEnemy.IsActive = false;
             _enemiesToRemove.Add(activeEnemy);
@@ -64,4 +56,25 @@ public class EnemyManager : IInteractionHandler
             player.TakeDamage(enemy);
         }
     }
+
+    private void RemoveEnemy(Enemy enemy)
+    {
+        // _activeEnemies.ToList().Remove(enemy);
+        // _enemiesToRemove.Remove(enemy);
+    }
+
+    // private void Update(Enemy activeEnemy, int positionX, int positionY)
+    // {
+    //     activeEnemy.PreviousX = activeEnemy.XPosition;
+    //     activeEnemy.PreviousY = activeEnemy.YPosition;
+    //
+    //     if (activeEnemy.MovementCooldown > 0)
+    //     {
+    //         activeEnemy.MovementCooldown--;
+    //         return;
+    //     }
+    //
+    //     activeEnemy.Move(activeEnemy, positionX, positionY);
+    //     activeEnemy.MovementCooldown = activeEnemy.MoveInterval;
+    // }
 }

@@ -1,34 +1,22 @@
 ﻿using PuzzleConsoleGame.Config;
-using PuzzleConsoleGame.Interfaces;
-using PuzzleConsoleGame.Rendering;
 
 namespace PuzzleConsoleGame.Entities.Items;
 
 
 
-public class Coin : IInteractable , IPointsItem, IRenderable
+public class Coin : Item
 {
-    public int XPosition { get; set; }
-    public int YPosition { get; set; }
-    
-    public int PreviousX { get;  set; }
-    public int PreviousY { get;  set; }
-    public char Symbol { get; set; } = ItemData.Coin;
-    public bool IsActive { get; set; }
-    public int Value { get; set; } = ItemData.CoinValue;
-    
-
-    
     public Coin()
     {
-        
+        Symbol = ItemData.Coin;
+        Value = ItemData.CoinValue;
     }
 
-    public void Interact(IInteractable other)
+    public override void Interact(IInteractable other)
     {
         if(!IsActive) return;
 
-        if (other is Player.Player player)
+        if (other is Character.Character player)
         {
             if(!IsActive) return;
             // _interactionHandler.HandleInteraction(player, this);

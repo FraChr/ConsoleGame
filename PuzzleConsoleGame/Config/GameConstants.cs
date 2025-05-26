@@ -1,4 +1,5 @@
-﻿namespace PuzzleConsoleGame.Config;
+﻿
+namespace PuzzleConsoleGame.Config;
 
 public static class GameSymbols
 {
@@ -75,3 +76,4 @@ public static class Ui
     public const int HorizontalPosition = 2;
     public const int VerticalPosition = 0;
 }
+

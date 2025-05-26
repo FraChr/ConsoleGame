@@ -1,68 +1,58 @@
 ﻿using PuzzleConsoleGame.Config;
 using PuzzleConsoleGame.Entities.Items;
 using PuzzleConsoleGame.Interfaces;
-using PuzzleConsoleGame.Rendering;
 
 namespace PuzzleConsoleGame.Entities.Enemy;
 
-public class Enemy : IRenderable, IInteractable, IDamage
+public class Enemy : Character.Character, IDamage
 {
-    private readonly Player.Player _player;
     private readonly IInteractionHandler _interactionHandler;
-    public int XPosition { get; set; }
-    public int YPosition { get; set; }
-    
-    public int PreviousX { get;  set; }
-    public int PreviousY { get;  set; }
-    public char Symbol { get; private set; } = EnemyData.EnemyCharacter;
-    public int Health { get; private set; } = EnemyData.Health;
     public int Damage { get; } = 10;
-    public bool IsActive { get; set; }
 
-    private int _movementCooldown = 0;
-    private const int MoveInterval = 20;
+    public int MovementCooldown = 0;
+    public readonly int MoveInterval = 20;
 
-    public Enemy(int xPosition, int yPosition, Player.Player player, IInteractionHandler interactionHandler)
+    public Enemy(int xPosition, int yPosition, IInteractionHandler interactionHandler) : base(xPosition, yPosition)
     {
-        _player = player;
         _interactionHandler = interactionHandler;
         XPosition = xPosition;
         YPosition = yPosition;
+        Symbol = EnemyData.EnemyCharacter;
+        Health = EnemyData.Health;
     }
-
-
-    public void Interact(IInteractable other)
+    
+    public override void Interact(IInteractable other)
     {
         _interactionHandler.HandleInteraction(this, other);
     }
-
-    public void Update()
+    
+    
+    public void Move(Enemy activeEnemy, int positionX, int positionY)
     {
-        PreviousX = XPosition;
-        PreviousY = YPosition;
-        
-        if (_movementCooldown > 0)
+        if (activeEnemy.XPosition < positionX) activeEnemy.XPosition++;
+        else if (activeEnemy.XPosition > positionX) activeEnemy.XPosition--;
+        if (activeEnemy.YPosition < positionY) activeEnemy.YPosition++;
+        else if (activeEnemy.YPosition > positionY) activeEnemy.YPosition--;
+
+
+        // if (XPosition < _player.PreviousX) XPosition++;
+        // else if (XPosition > _player.PreviousX) XPosition--;
+        // if (YPosition < _player.PreviousY) YPosition++;
+        // else if (YPosition > _player.PreviousY) YPosition--;
+    }
+    
+    public void Update(Enemy activeEnemy, int positionX, int positionY)
+    {
+        activeEnemy.PreviousX = activeEnemy.XPosition;
+        activeEnemy.PreviousY = activeEnemy.YPosition;
+
+        if (activeEnemy.MovementCooldown > 0)
         {
-            _movementCooldown--;
+            activeEnemy.MovementCooldown--;
             return;
         }
-        Move();
-        _movementCooldown = MoveInterval;
-    }
 
-    // TODO: Revise enemy movement pattern! currently following player slavishly
-    private void Move()
-    {
-        if (XPosition < _player.XPosition) XPosition++;
-        else if (XPosition > _player.XPosition) XPosition--;
-        if (YPosition < _player.YPosition) YPosition++;
-        else if (YPosition > _player.YPosition) YPosition--;
+        Move(activeEnemy, positionX, positionY);
+        activeEnemy.MovementCooldown = activeEnemy.MoveInterval;
     }
-
-    public void TakeDamage(IDamage damage)
-    {
-        Health -= damage.Damage;
-    }
-
-    
 }

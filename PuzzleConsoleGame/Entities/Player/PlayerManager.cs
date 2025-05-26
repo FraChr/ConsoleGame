@@ -5,27 +5,37 @@ namespace PuzzleConsoleGame.Entities.Player;
 
 public class PlayerManager
 {
-    private readonly Render _render;
     private readonly CollisionManager _collisionManager;
-    private readonly Player _player;
+    private Player? Player { get; set; }
 
-    public PlayerManager(Render render, CollisionManager collisionManager, Player player)
+
+    public PlayerManager(CollisionManager collisionManager)
     {
-        _render = render;
         _collisionManager = collisionManager;
-        _player = player;
     }
-    
+
     public void UpdatePlayer(int deltaX, int deltaY)
     {
-        var newPoint = new RenderPoint(_player.XPosition + deltaX, _player.YPosition + deltaY);
+        if (Player == null) return;
+        var newPoint = new RenderPoint(Player.XPosition + deltaX, Player.YPosition + deltaY);
         if (_collisionManager.IsInBounds(newPoint))
         {
-            _player.Update(deltaX, deltaY);
+            Player.Update(deltaX, deltaY);
         }
     }
-    
-    
 
+    public bool IsPlayerDead()
+    {
+        return Player is { Health: <= 0 };
+    }
 
+    public Player SpawnPlayer(int xPosition, int yPosition)
+    {
+        var player = new Player(xPosition, yPosition)
+        {
+            IsActive = true
+        };
+        Player = player;
+        return player;
+    }
 }

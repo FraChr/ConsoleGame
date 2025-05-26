@@ -1,23 +1,27 @@
-﻿using PuzzleConsoleGame.Core;
-using PuzzleConsoleGame.Entities;
-using PuzzleConsoleGame.Entities.Player;
+﻿using PuzzleConsoleGame.Entities.Character;
 using PuzzleConsoleGame.Entities.Weapon;
-using PuzzleConsoleGame.Rendering;
 
 namespace PuzzleConsoleGame.Input;
 
 public class Actions
 {
-    private readonly Player _player;
+    private Character? Player {get; set;}
     private readonly BulletManager _bulletManager;
-    public Actions(Player player, BulletManager bulletManager)
+    public Actions(BulletManager bulletManager)
     {
-        _player = player;
+        // _player = player;
         _bulletManager = bulletManager;
     }
 
     public void Shoot()
     {
-        _bulletManager.SpawnBullet(_player);
+        if(Player == null) return;
+        // _bulletManager.SpawnBullet(_player.XPosition, _player.YPosition, _player.Facing);
+        _bulletManager.SpawnBullet(Player, Player.Facing);
     }
+    public void SetPlayer(Character player)
+    {
+        Player = player;
+    }
+    
 }

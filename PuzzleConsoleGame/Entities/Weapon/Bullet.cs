@@ -6,7 +6,7 @@ using PuzzleConsoleGame.Rendering;
 
 namespace PuzzleConsoleGame.Entities.Weapon;
 
-public class Bullet : IDamage, IInteractable, IRenderable, IPositioned
+public class Bullet : Item, IDamage, IRenderable
 {
     public int XPosition { get; set; }
     public int YPosition { get; set; }
@@ -21,16 +21,16 @@ public class Bullet : IDamage, IInteractable, IRenderable, IPositioned
     
     private int _movementCooldown = 0;
     private const int MoveInterval = 10;
-    public int Delay = 0;
 
 
-    public Bullet(Player.Player player, IInteractionHandler interactionHandler, char symbol = WeaponData.Bullet)
+    public Bullet(int characterPositionX, int characterPositionY, Direction facing, IInteractionHandler interactionHandler, char symbol = WeaponData.Bullet)
     {
-        _direction = player.Facing;
+        // _direction = player.Facing;
+        _direction = facing;
 
         var (dx, dy) = GetDirectionsOffset(_direction);
-        XPosition = player.XPosition + dx;
-        YPosition = player.YPosition + dy;
+        XPosition = characterPositionX + dx;
+        YPosition = characterPositionY + dy;
         _interactionHandler = interactionHandler;
         Symbol = symbol;
     }

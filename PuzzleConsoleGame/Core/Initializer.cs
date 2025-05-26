@@ -14,18 +14,16 @@ public class Initializer
     public Game Initialize()
     {
         var gameWorld = new GameWorld(Boundaries.GameBoundsVerticalMax, Boundaries.GameBoundsHorizontalMax);
-        
-        var player = new Player(PlayerStart.PlayerStartPosHoriz, PlayerStart.PlayerStartPosVert);
         var render = new Render();
         var itemManager = new ItemManager(gameWorld, render);
-        var collisionManager = new CollisionManager(itemManager, gameWorld);
-        var bulletManager = new BulletManager(render, collisionManager);
-        var enemyManager = new EnemyManager(render, collisionManager, itemManager);
-        var actions = new Actions(player, bulletManager);
-        var playerManager = new PlayerManager(render, collisionManager, player);
+        var collisionManager = new CollisionManager();
+        var bulletManager = new BulletManager(collisionManager);
+        var enemyManager = new EnemyManager(itemManager);
+        var actions = new Actions(bulletManager);
+        var playerManager = new PlayerManager(collisionManager);
         var input = new InputProcessor(actions, playerManager);
         
         
-        return new Game(player, gameWorld, render, itemManager, input, bulletManager, enemyManager, collisionManager, playerManager);
+        return new Game(gameWorld, render, itemManager, input, bulletManager, enemyManager, collisionManager, playerManager);
     }
 }

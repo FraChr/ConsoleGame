@@ -1,71 +1,39 @@
 ﻿using PuzzleConsoleGame.Config;
-using PuzzleConsoleGame.Core;
-using PuzzleConsoleGame.Entities.Items;
-using PuzzleConsoleGame.Interfaces;
-using PuzzleConsoleGame.Rendering;
+
 
 namespace PuzzleConsoleGame.Entities.Player;
 
-public class Player
-    : IRenderable, IInteractable, IPositioned
+public class Player : Character.Character
 {
-    public int XPosition { get; set; }
-    public int YPosition { get; set; }
-    
-    public int PreviousX { get;  set; }
-    public int PreviousY { get;  set; }
-    public char Symbol { get; private set; }
-    public int Health { get;  private set; } = PlayerData.Health;
-    public int Score { get; set; }
-    public Direction Facing { get; private set; }
-    
-    public bool IsActive { get; set; }
-
-    public Player(int xPosition, int yPosition, Direction facing = Direction.Up)
+    public Player(int xPosition, int yPosition, Direction facing = Direction.Up) : base(xPosition, yPosition, facing)
     {
         XPosition = xPosition;
         YPosition = yPosition;
-        Symbol = GetDirectionSymbol(facing);
+        Symbol = PlayerData.CharacterDefault;
+        Health = PlayerData.Health;
     }
 
-    
-    public void Interact(IInteractable other)
-    {
-        
-    }
 
     public void Update(int deltaX, int deltaY)
     {
         PreviousX = XPosition;
         PreviousY = YPosition;
-        
+
+
         Move(deltaX, deltaY);
     }
-    
-    public void Move(int deltaX = Movement.NoMove, int deltaY = Movement.NoMove)
+
+    private void Move(int deltaX, int deltaY)
     {
         if (deltaX == Movement.MovePositive) Rotate(Direction.Right);
         else if (deltaX == Movement.MoveNegative) Rotate(Direction.Left);
         else if (deltaY == Movement.MoveNegative) Rotate(Direction.Up);
         else if (deltaY == Movement.MovePositive) Rotate(Direction.Down);
+
         XPosition += deltaX;
         YPosition += deltaY;
     }
 
-    public void TakeDamage(IDamage damage)
-    {
-        Health -= damage.Damage;
-    }
-    
-    
-    // TODO: PLAYER SIDE: make some better solution to detect if player is picking up item or not!!!
-    public int GiveHealth(int health)
-    {
-        int maxHealth = PlayerData.Health;
-        if(Health >= maxHealth) return -1;
-        Health += health;
-        return 0;
-    }
 
     private void Rotate(Direction newDirection)
     {
@@ -84,6 +52,4 @@ public class Player
             _ => PlayerData.CharacterDefault
         };
     }
-
-  
 }

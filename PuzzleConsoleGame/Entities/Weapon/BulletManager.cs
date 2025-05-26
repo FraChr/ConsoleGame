@@ -1,7 +1,5 @@
-﻿using PuzzleConsoleGame.Config;
+﻿using PuzzleConsoleGame.Core;
 using PuzzleConsoleGame.Entities.Items;
-using PuzzleConsoleGame.Interfaces;
-using PuzzleConsoleGame.Rendering;
 
 namespace PuzzleConsoleGame.Entities.Weapon;
 
@@ -9,19 +7,17 @@ public class BulletManager : IInteractionHandler
 {
     private List<Bullet> _activeBullets = [];
     private readonly List<Bullet> _bulletsToRemove = [];
-    private readonly Render _render;
     private readonly CollisionManager _collisionManager;
 
-    public BulletManager(Render render, CollisionManager collisionManager)
+    public BulletManager(CollisionManager collisionManager)
     {
-        _render = render;
         _collisionManager = collisionManager;
     }
 
 
-    public void SpawnBullet(Player.Player player)
+    public void SpawnBullet(IPositioned position, Direction facing)
     {
-        var bullet = new Bullet(player, this)
+        var bullet = new Bullet(position.XPosition, position.YPosition, facing, this)
         {
             IsActive = true
         };
@@ -34,6 +30,7 @@ public class BulletManager : IInteractionHandler
         {
             _activeBullets.Remove(bullet);
         }
+
         _bulletsToRemove.Clear();
         foreach (var bullet in _activeBullets)
         {
@@ -42,19 +39,17 @@ public class BulletManager : IInteractionHandler
             if (_collisionManager.IsInBounds(bullet)) continue;
             bullet.IsActive = false;
             _bulletsToRemove.Add(bullet);
-            
         }
-        
-        
-        
-        
+
+
         // _activeBullets = _activeBullets.Where(bullet => bullet.IsActive).ToList();
         // _bulletsToRemove.Clear();
     }
-    
+
     public void RemoveBullet(Bullet bullet)
     {
-        if(!_bulletsToRemove.Contains(bullet)){
+        if (!_bulletsToRemove.Contains(bullet))
+        {
             _bulletsToRemove.Add(bullet);
         }
         // _activeBullets.Remove(bullet);
@@ -62,9 +57,9 @@ public class BulletManager : IInteractionHandler
 
     public List<IInteractable> GetSpawnedBullets()
     {
-        return _activeBullets.OfType<IInteractable>().ToList(); 
+        return _activeBullets.OfType<IInteractable>().ToList();
     }
-    
+
     public void HandleInteraction(IInteractable source, IInteractable target)
     {
         if (source is not Bullet { IsActive: true } bullet) return;

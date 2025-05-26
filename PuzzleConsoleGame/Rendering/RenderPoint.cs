@@ -1,5 +1,4 @@
 ﻿using PuzzleConsoleGame.Core;
-using PuzzleConsoleGame.Entities.Items;
 
 namespace PuzzleConsoleGame.Rendering;
 

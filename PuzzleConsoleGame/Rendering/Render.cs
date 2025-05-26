@@ -1,7 +1,7 @@
 ﻿using PuzzleConsoleGame.Config;
 using PuzzleConsoleGame.Core;
+using PuzzleConsoleGame.Entities.Character;
 using PuzzleConsoleGame.Entities.Items;
-using PuzzleConsoleGame.Entities.Player;
 
 namespace PuzzleConsoleGame.Rendering;
 
@@ -18,9 +18,9 @@ public class Render
         Console.Write(overrideChar ?? obj.Symbol);
     }
 
-    public void DrawScore(Player player)
+    public void DrawScore(Character player)
     {
-        var maxLenght = 40;
+        const int maxLenght = 40;
         Console.SetCursorPosition(Ui.HorizontalPosition, Ui.VerticalPosition);
         Console.Write(new String(' ', maxLenght));
 
@@ -30,8 +30,8 @@ public class Render
 
     public void PrintAllGameObjects(List<IInteractable> allEntities)
     {
-        int startX = 60;
-        int startY = 1;
+        const int startX = 60;
+        const int startY = 1;
 
         Console.SetCursorPosition(startX, startY);
         Console.WriteLine("Entities this frame: ");
@@ -58,7 +58,7 @@ public class Render
 
     private static void DrawVerticalBorder(GameWorld gameWorld)
     {
-        int yMinBound = gameWorld.HorizontalMin + 1;
+        var yMinBound = gameWorld.HorizontalMin + 1;
         for (var y = yMinBound; y < gameWorld.HorizontalMax; y++)
         {
             Console.SetCursorPosition(gameWorld.VerticalMin, y);
@@ -70,7 +70,7 @@ public class Render
 
     private static void DrawHorizontalBorder(GameWorld gameWorld)
     {
-        int xMinBound = gameWorld.VerticalMin + 1;
+        var xMinBound = gameWorld.VerticalMin + 1;
         for (var x = xMinBound; x < gameWorld.VerticalMax; x++)
         {
             Console.SetCursorPosition(x, gameWorld.HorizontalMin);

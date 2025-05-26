@@ -1,8 +1,5 @@
-﻿using PuzzleConsoleGame.Config;
-using PuzzleConsoleGame.Core;
-using PuzzleConsoleGame.Entities;
+﻿using PuzzleConsoleGame.Entities.Character;
 using PuzzleConsoleGame.Entities.Player;
-using PuzzleConsoleGame.Rendering;
 namespace PuzzleConsoleGame.Input;
 
 public class InputProcessor
@@ -42,5 +39,10 @@ public class InputProcessor
         {
             _playerManager.UpdatePlayer(movement.Value.dx, movement.Value.dy);
         }
+    }
+    
+    public void SetPlayer(Character player)
+    {
+        _action.SetPlayer(player);
     }
 }

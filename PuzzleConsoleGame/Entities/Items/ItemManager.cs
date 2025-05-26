@@ -1,5 +1,4 @@
-﻿using System.Xml;
-using PuzzleConsoleGame.Core;
+﻿using PuzzleConsoleGame.Core;
 using PuzzleConsoleGame.Rendering;
 
 namespace PuzzleConsoleGame.Entities.Items;
@@ -12,6 +11,8 @@ public class ItemManager
         { 2, () => new HealthPack() }
     };
 
+    
+    
     private readonly List<IInteractable> _spawnedItems = [];
     private readonly Random _random = new();
     private readonly GameWorld _gameWorld;
@@ -26,7 +27,6 @@ public class ItemManager
     public void SpawnRandomItem(int positionX = 0, int positionY = 0)
     {
         var entery = _lootGenerationMap.ElementAt(_random.Next(_lootGenerationMap.Count));
-        
         
         var factory = entery.Value;
         var instance = factory();
@@ -76,7 +76,6 @@ public class ItemManager
 
     public List<IInteractable> GetSpawnedItems()
     {
-        // return _spawnedItems.OfType<IInteractable>().ToList();
         return _spawnedItems;
     }
 
