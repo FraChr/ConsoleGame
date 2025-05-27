@@ -16,10 +16,10 @@ public class Initializer
     {
         var gameWorld = new GameWorld(Boundaries.GameBoundsVerticalMax, Boundaries.GameBoundsHorizontalMax);
         var render = new Render();
-        var itemManager = new ItemManager(gameWorld, render);
+        var itemManager = new ItemManager();
         var collisionManager = new CollisionManager();
         var bulletManager = new BulletManager(collisionManager);
-        var enemyManager = new EnemyManager(itemManager);
+        var enemyManager = new EnemyManager(itemManager, collisionManager);
         var actions = new Actions(bulletManager);
         var playerManager = new PlayerManager(collisionManager);
         var input = new InputProcessor(actions, playerManager);

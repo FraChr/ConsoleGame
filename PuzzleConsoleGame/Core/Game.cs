@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using PuzzleConsoleGame.Config;
 using PuzzleConsoleGame.Config.Collision;
-using PuzzleConsoleGame.Entities;
 using PuzzleConsoleGame.Entities.Character;
 using PuzzleConsoleGame.Entities.Enemy;
 using PuzzleConsoleGame.Entities.Items;
@@ -15,7 +14,7 @@ namespace PuzzleConsoleGame.Core;
 public class Game
 {
     private bool _running = true;
-    private Character? Player {get; set;}
+    private Character? Player { get; set; }
     private readonly GameWorld _gameWorld;
     private readonly Render _render;
     private readonly ItemManager _itemManager;
@@ -24,9 +23,9 @@ public class Game
     private readonly EnemyManager _enemyManager;
     private readonly CollisionManager _collisionManager;
     private readonly PlayerManager _playerManager;
-    
-    private const int EnemySpawnIntervalsMs = 3000;
+
     private readonly Stopwatch _enemySpawnTimer = new();
+    private readonly Stopwatch _frameTimer = new();
 
     public Game(
         GameWorld gameWorld,
@@ -50,17 +49,13 @@ public class Game
     public void Run()
     {
         const int frameTimeMs = 16;
-        var stopwatch = new Stopwatch();
-
-    
-        
 
         InitGame();
         _enemySpawnTimer.Start();
         while (_running)
         {
-            stopwatch.Restart();
-            
+            _frameTimer.Restart();
+
             if (Console.KeyAvailable)
             {
                 _inputProcessor.ProcessControls();
@@ -71,22 +66,21 @@ public class Game
             _itemManager.UpdateItems();
 
 
-            // if (_enemySpawnTimer.ElapsedMilliseconds >= EnemySpawnIntervalsMs)
-            // {
-            //     _enemyManager.SpawnEnemy();
-            //     _enemySpawnTimer.Restart();
-            // }
-            
+            if (_enemySpawnTimer.ElapsedMilliseconds >= EnemyData.EnemySpawnIntervalsMs)
+            {
+                _enemyManager.SpawnEnemy();
+                _enemySpawnTimer.Restart();
+            }
+
             HandleInteractions();
 
             RenderFrame();
 
-            var elapsed = stopwatch.ElapsedMilliseconds;
+            var elapsed = _frameTimer.ElapsedMilliseconds;
             var sleepTime = frameTimeMs - (int)elapsed;
             if (sleepTime > 0)
                 Thread.Sleep(sleepTime);
         }
-        
     }
 
     private void InitGame()
@@ -100,7 +94,7 @@ public class Game
 
         RenderFrame();
     }
-    
+
     private void HandleInteractions()
     {
         if (_playerManager.IsPlayerDead())
@@ -108,7 +102,7 @@ public class Game
             if (Player != null) Player.IsActive = false;
             CleanUp();
         }
-        
+
         var allInteractables = new List<IInteractable>();
         allInteractables.AddRange(_bulletManager.GetSpawnedBullets());
         allInteractables.AddRange(_enemyManager.GetActiveEnemies());
@@ -118,7 +112,7 @@ public class Game
         _collisionManager.CheckInteraction(allInteractables);
 
         // _render.PrintAllGameObjects(allInteractables);
-        
+
         allInteractables.Clear();
     }
 

@@ -11,23 +11,15 @@ public class ItemManager
         { 2, () => new HealthPack() }
     };
 
-    
-    
+
     private readonly List<IInteractable> _spawnedItems = [];
     private readonly Random _random = new();
-    private readonly GameWorld _gameWorld;
-    private readonly Render _render;
 
-    public ItemManager(GameWorld gameWorld, Render render)
-    {
-        _gameWorld = gameWorld;
-        _render = render;
-    }
 
     public void SpawnRandomItem(int positionX = 0, int positionY = 0)
     {
         var entery = _lootGenerationMap.ElementAt(_random.Next(_lootGenerationMap.Count));
-        
+
         var factory = entery.Value;
         var instance = factory();
 
@@ -36,9 +28,9 @@ public class ItemManager
             interactable.XPosition = positionX;
             interactable.YPosition = positionY;
         }
-        
+
         instance.IsActive = true;
-        
+
         _spawnedItems.Add(instance);
     }
 

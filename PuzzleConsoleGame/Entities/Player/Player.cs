@@ -7,7 +7,7 @@ namespace PuzzleConsoleGame.Entities.Player;
 public class Player : Character.Character
 {
     public override EntityType Type => EntityType.Player;
-    public Player(int xPosition, int yPosition, Direction facing = Direction.Up) : base(xPosition, yPosition, facing)
+    public Player(int xPosition, int yPosition) : base(xPosition, yPosition)
     {
         XPosition = xPosition;
         YPosition = yPosition;
@@ -66,5 +66,10 @@ public class Player : Character.Character
     public void GivePoints(IInteractable interactionValue)
     {
         Score += interactionValue.Value;
+    }
+
+    public override void TakeDamage(IInteractable interactionValue)
+    {
+        Health -= interactionValue.Value;
     }
 }

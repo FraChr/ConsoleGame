@@ -12,6 +12,8 @@ public static class EnemyData
     public const int StartPositionHorizontal = 3;
     public const int StartPositionVertical = 4;
     public const int Health = 100;
+    public const int Damage = 1;
+    public const int EnemySpawnIntervalsMs = 6000;
     public static char Remove => GameSymbols.Remove;
 }
 
@@ -37,6 +39,8 @@ public static class ItemData
 {
     public const char Coin = '\u25CF';
     public const int CoinValue = 1;
+    public const char Health = '\u2665';
+    public const int HealthValue = 10;
     public static char Remove => GameSymbols.Remove;
 }
 

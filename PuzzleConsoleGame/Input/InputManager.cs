@@ -16,7 +16,6 @@ public class InputManager
 
     public InputManager(Actions actions)
     {
-        // _actions = new Actions();
         _actionMap = new Dictionary<ConsoleKey, Action>
         {
             { ConsoleKey.Spacebar, actions.Shoot }

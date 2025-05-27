@@ -1,25 +1,22 @@
 ﻿using PuzzleConsoleGame.Config;
-using PuzzleConsoleGame.Core;
 using PuzzleConsoleGame.Entities.Items;
-// using PuzzleConsoleGame.Interfaces;
-using PuzzleConsoleGame.Rendering;
 
 namespace PuzzleConsoleGame.Entities.Weapon;
 
-public class Bullet : Item, IRenderable
+public class Bullet : Item
 {
-    public int XPosition { get; set; }
-    public int YPosition { get; set; }
-    
-    public int PreviousX { get;  set; }
-    public int PreviousY { get;  set; }
-    public char Symbol { get; set; }
+    // public int XPosition { get; set; }
+    // public int YPosition { get; set; }
+    //
+    // public int PreviousX { get;  set; }
+    // public int PreviousY { get;  set; }
+    // public char Symbol { get; set; }
     // public int Damage => WeaponData.Damage;
-    public int Value { get; set; } = 50;
+    // public int Value { get; set; } = 50;
     private readonly Direction _direction;
-    public bool IsActive { get; set; }
+    // public bool IsActive { get; set; }
     
-    private int _movementCooldown = 0;
+    private int _movementCooldown;
     private const int MoveInterval = 10;
     
 
@@ -35,7 +32,8 @@ public class Bullet : Item, IRenderable
         YPosition = characterPositionY + dy;
         
         Symbol = symbol;
-        
+        Value = 50;
+
     }
 
     public void Interact(IInteractable other)
