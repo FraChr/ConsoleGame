@@ -1,12 +1,12 @@
 ﻿using PuzzleConsoleGame.Config;
 using PuzzleConsoleGame.Core;
 using PuzzleConsoleGame.Entities.Items;
-using PuzzleConsoleGame.Interfaces;
+// using PuzzleConsoleGame.Interfaces;
 using PuzzleConsoleGame.Rendering;
 
 namespace PuzzleConsoleGame.Entities.Weapon;
 
-public class Bullet : Item, IDamage, IRenderable
+public class Bullet : Item, IRenderable
 {
     public int XPosition { get; set; }
     public int YPosition { get; set; }
@@ -14,16 +14,18 @@ public class Bullet : Item, IDamage, IRenderable
     public int PreviousX { get;  set; }
     public int PreviousY { get;  set; }
     public char Symbol { get; set; }
-    public int Damage => WeaponData.Damage;
+    // public int Damage => WeaponData.Damage;
+    public int Value { get; set; } = 50;
     private readonly Direction _direction;
-    private readonly IInteractionHandler _interactionHandler;
     public bool IsActive { get; set; }
     
     private int _movementCooldown = 0;
     private const int MoveInterval = 10;
+    
 
+    public override EntityType Type => EntityType.Bullet;
 
-    public Bullet(int characterPositionX, int characterPositionY, Direction facing, IInteractionHandler interactionHandler, char symbol = WeaponData.Bullet)
+    public Bullet(int characterPositionX, int characterPositionY, Direction facing, char symbol = WeaponData.Bullet)
     {
         // _direction = player.Facing;
         _direction = facing;
@@ -31,14 +33,15 @@ public class Bullet : Item, IDamage, IRenderable
         var (dx, dy) = GetDirectionsOffset(_direction);
         XPosition = characterPositionX + dx;
         YPosition = characterPositionY + dy;
-        _interactionHandler = interactionHandler;
+        
         Symbol = symbol;
+        
     }
 
     public void Interact(IInteractable other)
     {
-        if (!IsActive) return;
-        _interactionHandler.HandleInteraction(this, other);
+        // if (!IsActive) return;
+        // _interactionHandler.HandleInteraction(this, other);
         // if (other is Player.Player player)
         // {
         //     player.TakeDamage(this);

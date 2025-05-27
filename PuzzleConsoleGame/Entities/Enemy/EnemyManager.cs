@@ -2,7 +2,7 @@
 
 namespace PuzzleConsoleGame.Entities.Enemy;
 
-public class EnemyManager : IInteractionHandler
+public class EnemyManager
 {
     private readonly List<Enemy> _activeEnemies = [];
     private readonly List<Enemy> _enemiesToRemove = [];
@@ -15,7 +15,7 @@ public class EnemyManager : IInteractionHandler
 
     public void SpawnEnemy()
     {
-        var enemy = new Enemy(6, 9, this)
+        var enemy = new Enemy(6, 9)
         {
             IsActive = true
         };
@@ -29,7 +29,6 @@ public class EnemyManager : IInteractionHandler
         {
             _itemManager.SpawnRandomItem(enemy.XPosition, enemy.YPosition);
             _activeEnemies.Remove(enemy);
-            RemoveEnemy(enemy);
         }
 
         _enemiesToRemove.Clear();
@@ -47,34 +46,4 @@ public class EnemyManager : IInteractionHandler
     {
         return _activeEnemies.OfType<IInteractable>().ToList();
     }
-
-    public void HandleInteraction(IInteractable source, IInteractable target)
-    {
-        if (source is not Enemy { IsActive: true } enemy) return;
-        if (target is Player.Player player)
-        {
-            player.TakeDamage(enemy);
-        }
-    }
-
-    private void RemoveEnemy(Enemy enemy)
-    {
-        // _activeEnemies.ToList().Remove(enemy);
-        // _enemiesToRemove.Remove(enemy);
-    }
-
-    // private void Update(Enemy activeEnemy, int positionX, int positionY)
-    // {
-    //     activeEnemy.PreviousX = activeEnemy.XPosition;
-    //     activeEnemy.PreviousY = activeEnemy.YPosition;
-    //
-    //     if (activeEnemy.MovementCooldown > 0)
-    //     {
-    //         activeEnemy.MovementCooldown--;
-    //         return;
-    //     }
-    //
-    //     activeEnemy.Move(activeEnemy, positionX, positionY);
-    //     activeEnemy.MovementCooldown = activeEnemy.MoveInterval;
-    // }
 }

@@ -1,4 +1,6 @@
 ﻿using PuzzleConsoleGame.Config;
+using PuzzleConsoleGame.Config.Collision;
+using PuzzleConsoleGame.Entities.Items;
 using PuzzleConsoleGame.Rendering;
 
 namespace PuzzleConsoleGame.Entities.Player;

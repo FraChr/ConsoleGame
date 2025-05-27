@@ -1,7 +1,5 @@
 ﻿using PuzzleConsoleGame.Config;
-using PuzzleConsoleGame.Core;
 using PuzzleConsoleGame.Entities.Items;
-using PuzzleConsoleGame.Interfaces;
 using PuzzleConsoleGame.Rendering;
 
 namespace PuzzleConsoleGame.Entities.Character;
@@ -26,22 +24,27 @@ public class Character : IRenderable
         YPosition = yPosition;
     }
 
-    
-    public virtual void Interact(IInteractable other)
+
+    public virtual EntityType Type { get; }
+    public int Value { get; }
+
+    public virtual void Interact()
     {
         
     }
 
-    public void TakeDamage(IDamage damage)
+    public virtual void TakeDamage(IInteractable interactionValue)
     {
-        Health -= damage.Damage;
+        Health -= interactionValue.Value;
     }
     
-    public int GiveHealth(int health)
+    public virtual void GiveHealth(IInteractable interactionValue)
     {
-        int maxHealth = PlayerData.Health;
-        if(Health >= maxHealth) return -1;
-        Health += health;
-        return 0;
+        // int maxHealth = PlayerData.Health;
+        // if(Health >= maxHealth) return -1;
+        
+        if (Health >= 100) return;
+        Health += interactionValue.Value;
+        // return 0;
     }
 }

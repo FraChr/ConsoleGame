@@ -1,29 +1,32 @@
 ﻿using PuzzleConsoleGame.Config;
-using PuzzleConsoleGame.Entities.Items;
-using PuzzleConsoleGame.Interfaces;
 
 namespace PuzzleConsoleGame.Entities.Enemy;
 
-public class Enemy : Character.Character, IDamage
+public class Enemy : Character.Character
 {
-    private readonly IInteractionHandler _interactionHandler;
-    public int Damage { get; } = 10;
+    public int Value { get; } = 10;
 
-    public int MovementCooldown = 0;
-    public readonly int MoveInterval = 20;
+    private int _movementCooldown = 0;
+    private const int MoveInterval = 20;
+    public override EntityType Type => EntityType.Enemy;
 
-    public Enemy(int xPosition, int yPosition, IInteractionHandler interactionHandler) : base(xPosition, yPosition)
+    public Enemy(int xPosition, int yPosition) : base(xPosition, yPosition)
     {
-        _interactionHandler = interactionHandler;
         XPosition = xPosition;
         YPosition = yPosition;
         Symbol = EnemyData.EnemyCharacter;
         Health = EnemyData.Health;
     }
     
-    public override void Interact(IInteractable other)
+    public override void Interact()
     {
-        _interactionHandler.HandleInteraction(this, other);
+        // if (other is not Enemy { IsActive: true } enemy) return;
+        // if (other is Player.Player player)
+        // {
+        //     player.TakeDamage(this);
+        // }
+        
+        // _interactionHandler.HandleInteraction(this, other);
     }
     
     
@@ -46,13 +49,13 @@ public class Enemy : Character.Character, IDamage
         activeEnemy.PreviousX = activeEnemy.XPosition;
         activeEnemy.PreviousY = activeEnemy.YPosition;
 
-        if (activeEnemy.MovementCooldown > 0)
+        if (activeEnemy._movementCooldown > 0)
         {
-            activeEnemy.MovementCooldown--;
+            activeEnemy._movementCooldown--;
             return;
         }
 
         Move(activeEnemy, positionX, positionY);
-        activeEnemy.MovementCooldown = activeEnemy.MoveInterval;
+        activeEnemy._movementCooldown = MoveInterval;
     }
 }

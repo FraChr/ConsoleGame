@@ -1,10 +1,12 @@
 ﻿using PuzzleConsoleGame.Config;
+using PuzzleConsoleGame.Entities.Items;
 
 
 namespace PuzzleConsoleGame.Entities.Player;
 
 public class Player : Character.Character
 {
+    public override EntityType Type => EntityType.Player;
     public Player(int xPosition, int yPosition, Direction facing = Direction.Up) : base(xPosition, yPosition, facing)
     {
         XPosition = xPosition;
@@ -13,13 +15,15 @@ public class Player : Character.Character
         Health = PlayerData.Health;
     }
 
-
     public void Update(int deltaX, int deltaY)
     {
         PreviousX = XPosition;
         PreviousY = YPosition;
 
-
+        if (Health >= 100)
+        {
+            Health = 100;
+        }
         Move(deltaX, deltaY);
     }
 
@@ -51,5 +55,16 @@ public class Player : Character.Character
             Direction.Right => PlayerData.CharacterRight,
             _ => PlayerData.CharacterDefault
         };
+    }
+    
+    public override void GiveHealth(IInteractable interactionValue)
+    {
+        if (Health >= 100) return;
+        Health += interactionValue.Value;
+    }
+
+    public void GivePoints(IInteractable interactionValue)
+    {
+        Score += interactionValue.Value;
     }
 }
