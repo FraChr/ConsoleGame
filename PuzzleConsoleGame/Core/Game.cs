@@ -14,7 +14,7 @@ namespace PuzzleConsoleGame.Core;
 public class Game
 {
     private bool _running = true;
-    private Character? Player { get; set; }
+    private Player? Player { get; set; }
     private readonly GameWorld _gameWorld;
     private readonly Render _render;
     private readonly ItemManager _itemManager;
@@ -49,7 +49,7 @@ public class Game
     public void Run()
     {
         const int frameTimeMs = 16;
-
+        
         InitGame();
         _enemySpawnTimer.Start();
         while (_running)
@@ -65,7 +65,10 @@ public class Game
             _bulletManager.UpdateBullets();
             _itemManager.UpdateItems();
 
-
+            if (_enemyManager.GetActiveEnemies().Count == 0)
+            {
+                _enemyManager.SpawnEnemy();
+            }
             if (_enemySpawnTimer.ElapsedMilliseconds >= EnemyData.EnemySpawnIntervalsMs)
             {
                 _enemyManager.SpawnEnemy();

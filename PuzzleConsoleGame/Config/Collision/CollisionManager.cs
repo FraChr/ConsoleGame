@@ -35,9 +35,7 @@ public class CollisionManager
 
     public bool IsInBounds(IPositioned entity)
     {
-        return entity.XPosition > Boundaries.GameBoundsVerticalMin &&
-               entity.XPosition < Boundaries.GameBoundsHorizontalMax &&
-               entity.YPosition > Boundaries.GameBoundsHorizontalMin &&
-               entity.YPosition < Boundaries.GameBoundsVerticalMax;
+        return entity.XPosition is > Boundaries.GameBoundsVerticalMin and < Boundaries.GameBoundsHorizontalMax &&
+               entity.YPosition is > Boundaries.GameBoundsHorizontalMin and < Boundaries.GameBoundsVerticalMax;
     }
 }

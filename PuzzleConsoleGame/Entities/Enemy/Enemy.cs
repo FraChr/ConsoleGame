@@ -38,17 +38,17 @@ public class Enemy : Character.Character
     private void Move(Enemy activeEnemy, int positionX, int positionY)
     {
         if(_random.NextDouble() < 0.2) return;
-        if (_random.NextDouble() < 0.3)
-        {
-            int direction = _random.Next(4);
-            switch (direction)
-            {
-                case 0: activeEnemy.YPosition -= 2; break;
-                case 1: activeEnemy.YPosition += 2; break;
-                case 2: activeEnemy.XPosition -= 2; break;
-                case 3: activeEnemy.XPosition += 2; break;
-            }
-        }
+        // if (_random.NextDouble() < 0.3)
+        // {
+        //     var direction = _random.Next(4);
+        //     switch (direction)
+        //     {
+        //         case 0: activeEnemy.YPosition -= 2; break;
+        //         case 1: activeEnemy.YPosition += 2; break;
+        //         case 2: activeEnemy.XPosition -= 2; break;
+        //         case 3: activeEnemy.XPosition += 2; break;
+        //     }
+        // }
 
         // if (_random.NextDouble() < 0.1)
         // {
@@ -58,7 +58,7 @@ public class Enemy : Character.Character
         
         // if (_random.NextDouble() < 0.3)
         // {
-        //     if (_random.Next(2) == 0)q
+        //     if (_random.Next(2) == 0)
         //     {
         //         activeEnemy.XPosition += _random.Next(2) * 2 - 1;
         //     }

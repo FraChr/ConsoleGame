@@ -16,7 +16,9 @@ public class Actions
     public void Shoot()
     {
         if(Player == null) return;
-        // _bulletManager.SpawnBullet(_player.XPosition, _player.YPosition, _player.Facing);
+        Console.Beep(800, 50);
+        Thread.Sleep(20);
+        Console.Beep(600, 80);
         _bulletManager.SpawnBullet(Player, Player.Facing);
     }
     public void SetPlayer(Character player)
