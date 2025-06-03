@@ -36,15 +36,14 @@ public class Render
         Console.SetCursorPosition(startX, startY);
         Console.WriteLine("Entities this frame: ");
 
-        int line = startY + 1;
+        var line = startY + 1;
         foreach (var entity in allEntities)
         {
-            if(entity is IPositioned positioned)
-            {
-                Console.SetCursorPosition(startX, line++);
-                Console.WriteLine(
-                    $"{entity.GetType().Name} @ ({positioned.XPosition}, {positioned.YPosition}), Active: {entity.IsActive}");
-            }
+            if (entity is not IPositioned positioned) continue;
+            
+            Console.SetCursorPosition(startX, line++);
+            Console.WriteLine(
+                $"{entity.GetType().Name} @ ({positioned.XPosition}, {positioned.YPosition}), Active: {entity.IsActive}");
         }
     }
 

@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using PuzzleConsoleGame.Config;
 using PuzzleConsoleGame.Config.Collision;
-using PuzzleConsoleGame.Entities.Character;
 using PuzzleConsoleGame.Entities.Enemy;
 using PuzzleConsoleGame.Entities.Items;
 using PuzzleConsoleGame.Entities.Player;
@@ -23,6 +22,7 @@ public class Game
     private readonly EnemyManager _enemyManager;
     private readonly CollisionManager _collisionManager;
     private readonly PlayerManager _playerManager;
+    
 
     private readonly Stopwatch _enemySpawnTimer = new();
     private readonly Stopwatch _frameTimer = new();
@@ -94,7 +94,8 @@ public class Game
         _itemManager.SpawnItem(() => new Coin(), 10, 10);
         _itemManager.SpawnItem(() => new Coin(), 15, 5);
         _enemyManager.SpawnEnemy();
-
+        Sound.Music();
+    
         RenderFrame();
     }
 
@@ -114,7 +115,7 @@ public class Game
 
         _collisionManager.CheckInteraction(allInteractables);
 
-        // _render.PrintAllGameObjects(allInteractables);
+        _render.PrintAllGameObjects(allInteractables);
 
         allInteractables.Clear();
     }

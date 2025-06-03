@@ -1,4 +1,5 @@
-﻿using PuzzleConsoleGame.Entities.Character;
+﻿using PuzzleConsoleGame.Entities;
+using PuzzleConsoleGame.Entities.Character;
 using PuzzleConsoleGame.Entities.Weapon;
 
 namespace PuzzleConsoleGame.Input;
@@ -9,17 +10,16 @@ public class Actions
     private readonly BulletManager _bulletManager;
     public Actions(BulletManager bulletManager)
     {
-        // _player = player;
         _bulletManager = bulletManager;
     }
 
     public void Shoot()
     {
         if(Player == null) return;
-        Console.Beep(800, 50);
-        Thread.Sleep(20);
-        Console.Beep(600, 80);
+        Sound.Gunshot();
         _bulletManager.SpawnBullet(Player, Player.Facing);
+        // _bulletManager.SpawnBulletsCircle(Player);
+
     }
     public void SetPlayer(Character player)
     {

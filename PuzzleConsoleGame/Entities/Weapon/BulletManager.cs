@@ -25,6 +25,20 @@ public class BulletManager
         _activeBullets.Add(bullet);
     }
 
+    public void SpawnBulletsCircle(IPositioned position)
+    {
+        Direction[] facings = (Direction[])Enum.GetValues(typeof(Direction));
+        
+        foreach (var direction in facings)
+        {
+            var bullet = new Bullet(position.XPosition, position.YPosition, direction)
+            {
+                IsActive = true
+            };
+            _activeBullets.Add(bullet);
+        }
+    }
+    
     public void UpdateBullets()
     {
         foreach (var bullet in _bulletsToRemove)
