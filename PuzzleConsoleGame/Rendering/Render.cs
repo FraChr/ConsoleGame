@@ -25,7 +25,7 @@ public class Render
         Console.Write(new String(' ', maxLenght));
 
         Console.SetCursorPosition(Ui.HorizontalPosition, Ui.VerticalPosition);
-        Console.Write($"score {player.Score} | Health: {player.Health}");
+        Console.Write($"Coin {player.Coin} | Health: {player.Health}");
     }
 
     public void PrintAllGameObjects(List<IInteractable> allEntities)

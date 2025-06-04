@@ -115,7 +115,7 @@ public class Game
 
         _collisionManager.CheckInteraction(allInteractables);
 
-        _render.PrintAllGameObjects(allInteractables);
+        // _render.PrintAllGameObjects(allInteractables);
 
         allInteractables.Clear();
     }

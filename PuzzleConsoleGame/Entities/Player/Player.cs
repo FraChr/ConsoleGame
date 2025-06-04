@@ -65,7 +65,7 @@ public class Player : Character.Character
 
     public void GivePoints(IInteractable interactionValue)
     {
-        Score += interactionValue.Value;
+        Coin += interactionValue.Value;
     }
 
     public override void TakeDamage(IInteractable interactionValue)

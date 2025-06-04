@@ -13,7 +13,7 @@ public class Character : IRenderable
     public int PreviousY { get; set; }
     public char Symbol { get; set; }
     public int Health { get; protected set; } = PlayerData.Health;
-    public int Score { get; set; }
+    public int Coin { get; set; }
     public Direction Facing { get; set; } = Direction.Up;
 
     public bool IsActive { get; set; }
