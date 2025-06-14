@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using PuzzleConsoleGame.Config;
 using PuzzleConsoleGame.Config.Collision;
+using PuzzleConsoleGame.DataBaseAPI;
 using PuzzleConsoleGame.Entities.Enemy;
 using PuzzleConsoleGame.Entities.Items;
 using PuzzleConsoleGame.Entities.Player;
@@ -14,7 +15,7 @@ public class Game
 {
     private bool _running = true;
     private Player? Player { get; set; }
-    private readonly GameWorld _gameWorld;
+    private GameWorld _gameWorld;
     private readonly Render _render;
     private readonly ItemManager _itemManager;
     private readonly InputProcessor _inputProcessor;
@@ -28,7 +29,7 @@ public class Game
     private readonly Stopwatch _frameTimer = new();
 
     public Game(
-        GameWorld gameWorld,
+        // GameWorld gameWorld,
         Render render,
         ItemManager itemManager,
         InputProcessor inputProcessor,
@@ -36,7 +37,7 @@ public class Game
         EnemyManager enemyManager,
         CollisionManager collisionManager, PlayerManager playerManager)
     {
-        _gameWorld = gameWorld;
+        // _gameWorld = gameWorld;
         _render = render;
         _itemManager = itemManager;
         _inputProcessor = inputProcessor;
@@ -88,6 +89,10 @@ public class Game
 
     private void InitGame()
     {
+        _gameWorld = new GameWorld(_render);
+
+        _gameWorld.GetMapFromDataBase();
+        
         _render.DrawBoundaries(_gameWorld);
         Player = _playerManager.SpawnPlayer(PlayerStart.PlayerStartPosHoriz, PlayerStart.PlayerStartPosVert);
         _inputProcessor.SetPlayer(Player);
@@ -111,6 +116,7 @@ public class Game
         allInteractables.AddRange(_bulletManager.GetSpawnedBullets());
         allInteractables.AddRange(_enemyManager.GetActiveEnemies());
         allInteractables.AddRange(_itemManager.GetSpawnedItems());
+        
         if (Player != null) allInteractables.AddRange(Player);
 
         _collisionManager.CheckInteraction(allInteractables);
@@ -141,6 +147,11 @@ public class Game
         foreach (var bullet in _bulletManager.GetSpawnedBullets().OfType<IRenderable>())
         {
             _render.Draw(bullet);
+        }
+
+        foreach (var wall in _gameWorld.GetMap().OfType<IRenderable>())
+        {
+            _render.Draw(wall);
         }
     }
 

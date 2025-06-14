@@ -1,6 +1,5 @@
 ﻿using PuzzleConsoleGame.Config;
 using PuzzleConsoleGame.Config.Collision;
-using PuzzleConsoleGame.Entities;
 using PuzzleConsoleGame.Entities.Enemy;
 using PuzzleConsoleGame.Entities.Items;
 using PuzzleConsoleGame.Entities.Player;
@@ -14,7 +13,7 @@ public class Initializer
 {
     public Game Initialize()
     {
-        var gameWorld = new GameWorld(Boundaries.GameBoundsVerticalMax, Boundaries.GameBoundsHorizontalMax);
+        // var gameWorld = new GameWorld(Boundaries.GameBoundsVerticalMax, Boundaries.GameBoundsHorizontalMax);
         var render = new Render();
         var itemManager = new ItemManager();
         var collisionManager = new CollisionManager();
@@ -25,6 +24,6 @@ public class Initializer
         var input = new InputProcessor(actions, playerManager);
         
         
-        return new Game(gameWorld, render, itemManager, input, bulletManager, enemyManager, collisionManager, playerManager);
+        return new Game(render, itemManager, input, bulletManager, enemyManager, collisionManager, playerManager);
     }
 }

@@ -28,6 +28,7 @@ public class Character : IRenderable
 
     public virtual void Interact()
     {
+        
     }
 
     public virtual void TakeDamage(IInteractable interactionValue)

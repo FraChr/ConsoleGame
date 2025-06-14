@@ -1,5 +1,6 @@
 ﻿using PuzzleConsoleGame.Core;
 using PuzzleConsoleGame.Entities;
+using PuzzleConsoleGame.Entities.Enemy;
 using PuzzleConsoleGame.Entities.Items;
 using PuzzleConsoleGame.Entities.Weapon;
 
@@ -35,7 +36,18 @@ public class CollisionManager
 
     public bool IsInBounds(IPositioned entity)
     {
-        return entity.XPosition is > Boundaries.GameBoundsVerticalMin and < Boundaries.GameBoundsHorizontalMax &&
+       
+        
+        var t = entity.XPosition is > Boundaries.GameBoundsVerticalMin and < Boundaries.GameBoundsHorizontalMax &&
                entity.YPosition is > Boundaries.GameBoundsHorizontalMin and < Boundaries.GameBoundsVerticalMax;
+
+        var walls = GameWorld._maps;
+        
+        if (walls.Where(wall => entity is not Enemy).Any(wall => entity.XPosition == wall.XPosition && entity.YPosition == wall.YPosition))
+        {
+            return false;
+        }
+        
+        return t;
     }
 }

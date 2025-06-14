@@ -8,6 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Dapper" Version="2.1.66" />
+      <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.0-preview1.25120.4" />
       <PackageReference Include="NAudio" Version="2.2.1" />
     </ItemGroup>
 
@@ -28,10 +30,6 @@
       <Content Include="Assets\Effects\gunshot.mp3">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Assets\Level\" />
     </ItemGroup>
 
 </Project>

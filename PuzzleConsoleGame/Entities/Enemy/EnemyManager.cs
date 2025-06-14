@@ -1,5 +1,6 @@
 ﻿using PuzzleConsoleGame.Config;
 using PuzzleConsoleGame.Config.Collision;
+using PuzzleConsoleGame.Core;
 using PuzzleConsoleGame.Entities.Items;
 
 namespace PuzzleConsoleGame.Entities.Enemy;
@@ -22,8 +23,11 @@ public class EnemyManager
     public void SpawnEnemy()
     {
         
-        var xPos = _random.Next(Boundaries.GameBoundsHorizontalMin + 2, Boundaries.GameBoundsHorizontalMax - 1);
-        var yPos = _random.Next(Boundaries.GameBoundsVerticalMin + 2, Boundaries.GameBoundsVerticalMax - 1);
+        // var xPos = _random.Next(Boundaries.GameBoundsHorizontalMin + 2, Boundaries.GameBoundsHorizontalMax - 1);
+        // var yPos = _random.Next(Boundaries.GameBoundsVerticalMin + 2, Boundaries.GameBoundsVerticalMax - 1);
+        var xPos = 18;
+        var yPos = 10;
+        
         var enemy = new Enemy(xPos, yPos)
         {
             IsActive = true
@@ -51,7 +55,6 @@ public class EnemyManager
             if (activeEnemy.Health > 0) continue;
             activeEnemy.IsActive = false;
             _enemiesToRemove.Add(activeEnemy);
-            // RemoveEnemy(activeEnemy);
         }
     }
 

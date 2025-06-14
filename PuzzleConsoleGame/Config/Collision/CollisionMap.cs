@@ -1,4 +1,5 @@
-﻿using PuzzleConsoleGame.Entities;
+﻿using System.Diagnostics;
+using PuzzleConsoleGame.Entities;
 using PuzzleConsoleGame.Entities.Items;
 using PuzzleConsoleGame.Entities.Weapon;
 
@@ -6,6 +7,7 @@ namespace PuzzleConsoleGame.Config.Collision;
 
 public class CollisionMap
 {
+    
     public static readonly Dictionary<(EntityType source, EntityType target), Action<IInteractable, IInteractable>>
         InteractionMap = new()
         {
@@ -34,7 +36,19 @@ public class CollisionMap
             {
                 ((Entities.Player.Player)target).GivePoints((Coin)source);
                 ((Coin)source).IsActive = false;
-            }
+            },
             
+            
+            // [(EntityType.Boundary, EntityType.Enemy)] = (source, target) =>
+            // {
+            //     ((Entities.Enemy.Enemy)target).XPosition = ((Entities.Enemy.Enemy)target).PreviousX;
+            //     ((Entities.Enemy.Enemy)target).YPosition = ((Entities.Enemy.Enemy)target).PreviousY;
+            // },
+            // [(EntityType.Boundary, EntityType.Bullet)] = (source, target) =>
+            // {
+            //     ((Entities.Enemy.Enemy)target).XPosition = ((Bullet)target).PreviousX;
+            //     ((Entities.Enemy.Enemy)target).YPosition = ((Bullet)target).PreviousY;
+            // },
+            //
         };
 }

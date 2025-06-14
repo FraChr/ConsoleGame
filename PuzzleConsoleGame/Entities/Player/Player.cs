@@ -26,9 +26,10 @@ public class Player : Character.Character
         }
         Move(deltaX, deltaY);
     }
-
+    
     private void Move(int deltaX, int deltaY)
     {
+        
         if (deltaX == Movement.MovePositive) Rotate(Direction.Right);
         else if (deltaX == Movement.MoveNegative) Rotate(Direction.Left);
         else if (deltaY == Movement.MoveNegative) Rotate(Direction.Up);

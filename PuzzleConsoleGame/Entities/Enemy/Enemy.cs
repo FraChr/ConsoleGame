@@ -37,7 +37,7 @@ public class Enemy : Character.Character
 
     private void Move(Enemy activeEnemy, int positionX, int positionY)
     {
-        if(_random.NextDouble() < 0.2) return;
+        // if(_random.NextDouble() < 0.2) return;
         // if (_random.NextDouble() < 0.3)
         // {
         //     var direction = _random.Next(4);
