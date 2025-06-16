@@ -5,10 +5,10 @@ namespace PuzzleConsoleGame.Entities.Items;
 
 public class ItemManager
 {
-    private readonly Dictionary<int, Func<IInteractable>> _lootGenerationMap = new()
+    private readonly Dictionary<int, LootItemInfo> _lootGenerationMap = new()
     {
-        { 1, () => new Coin() },
-        { 2, () => new HealthPack() }
+        { 1, new LootItemInfo(() => new Coin(), 0.5) },
+        { 2,new LootItemInfo(() => new HealthPack(), 0.2, 3) }
     };
 
 
@@ -18,10 +18,13 @@ public class ItemManager
 
     public void SpawnRandomItem(int positionX = 0, int positionY = 0)
     {
-        var entery = _lootGenerationMap.ElementAt(_random.Next(_lootGenerationMap.Count));
+        var entry = _lootGenerationMap.ElementAt(_random.Next(_lootGenerationMap.Count));
 
-        var factory = entery.Value;
-        var instance = factory();
+        var lootInfo = entry.Value;
+
+        if (!ShouldSpawnItem(lootInfo) || !CanSpawnItem(lootInfo)) return;
+        
+        var instance = lootInfo.Factory();
 
         if (instance is IPositioned interactable)
         {
@@ -33,6 +36,22 @@ public class ItemManager
 
         _spawnedItems.Add(instance);
     }
+
+    private bool ShouldSpawnItem(LootItemInfo lootInfo)
+    {
+        var chance = _random.NextDouble();
+        return chance <= lootInfo.SpawnProbability;
+    }
+    private bool CanSpawnItem(LootItemInfo lootInfo)
+    {
+        if (lootInfo.MaxSpawnCount is not { } max) return true;
+        
+        var itemType = lootInfo.Factory().GetType();
+        var currentCount = _spawnedItems.Count(item => item.GetType() == itemType);
+
+        return currentCount < max;
+    }
+
 
     public void SpawnItem<T>(Func<T> factory, int x, int y) where T : IInteractable, IPositioned
     {

@@ -12,32 +12,24 @@ public class GameWorld
 {
     public readonly int VerticalMin = Boundaries.GameBoundsVerticalMin;
     public readonly int HorizontalMin = Boundaries.GameBoundsHorizontalMin;
-    
+
     public int VerticalMax = Boundaries.GameBoundsHorizontalMax;
     public int HorizontalMax = Boundaries.GameBoundsVerticalMax;
 
-    public static List<IPositioned> _maps = new List<IPositioned>();
-    
-    private Render _render;
-    
-    
-    // private map = new DbApi();
-    
-    // dbapi.GetGameWorld();
-    public GameWorld(Render render)
-    {
-        _render = render;
-    }
+    public static List<IPositioned> _maps = [];
+    public static (int XPosition, int YPosition) Spawn;
 
     public void GetMapFromDataBase()
     {
         var dbapi = new DbApi();
         var map = dbapi.GetGameMap();
-        
+
         foreach (var wall in map)
         {
             var renderable = new RenderableMap(wall);
             _maps.Add(renderable);
+            Spawn = (wall.XSpawn, wall.YSpawn);
+            
         }
     }
 
@@ -45,5 +37,9 @@ public class GameWorld
     {
         return _maps;
     }
-    
+
+    public (int xPosition, int yPosition) GetPlayerSpawn()
+    {
+        return Spawn;
+    }
 }

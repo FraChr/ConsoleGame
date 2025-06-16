@@ -18,17 +18,21 @@ public class DbApi
                         M.XPosition,
                         M.YPosition,
                         W.Symbol,
-                        W.Description
+                        W.Description,
+                        PS.XPosition as XSpawn,
+                        PS.YPosition as YSpawn
                     From
                         Map M
                     JOIN 
                         WallTypes W On M.WallTypeId = W.WallTypeId
+                    JOIN
+                        PlayerSpawn PS ON M.LevelId = PS.LevelId
                     WHERE
-                         M.LevelId = 1
+                        M.LevelId = 2
                     ORDER BY
                         M.YPosition, M.XPosition";
         var map = connection.Query<Map>(query).ToArray();
-        return map;        
+        return map;
     }   
 }
 

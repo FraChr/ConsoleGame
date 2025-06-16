@@ -10,15 +10,18 @@ public static class Sound
     }
     public static void Gunshot()
     {
-        PlaySound("Assets/Effects/gunshot.mp3");
+        PlaySound("Assets/Effects/gunshot.mp3", volume: 0.3f);
     }
 
-    private static void PlaySound(string path, bool loop = false)
+    private static void PlaySound(string path, bool loop = false, float volume = 1f)
     {
         IWavePlayer waveOutDevice = new WaveOutEvent();
         
         var filePath = Path.Combine(Environment.CurrentDirectory, path);
-        var audioFileReader = new AudioFileReader(filePath);
+        var audioFileReader = new AudioFileReader(filePath)
+        {
+            Volume = volume
+        };
 
         waveOutDevice.Init(audioFileReader);
 

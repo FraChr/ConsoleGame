@@ -89,15 +89,17 @@ public class Game
 
     private void InitGame()
     {
-        _gameWorld = new GameWorld(_render);
+        _gameWorld = new GameWorld();
 
         _gameWorld.GetMapFromDataBase();
+
+        var x = _gameWorld.GetPlayerSpawn();
         
         _render.DrawBoundaries(_gameWorld);
-        Player = _playerManager.SpawnPlayer(PlayerStart.PlayerStartPosHoriz, PlayerStart.PlayerStartPosVert);
+        Player = _playerManager.SpawnPlayer(x.xPosition, x.yPosition);
         _inputProcessor.SetPlayer(Player);
-        _itemManager.SpawnItem(() => new Coin(), 10, 10);
-        _itemManager.SpawnItem(() => new Coin(), 15, 5);
+        // _itemManager.SpawnItem(() => new Coin(), 10, 10);
+        // _itemManager.SpawnItem(() => new Coin(), 15, 5);
         _enemyManager.SpawnEnemy();
         Sound.Music();
     
@@ -149,6 +151,7 @@ public class Game
             _render.Draw(bullet);
         }
 
+        
         foreach (var wall in _gameWorld.GetMap().OfType<IRenderable>())
         {
             _render.Draw(wall);
