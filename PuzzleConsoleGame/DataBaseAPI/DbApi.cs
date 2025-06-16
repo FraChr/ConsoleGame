@@ -10,7 +10,7 @@ public class DbApi
         "Data Source=localhost;Database=GameWorld;Integrated Security=true;Connect Timeout=30;Encrypt=true;TrustServerCertificate=true;";
 
 
-    public Map[] GetGameMap()
+    public Map[] GetGameMap(int levelId)
     {
         var connection = new SqlConnection(_connectionString);
         var query = @"SELECT 
@@ -28,10 +28,13 @@ public class DbApi
                     JOIN
                         PlayerSpawn PS ON M.LevelId = PS.LevelId
                     WHERE
-                        M.LevelId = 2
+                        M.LevelId = @LevelId
                     ORDER BY
                         M.YPosition, M.XPosition";
-        var map = connection.Query<Map>(query).ToArray();
+        
+        var parameters = new { LevelId = levelId };
+        
+        var map = connection.Query<Map>(query, parameters).ToArray();
         return map;
     }   
 }

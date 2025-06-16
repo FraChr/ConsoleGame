@@ -34,7 +34,7 @@ public class Render
         const int startY = 1;
 
         Console.SetCursorPosition(startX, startY);
-        Console.WriteLine("Entities this frame: ");
+        Console.WriteLine("Entities this frame: "); 
 
         var line = startY + 1;
         foreach (var entity in allEntities)

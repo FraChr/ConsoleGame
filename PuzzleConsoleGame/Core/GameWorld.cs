@@ -19,10 +19,10 @@ public class GameWorld
     public static List<IPositioned> _maps = [];
     public static (int XPosition, int YPosition) Spawn;
 
-    public void GetMapFromDataBase()
+    public void GetMapFromDataBase(int levelId)
     {
         var dbapi = new DbApi();
-        var map = dbapi.GetGameMap();
+        var map = dbapi.GetGameMap(levelId);
 
         foreach (var wall in map)
         {

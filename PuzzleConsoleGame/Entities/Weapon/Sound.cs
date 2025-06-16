@@ -10,7 +10,7 @@ public static class Sound
     }
     public static void Gunshot()
     {
-        PlaySound("Assets/Effects/gunshot.mp3", volume: 0.3f);
+        PlaySound("Assets/Effects/gunshot.mp3", volume: 0.1f);
     }
 
     private static void PlaySound(string path, bool loop = false, float volume = 1f)

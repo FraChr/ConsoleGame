@@ -85,13 +85,15 @@ public class Game
             if (sleepTime > 0)
                 Thread.Sleep(sleepTime);
         }
+
+        Console.ReadLine();
     }
 
     private void InitGame()
     {
         _gameWorld = new GameWorld();
 
-        _gameWorld.GetMapFromDataBase();
+        _gameWorld.GetMapFromDataBase(2);
 
         var x = _gameWorld.GetPlayerSpawn();
         
