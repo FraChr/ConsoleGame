@@ -95,11 +95,25 @@ public class Game
 
         _gameWorld.GetMapFromDataBase(2);
 
-        var x = _gameWorld.GetPlayerSpawn();
+        var playerSpawn = _gameWorld.GetPlayerSpawn();
         
+        var itemSpawn = _gameWorld.GetItemSpawn();
+
+        //var toSpawn = itemSpawn.Where(x => x.XPosition != 0 || x.YPosition != 0);
         _render.DrawBoundaries(_gameWorld);
-        Player = _playerManager.SpawnPlayer(x.xPosition, x.yPosition);
+        Player = _playerManager.SpawnPlayer(playerSpawn.xPosition, playerSpawn.yPosition);
         _inputProcessor.SetPlayer(Player);
+        
+        foreach (var value in itemSpawn)
+        {
+            switch (value.ItemType)
+            {
+                case "Coin":
+                    _itemManager.SpawnItem(() => new Coin(), value.ItemXSpawn, value.ItemYSpawn);
+                    break;
+            }
+        }
+        
         // _itemManager.SpawnItem(() => new Coin(), 10, 10);
         // _itemManager.SpawnItem(() => new Coin(), 15, 5);
         _enemyManager.SpawnEnemy();

@@ -1,6 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using PuzzleConsoleGame.Core;
 using PuzzleConsoleGame.Entities;
+using PuzzleConsoleGame.Models;
 using PuzzleConsoleGame.Rendering;
 
 namespace PuzzleConsoleGame;
@@ -15,11 +16,11 @@ public class RenderableMap : IRenderable
     public bool IsActive { get; set; } = true;
     public EntityType Type { get; }
     public int Value { get; }
-    public RenderableMap(Map map)
+    public RenderableMap(MapTile mapTile)
     {
-        XPosition = map.XPosition;
-        YPosition = map.YPosition;
-        Symbol = Regex.Unescape(map.Symbol)[0];
+        XPosition = mapTile.XPosition;
+        YPosition = mapTile.YPosition;
+        Symbol = Regex.Unescape(mapTile.Symbol)[0];
     }
 
  

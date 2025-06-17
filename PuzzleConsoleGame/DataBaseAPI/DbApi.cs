@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Microsoft.Data.SqlClient;
 using PuzzleConsoleGame.Core;
+using PuzzleConsoleGame.Models;
 
 namespace PuzzleConsoleGame.DataBaseAPI;
 
@@ -10,32 +11,45 @@ public class DbApi
         "Data Source=localhost;Database=GameWorld;Integrated Security=true;Connect Timeout=30;Encrypt=true;TrustServerCertificate=true;";
 
 
-    public Map[] GetGameMap(int levelId)
+    public LevelData GetGameLevel(int levelId)
     {
         var connection = new SqlConnection(_connectionString);
-        var query = @"SELECT 
+        var queryMapTiles = @"SELECT 
                         M.LevelId,
                         M.XPosition,
                         M.YPosition,
                         W.Symbol,
-                        W.Description,
-                        PS.XPosition as XSpawn,
-                        PS.YPosition as YSpawn
-                    From
+                        W.Description
+                    FROM
                         Map M
                     JOIN 
-                        WallTypes W On M.WallTypeId = W.WallTypeId
-                    JOIN
-                        PlayerSpawn PS ON M.LevelId = PS.LevelId
+                        WallTypes W ON M.WallTypeId = W.WallTypeId
                     WHERE
-                        M.LevelId = @LevelId
+                        M.LevelId = @levelId
                     ORDER BY
-                        M.YPosition, M.XPosition";
+                        M.YPosition, M.XPosition;";
+
+        var queryPlayerSpawn = @"SELECT  LevelId, XPosition AS PlayerXSpawn, YPosition AS PlayerYSpawn
+                                    FROM PlayerSpawn
+                                    WHERE LevelId = @levelId;";
+
+        var queryItemSpawns = @"SELECT LevelId, XPosition AS ItemXSpawn, YPosition AS ItemYSpawn, Type As ItemType
+                                    FROM ItemSpawns
+                                    WHERE LevelId = @levelId;";
         
         var parameters = new { LevelId = levelId };
         
-        var map = connection.Query<Map>(query, parameters).ToArray();
-        return map;
+        var tiles = connection.Query<MapTile>(queryMapTiles, parameters).ToList();
+        var playerSpawn = connection.Query<PlayerSpawn>(queryPlayerSpawn, parameters).FirstOrDefault();
+        var itemSpawns = connection.Query<ItemSpawn>(queryItemSpawns, parameters).ToList();
+
+        return new LevelData
+        {
+            LevelId = levelId,
+            MapTiles = tiles,
+            PlayerSpawn = playerSpawn,
+            ItemSpawns = itemSpawns
+        };
     }   
 }
 

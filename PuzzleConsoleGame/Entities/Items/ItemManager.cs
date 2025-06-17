@@ -8,7 +8,7 @@ public class ItemManager
     private readonly Dictionary<int, LootItemInfo> _lootGenerationMap = new()
     {
         { 1, new LootItemInfo(() => new Coin(), 0.5) },
-        { 2,new LootItemInfo(() => new HealthPack(), 0.2, 3) }
+        { 2, new LootItemInfo(() => new HealthPack(), 0.2, 3) }
     };
 
 

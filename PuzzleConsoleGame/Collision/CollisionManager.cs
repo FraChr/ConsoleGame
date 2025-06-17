@@ -41,7 +41,7 @@ public class CollisionManager
         var t = entity.XPosition is > Boundaries.GameBoundsVerticalMin and < Boundaries.GameBoundsHorizontalMax &&
                entity.YPosition is > Boundaries.GameBoundsHorizontalMin and < Boundaries.GameBoundsVerticalMax;
 
-        var walls = GameWorld._maps;
+        var walls = GameWorld.Maps;
         
         if (walls.Where(wall => entity is not Enemy).Any(wall => entity.XPosition == wall.XPosition && entity.YPosition == wall.YPosition))
         {
