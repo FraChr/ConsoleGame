@@ -6,5 +6,6 @@ public enum EntityType
     Enemy,
     Bullet,
     Coin,
-    HealthPack
+    HealthPack,
+    Upgrade
 }

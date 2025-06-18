@@ -47,6 +47,11 @@ public class Bullet : Item
         YPosition += deltaY;
     }
 
+    public void IncreaseDamage(IInteractable interactionValue)
+    {
+        Value += interactionValue.Value;
+    }
+    
     private (int, int) GetDirectionsOffset(Direction direction)
     {
         return direction switch

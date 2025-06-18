@@ -1,5 +1,6 @@
 ﻿using PuzzleConsoleGame.Config;
 using PuzzleConsoleGame.Entities.Items;
+using PuzzleConsoleGame.Entities.Weapon;
 
 
 namespace PuzzleConsoleGame.Entities.Player;
@@ -7,23 +8,21 @@ namespace PuzzleConsoleGame.Entities.Player;
 public class Player : Character.Character
 {
     public override EntityType Type => EntityType.Player;
+    private int MaxHealth { get; set; } = PlayerData.Health;
     public Player(int xPosition, int yPosition) : base(xPosition, yPosition)
     {
         XPosition = xPosition;
         YPosition = yPosition;
         Symbol = PlayerData.CharacterDefault;
-        Health = PlayerData.Health;
+        Health = MaxHealth;
+        
     }
 
     public void Update(int deltaX, int deltaY)
     {
         PreviousX = XPosition;
         PreviousY = YPosition;
-
-        if (Health >= 100)
-        {
-            Health = 100;
-        }
+        
         Move(deltaX, deltaY);
     }
     
@@ -60,13 +59,26 @@ public class Player : Character.Character
     
     public override void GiveHealth(IInteractable interactionValue)
     {
-        if (Health >= 100) return;
+        
         Health += interactionValue.Value;
+        if (Health > MaxHealth)
+        {
+            Health = MaxHealth;
+        }
     }
 
     public void GivePoints(IInteractable interactionValue)
     {
         Coin += interactionValue.Value;
+    }
+
+    public void ApplyUpgrade(IInteractable interactionValue)
+    {
+        if (Coin < 1) return;
+        MaxHealth += interactionValue.Value;
+        Health = MaxHealth;
+        Coin -= 1;
+        interactionValue.IsActive = false;
     }
 
     public override void TakeDamage(IInteractable interactionValue)

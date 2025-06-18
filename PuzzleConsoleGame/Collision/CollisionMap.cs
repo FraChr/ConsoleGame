@@ -38,17 +38,10 @@ public class CollisionMap
                 ((Coin)source).IsActive = false;
             },
             
-            
-            // [(EntityType.Boundary, EntityType.Enemy)] = (source, target) =>
-            // {
-            //     ((Entities.Enemy.Enemy)target).XPosition = ((Entities.Enemy.Enemy)target).PreviousX;
-            //     ((Entities.Enemy.Enemy)target).YPosition = ((Entities.Enemy.Enemy)target).PreviousY;
-            // },
-            // [(EntityType.Boundary, EntityType.Bullet)] = (source, target) =>
-            // {
-            //     ((Entities.Enemy.Enemy)target).XPosition = ((Bullet)target).PreviousX;
-            //     ((Entities.Enemy.Enemy)target).YPosition = ((Bullet)target).PreviousY;
-            // },
-            //
+            [(EntityType.Upgrade, EntityType.Player)] = (source, target) =>
+            {
+                ((Entities.Player.Player)target).ApplyUpgrade((Upgrade)source);
+                // ((Upgrade)source).IsActive = false;
+            }
         };
 }

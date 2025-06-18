@@ -39,8 +39,13 @@ public static class ItemData
 {
     public const char Coin = '\u25CF';
     public const int CoinValue = 1;
+    
     public const char Health = '\u2665';
     public const int HealthValue = 10;
+    
+    public const char Upgrade = '\u2660';
+    public const int UpgradeValue = 10;
+    public const int UpdgradeCost = 20;
     public static char Remove => GameSymbols.Remove;
 }
 

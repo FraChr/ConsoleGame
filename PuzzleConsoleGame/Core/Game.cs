@@ -98,8 +98,7 @@ public class Game
         var playerSpawn = _gameWorld.GetPlayerSpawn();
         
         var itemSpawn = _gameWorld.GetItemSpawn();
-
-        //var toSpawn = itemSpawn.Where(x => x.XPosition != 0 || x.YPosition != 0);
+        
         _render.DrawBoundaries(_gameWorld);
         Player = _playerManager.SpawnPlayer(playerSpawn.xPosition, playerSpawn.yPosition);
         _inputProcessor.SetPlayer(Player);
@@ -111,11 +110,11 @@ public class Game
                 case "Coin":
                     _itemManager.SpawnItem(() => new Coin(), value.ItemXSpawn, value.ItemYSpawn);
                     break;
+                case "Upgrade":
+                    _itemManager.SpawnItem(() => new Upgrade(), value.ItemXSpawn, value.ItemYSpawn);
+                    break;
             }
         }
-        
-        // _itemManager.SpawnItem(() => new Coin(), 10, 10);
-        // _itemManager.SpawnItem(() => new Coin(), 15, 5);
         _enemyManager.SpawnEnemy();
         Sound.Music();
     
