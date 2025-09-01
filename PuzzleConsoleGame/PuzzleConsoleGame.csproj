@@ -7,4 +7,29 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Dapper" Version="2.1.66" />
+      <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.0-preview1.25120.4" />
+      <PackageReference Include="NAudio" Version="2.2.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Assets\Audio\Effects\can.mp3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Assets\Effects\can.mp3" />
+      <Content Include="Assets\Effects\can.mp3">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Assets\Music\audio.mp3" />
+      <Content Include="Assets\Music\audio.mp3">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Assets\Effects\gunshot.mp3" />
+      <Content Include="Assets\Effects\gunshot.mp3">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>
